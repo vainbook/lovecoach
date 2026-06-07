@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Training 情感教育 ｜ 互動工具與學習指南</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="UC Training 情感教育數位平台：提供故事話題庫、聊天練習教練，以及交往前共識清單互動電子書，幫助您建立優質親密關係。">
+  <meta name="keywords" content="UC Training, 情感教育, 聊天教練, 故事話題庫, 交往前共識, 約會話題, 聊天技巧">
+  
+  <!-- UC Brand Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* UC Training Design System Style Guide */
+    :root {
+      /* Colors */
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+      --white: #FFFFFF;
+      
+      --navy-60: rgba(19, 27, 46, 0.6);
+      --beige-40: rgba(232, 228, 220, 0.4);
+      --beige-10: rgba(232, 228, 220, 0.1);
+      
+      --bg-primary: var(--navy);
+      --text-primary: var(--beige);
+      --text-secondary: rgba(232, 228, 220, 0.7);
+      --text-muted: rgba(232, 228, 220, 0.4);
+      
+      --accent-color: var(--salmon);
+      --accent-light: var(--beige);
+      
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-border: rgba(232, 228, 220, 0.1);
+      --glass-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      
+      /* Typography */
+      --font-serif: 'Noto Serif TC', serif;
+      --font-sans: 'Noto Sans TC', sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-decor: 'DM Serif Display', serif;
+      
+      --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* UC Maze Pattern Background */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      );
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* Soft Glow Background Decor */
+    body::after {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 800px;
+      background: radial-gradient(circle, rgba(232, 228, 220, 0.05) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* UC Side Labels */
+    .side-label {
+      position: fixed;
+      writing-mode: vertical-rl;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      font-family: var(--font-display);
+      opacity: 0.15;
+      color: var(--beige);
+      pointer-events: none;
+      z-index: 50;
+      text-transform: uppercase;
+    }
+
+    .side-label-left {
+      position: fixed;
+      writing-mode: vertical-rl;
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%) rotate(180deg);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      font-family: var(--font-display);
+      opacity: 0.15;
+      color: var(--beige);
+      pointer-events: none;
+      z-index: 50;
+      text-transform: uppercase;
+    }
+
+    /* Layout Containers */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1.5px solid var(--card-border);
+      margin-bottom: 4rem;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* UC Logo Circle Badge */
+    .uc-logo {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      border: 1.5px solid currentColor;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--beige);
+      transition: var(--transition-smooth);
+      text-transform: lowercase;
+    }
+
+    .logo-container:hover .uc-logo {
+      color: var(--salmon);
+      border-color: var(--salmon);
+      transform: rotate(360deg);
+    }
+
+    .logo-text h1 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: var(--beige);
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.15em;
+      font-family: var(--font-display);
+    }
+
+    .header-badge {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--salmon);
+      border: 1px solid var(--salmon);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 5rem;
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .hero-tag {
+      font-family: var(--font-display);
+      color: var(--salmon);
+      font-size: 0.875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero h2 {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+      font-weight: 900;
+      color: var(--beige);
+    }
+
+    .hero h2 span {
+      color: var(--salmon);
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* UC Double-line Divider */
+    .divider-h {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+
+    .divider-h .thick {
+      width: 60px;
+      height: 3px;
+      background: var(--salmon);
+    }
+
+    .divider-h .thin {
+      flex: 1;
+      height: 1.5px;
+      background: var(--beige);
+      opacity: 0.15;
+    }
+
+    /* Grid Layout for Apps */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      margin-bottom: 5rem;
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    @media (max-width: 850px) {
+      .apps-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* UC Glass Card & Corner Brackets */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 0.75rem;
+      padding: 3rem 2.5rem;
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(232, 168, 152, 0.4);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .glass-card:hover::before {
+      background: var(--salmon);
+    }
+
+    /* Corner L-Brackets */
+    .corner-bracket {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      color: var(--beige);
+      opacity: 0.25;
+      pointer-events: none;
+      transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover .corner-bracket {
+      opacity: 0.6;
+      color: var(--salmon);
+    }
+
+    .corner-tl {
+      top: 16px;
+      left: 16px;
+      border-top: 1.5px solid currentColor;
+      border-left: 1.5px solid currentColor;
+    }
+
+    .corner-tr {
+      top: 16px;
+      right: 16px;
+      border-top: 1.5px solid currentColor;
+      border-right: 1.5px solid currentColor;
+    }
+
+    .corner-bl {
+      bottom: 16px;
+      left: 16px;
+      border-bottom: 1.5px solid currentColor;
+      border-left: 1.5px solid currentColor;
+    }
+
+    .corner-br {
+      bottom: 16px;
+      right: 16px;
+      border-bottom: 1.5px solid currentColor;
+      border-right: 1.5px solid currentColor;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-badge {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      background: rgba(232, 168, 152, 0.15);
+      color: var(--salmon);
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .card-number {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .card-content h3 {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover .card-content h3 {
+      color: var(--salmon);
+    }
+
+    .card-subtitle {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--salmon);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-top: 1.5px solid var(--card-border);
+      padding-top: 1.5rem;
+      transition: var(--transition-smooth);
+    }
+
+    .card-action svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover .card-action svg {
+      transform: translateX(6px);
+    }
+
+    /* Resources Section */
+    .resources-section {
+      margin-bottom: 4rem;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .section-title h3 {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--beige);
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    .resources-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .resource-item {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1.5px solid var(--card-border);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .resource-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(232, 228, 220, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .res-type {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .res-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--beige);
+      margin-bottom: 1rem;
+    }
+
+    .res-link {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--salmon);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .res-link svg {
+      width: 0.9rem;
+      height: 0.9rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding-top: 3rem;
+      border-top: 1.5px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-brand span {
+      font-family: var(--font-display);
+      font-weight: 600;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+    }
+
+    @media (max-width: 600px) {
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background side labels -->
+  <div class="side-label-left">uc training ∙ conversation coach</div>
+  <div class="side-label">uc training ∙ consensus checklist</div>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header>
+      <a href="#" class="logo-container">
+        <div class="uc-logo">uc</div>
+        <div class="logo-text">
+          <h1>UC Training</h1>
+          <p>relationship intelligence</p>
+        </div>
+      </a>
+      <div class="header-badge">learning portal</div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-tag">interactive ecosystem</div>
+      <h2>探索親密關係的<span>溝通默契</span></h2>
+      <p>
+        歡迎來到 UC Training 情感教育工具箱。我們整合了數位對話演練工具與互動式關係共識清單，陪伴您在人際互動與親密關係中，以清晰、真誠且富有同理心的方式溝通，建立深刻的感情默契。
+      </p>
+    </section>
+
+    <!-- Interactive Apps Grid -->
+    <section class="apps-grid">
+      
+      <!-- Card 1: Conversation Coach -->
+      <a href="conversation_coach.html" class="glass-card">
+        <!-- Corner Brackets -->
+        <div class="corner-bracket corner-tl"></div>
+        <div class="corner-bracket corner-tr"></div>
+        <div class="corner-bracket corner-bl"></div>
+        <div class="corner-bracket corner-br"></div>
+        
+        <div>
+          <div class="card-meta">
+            <span class="card-badge">對話練習工具</span>
+            <span class="card-number">01</span>
+          </div>
+          
+          <div class="card-content">
+            <h3>故事話題庫 & 聊天教練</h3>
+            <div class="card-subtitle">Conversation Coach Database</div>
+            <p>
+              收錄豐富的社交破冰、約會聊天、深度故事話題與互動情境。提供獨創的對話框架與即時指引，幫助你告別尬聊，在任何對話情境中都能流暢且真誠地表達自己，掌握聊天主導權。
+            </p>
+          </div>
+        </div>
+        
+        <div class="card-action">
+          立即開啟對話練習
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Card 2: Consensus Ebook -->
+      <a href="relationship_consensus_ebook.html" class="glass-card">
+        <!-- Corner Brackets -->
+        <div class="corner-bracket corner-tl"></div>
+        <div class="corner-bracket corner-tr"></div>
+        <div class="corner-bracket corner-bl"></div>
+        <div class="corner-bracket corner-br"></div>
+        
+        <div>
+          <div class="card-meta">
+            <span class="card-badge">雙人共識工具</span>
+            <span class="card-number">02</span>
+          </div>
+          
+          <div class="card-content">
+            <h3>交往前共識清單電子書</h3>
+            <div class="card-subtitle">Pre-Relationship Consensus Ebook</div>
+            <p>
+              為曖昧或即將邁入交往的情侶量身打造的互動式簡報。涵蓋金錢觀、親密感、未來規劃與生活習慣等核心共識議題，支援雙人共同線上點選、標註共識點，以溫和且系統化的方式對齊價值觀。
+            </p>
+          </div>
+        </div>
+        
+        <div class="card-action">
+          閱讀互動電子書
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- Additional Resources Section -->
+    <section class="resources-section">
+      <div class="section-header">
+        <div class="section-title">
+          <h3>學習指南與教材</h3>
+          <p>精選的情感指南、約會話題及經營指南 (Markdown 格式)</p>
+        </div>
+      </div>
+      
+      <div class="divider-h">
+        <div class="thick"></div>
+        <div class="thin"></div>
+      </div>
+
+      <div class="resources-list">
+        
+        <!-- Resource 1: 約會話題清單 -->
+        <a href="約會話題清單.md" class="resource-item">
+          <div>
+            <div class="res-type">topics list</div>
+            <div class="res-title">約會話題清單：從破冰到深聊</div>
+          </div>
+          <div class="res-link">
+            檢視文件
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Resource 2: Threads 交友指南 -->
+        <a href="Threads交友指南.md" class="resource-item">
+          <div>
+            <div class="res-type">social guide</div>
+            <div class="res-title">Threads 交友指南與文案範本</div>
+          </div>
+          <div class="res-link">
+            檢視文件
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Resource 3: 曖昧行為指南 -->
+        <a href="曖昧行為指南.md" class="resource-item">
+          <div>
+            <div class="res-type">relationship guide</div>
+            <div class="res-title">曖昧期行為指南與關係升溫技巧</div>
+          </div>
+          <div class="res-link">
+            檢視文件
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Resource 4: 交往前共識清單文字版 -->
+        <a href="交往前共識清單.md" class="resource-item">
+          <div>
+            <div class="res-type">text checklist</div>
+            <div class="res-title">交往前核心共識清單 (完整文字版)</div>
+          </div>
+          <div class="res-link">
+            檢視文件
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-brand">
+        <span>uc</span>
+        <p>UC Training 情感教育 ∙ 關係智慧學科</p>
+      </div>
+      <div>© 2026 UC Training. Designed for growth & connection.</div>
+    </footer>
+
+  </div>
+
+</body>
+</html>
