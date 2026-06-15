@@ -1158,6 +1158,8 @@
       letter-spacing: 0.05em;
     }
   </style>
+  <!-- html2canvas for image export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -1327,6 +1329,11 @@
             
             <div class="luxury-card-title" id="preview-title">《 新的故事卡 》</div>
             
+            <!-- Reference Questions list inside the card -->
+            <div class="card-ref-questions" id="preview-ref-questions" style="margin-top: 12px; font-size: 11.5px; color: var(--text-muted); border-bottom: 1.5px dashed var(--card-border); padding-bottom: 12px; display: none; text-align: left;">
+              <!-- Will be synced dynamically -->
+            </div>
+            
             <!-- Step 2: Intro Bubble -->
             <div class="card-bubble">
               <div class="bubble-label">Intro Question / 引導對話開場</div>
@@ -1366,9 +1373,12 @@
           </div>
           
           <!-- ACTIONS FOR CARD -->
-          <div class="preview-card-actions" style="display: block;">
-            <button class="btn btn-secondary" style="width: 100%;" onclick="copyCardContent()">
-              <span>📋 複製 Markdown</span>
+          <div class="preview-card-actions" style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary" style="flex: 1; font-size: 13px; padding: 10px 8px;" onclick="copyCardContent()">
+              <span>📋 複製 MD</span>
+            </button>
+            <button class="btn btn-secondary" style="flex: 1; font-size: 13px; padding: 10px 8px; border-color: var(--accent-color); color: var(--accent-color);" onclick="exportCardAsImage()">
+              <span>🖼️ 導出圖片</span>
             </button>
           </div>
           
@@ -2065,6 +2075,26 @@
         previewBadge.className = 'context-badge';
       }
       
+      // Update reference questions inside card preview
+      const previewRefQuestions = document.getElementById('preview-ref-questions');
+      if (activeCtx && activeTh) {
+        const contextData = CONTEXT_DATA[activeCtx];
+        const section = contextData.sections.find(sec => sec.themeId === activeTh);
+        if (section) {
+          previewRefQuestions.innerHTML = `
+            <div style="font-weight: 700; margin-bottom: 4px; color: var(--accent-color);">🎯 自我挖掘問句引導：</div>
+            <ul style="padding-left: 16px; margin: 0; line-height: 1.5; list-style-type: decimal;">
+              ${section.questions.map(q => `<li>${q}</li>`).join('')}
+            </ul>
+          `;
+          previewRefQuestions.style.display = 'block';
+        } else {
+          previewRefQuestions.style.display = 'none';
+        }
+      } else {
+        previewRefQuestions.style.display = 'none';
+      }
+
       // Fields values
       const title = document.getElementById('field-title').value.trim();
       const step2 = document.getElementById('field-step2').value.trim();
@@ -2197,6 +2227,30 @@
         showToast('已複製卡片 Markdown 內容！');
       }).catch(err => {
         alert('複製失敗，請手動複製右側預覽的文字');
+      });
+    }
+
+    function exportCardAsImage() {
+      const card = document.getElementById('card-preview');
+      if (!card) return;
+      
+      showToast('正在生成卡片圖片，請稍候...');
+      
+      html2canvas(card, {
+        backgroundColor: '#131B2E',
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        const link = document.createElement('a');
+        const title = document.getElementById('field-title').value.trim() || '未命名故事卡';
+        link.download = `UC-StoryCard-${title}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('卡片圖片已成功導出！');
+      }).catch(err => {
+        console.error('Failed to export image', err);
+        alert('導出圖片失敗，請重試或截圖保存。');
       });
     }
 
