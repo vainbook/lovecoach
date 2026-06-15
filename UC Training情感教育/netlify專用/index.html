@@ -535,6 +535,19 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // ─── RUNTIME ERROR LOGGING ───────────────────────────────────
+    window.onerror = function(message, source, lineno, colno, error) {
+      const warning = document.getElementById('config-warning');
+      if (warning) {
+        warning.style.display = 'block';
+        warning.style.color = '#ff6b6b';
+        warning.style.background = 'rgba(255, 107, 107, 0.1)';
+        warning.style.border = '1px solid rgba(255, 107, 107, 0.2)';
+        warning.innerHTML = `⚠️ 系統執行發生 JavaScript 錯誤：<br><small>${message} (行號 ${lineno}:${colno})</small>`;
+      }
+      return false;
+    };
+
     // ─── SUPABASE CONFIGURATION ──────────────────────────────────
     // 請至您的 Supabase 控制台 (Settings > API) 取得以下資訊並填入：
     const SUPABASE_URL       = "https://drhbvhxmedotupotkxyt.supabase.co";
