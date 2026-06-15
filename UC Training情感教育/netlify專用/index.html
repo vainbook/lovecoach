@@ -426,7 +426,7 @@
       <div class="welcome-title" style="text-align: center; border-bottom: none; margin-bottom: 8px;">學員登入</div>
       <div class="login-description" style="margin-bottom: 20px;">輸入您的電子信箱與密碼登入</div>
 
-      <form id="login-form" onsubmit="handleLoginSubmit(event)">
+      <form id="login-form">
         <div class="input-group">
           <input type="email" id="login-email" placeholder="電子信箱 (Email)" required class="custom-input">
         </div>
@@ -436,7 +436,7 @@
         <div id="login-error" class="error-msg"></div>
         <button type="submit" class="btn btn-primary" style="margin-top: 20px;">登入系統</button>
       </form>
-      <button class="btn btn-secondary" onclick="showCard('signup-card')">
+      <button class="btn btn-secondary" id="to-signup-btn">
         首次使用？立即註冊帳號
       </button>
     </div>
@@ -451,7 +451,7 @@
       <div class="welcome-title" style="text-align: center; border-bottom: none; margin-bottom: 8px;">註冊學員帳號</div>
       <div class="login-description" style="margin-bottom: 20px;">請填寫以下資料以建立您的帳號</div>
 
-      <form id="signup-form" onsubmit="handleSignupSubmit(event)">
+      <form id="signup-form">
         <div class="input-group">
           <input type="text" id="signup-name" placeholder="您的姓名 / 暱稱" required class="custom-input">
         </div>
@@ -464,7 +464,7 @@
         <div id="signup-error" class="error-msg"></div>
         <button type="submit" class="btn btn-primary" style="margin-top: 20px;">確認註冊</button>
       </form>
-      <button class="btn btn-secondary" onclick="showCard('login-card')">
+      <button class="btn btn-secondary" id="to-login-btn">
         已經有帳號？返回登入頁面
       </button>
     </div>
@@ -524,7 +524,7 @@
         </div>
       </div>
 
-      <button class="btn btn-secondary" onclick="handleLogout()">登出學員系統</button>
+      <button class="btn btn-secondary" id="logout-btn">登出學員系統</button>
     </div>
 
     <footer>
@@ -645,7 +645,7 @@
     }
 
     // ─── LOGIN & SIGNUP SUBMIT HANDLERS ───────────────────────────
-    window.handleLoginSubmit = async function(e) {
+    async function handleLoginSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
@@ -660,9 +660,9 @@
         showCard('login-card');
         errorDiv.textContent = `❌ 登入失敗: ${error.message}`;
       }
-    };
+    }
 
-    window.handleSignupSubmit = async function(e) {
+    async function handleSignupSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('signup-name').value.trim();
       const email = document.getElementById('signup-email').value.trim();
@@ -696,14 +696,14 @@
         errorDiv.style.color = 'var(--accent-color)';
         errorDiv.textContent = `✉️ 驗證信已寄出！請至信箱點擊連結啟用帳號。`;
       }
-    };
+    }
 
     // ─── LOGOUT ───────────────────────────────────────────────────
-    window.handleLogout = async function () {
+    async function handleLogout() {
       if (!supabase) return;
       showCard('loading-card');
       await supabase.auth.signOut();
-    };
+    }
 
     // ─── SUPABASE AUTH STATE LISTENER ──────────────────────────────
     if (supabase) {
@@ -747,6 +747,32 @@
       }
     }
     initSession();
+
+    // ─── EVENT LISTENERS ──────────────────────────────────────────
+    const toSignupBtn = document.getElementById('to-signup-btn');
+    if (toSignupBtn) {
+      toSignupBtn.addEventListener('click', () => showCard('signup-card'));
+    }
+
+    const toLoginBtn = document.getElementById('to-login-btn');
+    if (toLoginBtn) {
+      toLoginBtn.addEventListener('click', () => showCard('login-card'));
+    }
+
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', handleLoginSubmit);
+    }
+
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+      signupForm.addEventListener('submit', handleSignupSubmit);
+    }
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', handleLogout);
+    }
   </script>
 
 </body>
