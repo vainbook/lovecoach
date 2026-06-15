@@ -560,13 +560,13 @@
     const historyList   = document.getElementById('history-list');
 
     // ─── HELPERS ──────────────────────────────────────────────────
-    function showCard(cardId) {
+    window.showCard = function(cardId) {
       [loginCard, signupCard, loadingCard, dashboardCard].forEach(c => {
         if (c) c.classList.remove('active');
       });
       const target = document.getElementById(cardId);
       if (target) target.classList.add('active');
-    }
+    };
 
     function getFormattedDate() {
       const now = new Date();
