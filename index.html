@@ -395,6 +395,34 @@
       margin-top: 8px;
     }
 
+    .footer-tutorial-btn {
+      margin-left: 8px;
+      color: var(--accent-color);
+      text-decoration: none;
+      border: 1px solid rgba(232, 168, 152, 0.4);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 9px;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 0.05em;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(232, 168, 152, 0.02);
+      vertical-align: middle;
+    }
+    .footer-tutorial-btn:hover {
+      background: linear-gradient(135deg, var(--accent-color), #f7cac1);
+      color: var(--navy) !important;
+      border-color: transparent;
+      box-shadow: 0 0 10px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+    .footer-tutorial-btn:active {
+      transform: translateY(0);
+    }
+
     /* Netlify Identity Widget override — dark theme */
     [data-netlify-identity-menu] {
       display: none !important;
@@ -445,7 +473,7 @@
     </div>
 
     <footer>
-      © 2026 UC TRAINING. ALL RIGHTS RESERVED.
+      © 2026 UC TRAINING. ALL RIGHTS RESERVED. <a href="guide.html" class="footer-tutorial-btn">💡 新手教學</a>
     </footer>
 
   </div>

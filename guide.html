@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新手教學 — UC Training 關係智慧學習系統</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS RESET & VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-color: #131B2E;
+      --text-color: #E8E4DC;
+      --text-muted: rgba(232, 228, 220, 0.6);
+      --card-bg: rgba(232, 228, 220, 0.03);
+      --card-border: rgba(232, 228, 220, 0.12);
+      --card-hover: rgba(232, 228, 220, 0.08);
+      --accent-color: #E8A898;
+      --accent-glow: rgba(232, 168, 152, 0.3);
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+      --blue: #8EC8E8;
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+      padding: 0 0 60px 0;
+    }
+
+    /* Grid Background Pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+
+    /* TOP NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(19, 27, 46, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      background: var(--accent-color);
+      color: var(--navy);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 9px;
+    }
+
+    .btn-back {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 6px 16px;
+      border-radius: 18px;
+      border: 1.5px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--beige);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      white-space: nowrap;
+    }
+
+    .btn-back:hover {
+      border-color: var(--accent-color);
+      background-color: rgba(232, 168, 152, 0.08);
+      color: var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-glow);
+      transform: translateX(-2px);
+    }
+
+    /* CONTAINER */
+    .container {
+      width: 100%;
+      max-width: 800px;
+      z-index: 1;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      margin-bottom: 10px;
+      animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .uc-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      border: 1.5px solid var(--accent-color);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+      text-transform: lowercase;
+      margin: 0 auto 16px;
+    }
+
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text-color);
+    }
+
+    .subtitle {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--accent-color);
+    }
+
+    /* QUICK NAVIGATION TABS */
+    .quick-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      opacity: 0;
+    }
+
+    .nav-tab {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 10px 20px;
+      color: var(--text-muted);
+      font-size: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-tab:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      background-color: var(--card-hover);
+      transform: translateY(-2px);
+    }
+
+    /* GLASS CARDS */
+    .guide-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .guide-card:hover {
+      border-color: rgba(232, 168, 152, 0.3);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 20px rgba(232, 168, 152, 0.05);
+    }
+
+    /* CORNER BRACKETS */
+    .corner-bracket {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--accent-color);
+      border-style: solid;
+      opacity: 0.3;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .bracket-tl { top: 16px; left: 16px; border-width: 1.5px 0 0 1.5px; }
+    .bracket-tr { top: 16px; right: 16px; border-width: 1.5px 1.5px 0 0; }
+    .bracket-bl { bottom: 16px; left: 16px; border-width: 0 0 1.5px 1.5px; }
+    .bracket-br { bottom: 16px; right: 16px; border-width: 0 1.5px 1.5px 0; }
+
+    .guide-card:hover .corner-bracket {
+      opacity: 0.6;
+    }
+
+    /* CARD HEADER */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .tool-badge {
+      font-size: 28px;
+      width: 56px;
+      height: 56px;
+      background: rgba(232, 168, 152, 0.08);
+      border: 1px solid rgba(232, 168, 152, 0.25);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+      flex-shrink: 0;
+    }
+
+    .tool-meta {
+      flex-grow: 1;
+    }
+
+    .tool-meta h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+
+    .tool-meta .tool-slogan {
+      font-size: 12px;
+      color: var(--accent-color);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .tool-desc {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* EXPECTED EFFECTS SECTION */
+    .effects-section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(232, 168, 152, 0.2), transparent);
+    }
+
+    .effects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 600px) {
+      .effects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .effect-item {
+      background: rgba(232, 228, 220, 0.015);
+      border: 1px solid rgba(232, 228, 220, 0.06);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .effect-item:hover {
+      background: rgba(232, 168, 152, 0.03);
+      border-color: rgba(232, 168, 152, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .effect-num-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent-color);
+      background: rgba(232, 168, 152, 0.08);
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .effect-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--beige);
+      margin-bottom: 6px;
+    }
+
+    .effect-detail {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* STEP BY STEP TIMELINE */
+    .steps-section {
+      margin-bottom: 32px;
+    }
+
+    .steps-timeline {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      position: relative;
+    }
+
+    @media (min-width: 650px) {
+      .steps-timeline {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      
+      .steps-timeline::before {
+        content: "";
+        position: absolute;
+        top: 24px;
+        left: 20%;
+        width: 60%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(232, 168, 152, 0.15) 20%, rgba(232, 168, 152, 0.15) 80%, transparent);
+        z-index: 0;
+      }
+    }
+
+    .step-card {
+      background: rgba(232, 228, 220, 0.01);
+      border: 1px solid rgba(232, 228, 220, 0.04);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+      background: rgba(232, 228, 220, 0.03);
+      border-color: rgba(232, 228, 220, 0.1);
+    }
+
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 1.5px solid var(--card-border);
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover .step-circle {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    .step-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--beige);
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ACTION BUTTON */
+    .btn-action {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      padding: 12px 28px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      width: 100%;
+      text-align: center;
+      display: inline-block;
+      text-decoration: none;
+      background: transparent;
+      border: 1.5px solid rgba(232, 168, 152, 0.35);
+      color: var(--accent-color);
+      box-shadow: 0 4px 12px rgba(232, 168, 152, 0.02);
+    }
+
+    .btn-action:hover {
+      background: linear-gradient(135deg, var(--accent-color), #f7cac1);
+      color: var(--navy);
+      border-color: transparent;
+      box-shadow: 0 8px 24px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-action:active {
+      transform: translateY(1px);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.1em;
+      margin-top: 20px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="index.html" class="nav-brand">
+      uc training <span>新手指南</span>
+    </a>
+    <a href="index.html" class="btn-back">← 返回首頁</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+      <div class="uc-logo">uc</div>
+      <h1>系統功能新手教學</h1>
+      <div class="subtitle">三步掌握關係智能，打造專屬的高價值社交吸引力</div>
+    </header>
+
+    <!-- QUICK NAVIGATION TABS -->
+    <div class="quick-nav">
+      <a href="#story-guide" class="nav-tab">📄 個人故事整理指南</a>
+      <a href="#dating-topics" class="nav-tab">🎲 約會話題製造機</a>
+      <a href="#consensus-checklist" class="nav-tab">💑 交往前共識清單</a>
+    </div>
+
+    <!-- CARD 1: 個人故事整理指南 -->
+    <div class="guide-card" id="story-guide">
+      <div class="corner-bracket bracket-tl"></div>
+      <div class="corner-bracket bracket-tr"></div>
+      <div class="corner-bracket bracket-bl"></div>
+      <div class="corner-bracket bracket-br"></div>
+
+      <div class="card-header">
+        <div class="tool-badge">📄</div>
+        <div class="tool-meta">
+          <h2>個人故事整理指南</h2>
+          <div class="tool-slogan">三大脈絡 · 自我挖掘 · 故事打磨卡</div>
+        </div>
+      </div>
+
+      <div class="tool-desc">
+        在社交與情感互動中，<strong>個人故事</strong>是展現個人魅力最強大的載體。比起條列式的硬實力炫耀，透過故事，你的獨特優勢、生活態度與逆境商數，才能自然且深刻地植入對方的腦海中。
+      </div>
+
+      <!-- EFFECTS -->
+      <div class="effects-section">
+        <h3 class="section-title">✨ 使用效果</h3>
+        <div class="effects-grid">
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 01</span>
+            <h4 class="effect-title">經歷高價值美化</h4>
+            <p class="effect-detail">將枯燥的工作與日常片段，整理成展現細心、熱情或高逆境商數的吸引力畫面。</p>
+          </div>
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 02</span>
+            <h4 class="effect-title">對話完美銜接</h4>
+            <p class="effect-detail">透過內建的「引導問句」與「延伸問句」，在聊天時流暢切入話題並自然把球拋給對方。</p>
+          </div>
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 03</span>
+            <h4 class="effect-title">建立數位故事庫</h4>
+            <p class="effect-detail">將故事卡數位化儲存，隨時在手機上查閱與複習，並支持導出精美卡片圖片與 Markdown。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE STEPS -->
+      <div class="steps-section">
+        <h3 class="section-title">🧭 快速上手三步驟</h3>
+        <div class="steps-timeline">
+          <div class="step-card">
+            <div class="step-circle">1</div>
+            <h4 class="step-name">挑選話題脈絡</h4>
+            <p class="step-desc">從進度板中選擇「職業美化」、「生活經驗」或「人生重大事件」中想要整理的子話題。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-circle">2</div>
+            <h4 class="step-name">感性自我挖掘</h4>
+            <p class="step-desc">閱讀系統精選的引導問題與對比範例，在編輯區中一邊思索一邊寫下真實的體驗與目的。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-circle">3</div>
+            <h4 class="step-name">即時預覽與儲存</h4>
+            <p class="step-desc">在右側即時檢視生成的豪華故事卡片預覽。完成後點擊儲存，永久保存至你的故事進度版。</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="story_guide.html" class="btn-action">立即進入「個人故事整理指南」</a>
+    </div>
+
+    <!-- CARD 2: 約會話題製造機 -->
+    <div class="guide-card" id="dating-topics">
+      <div class="corner-bracket bracket-tl"></div>
+      <div class="corner-bracket bracket-tr"></div>
+      <div class="corner-bracket bracket-bl"></div>
+      <div class="corner-bracket bracket-br"></div>
+
+      <div class="card-header">
+        <div class="tool-badge">🎲</div>
+        <div class="tool-meta">
+          <h2>約會話題製造機</h2>
+          <div class="tool-slogan">拉霸隨機抽題 · 211 題約會對談系統</div>
+        </div>
+      </div>
+
+      <div class="tool-desc">
+        拒絕沒有溫度的「在幹嘛」或身家調查式的提問。這套系統精選了 <strong>211 道深度話題</strong>，以趣味的拉霸模式包裝，讓約會氣氛輕鬆愉快，同時能在對談中循序漸進地了解對方的底層想法。
+      </div>
+
+      <!-- EFFECTS -->
+      <div class="effects-section">
+        <h3 class="section-title">✨ 使用效果</h3>
+        <div class="effects-grid">
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 01</span>
+            <h4 class="effect-title">終結尷尬句點</h4>
+            <p class="effect-detail">再也不怕聊天沒話題。拉霸機隨機抽題，讓提問變得像玩遊戲一樣自然，完全沒有刻意感。</p>
+          </div>
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 02</span>
+            <h4 class="effect-title">三階關係遞進</h4>
+            <p class="effect-detail">從「邂逅吸引（品味/狂想）」到「走入心房（回憶/脆弱）」，再到「親密關係」，逐層深入。</p>
+          </div>
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 03</span>
+            <h4 class="effect-title">建立約會存檔記錄</h4>
+            <p class="effect-detail">記錄你們探討過的所有話題與答案。每次約會都更進一步，不用擔心問題重複。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE STEPS -->
+      <div class="steps-section">
+        <h3 class="section-title">🧭 快速上手三步驟</h3>
+        <div class="steps-timeline">
+          <div class="step-card">
+            <div class="step-circle">1</div>
+            <h4 class="step-name">挑選親密階段</h4>
+            <p class="step-desc">依據目前與對方的熟悉程度，在上方點選合適的對話深度（邂逅吸引、走入心房或親密關係）。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-circle">2</div>
+            <h4 class="step-name">點擊拉霸抽取</h4>
+            <p class="step-desc">點擊「拉霸抽題」按鈕，齒輪轉動後會為你們隨機抽選該階段的主題問答。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-circle">3</div>
+            <h4 class="step-name">分享並標記進度</h4>
+            <p class="step-desc">雙方輪流真誠回答。完成後點選「已探討」，記錄當前進度並將話題歸檔，積累共同回憶。</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="dating_topics.html" class="btn-action">立即開啟「約會話題製造機」</a>
+    </div>
+
+    <!-- CARD 3: 交往前共識清單 -->
+    <div class="guide-card" id="consensus-checklist">
+      <div class="corner-bracket bracket-tl"></div>
+      <div class="corner-bracket bracket-tr"></div>
+      <div class="corner-bracket bracket-bl"></div>
+      <div class="corner-bracket bracket-br"></div>
+
+      <div class="card-header">
+        <div class="tool-badge">💑</div>
+        <div class="tool-meta">
+          <h2>交往前共識清單</h2>
+          <div class="tool-slogan">七大三觀主題 · 深度對話 · 愛情設計圖</div>
+        </div>
+      </div>
+
+      <div class="tool-desc">
+        這不是一場死板的是非測驗，而是幫助兩人在進入親密關係之前，建立<strong>深度溝通與互信</strong>的指南。坦誠地核對感情中的敏感議題，能讓雙方在未來的磨合之路上走得更加平穩踏實。
+      </div>
+
+      <!-- EFFECTS -->
+      <div class="effects-section">
+        <h3 class="section-title">✨ 使用效果</h3>
+        <div class="effects-grid">
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 01</span>
+            <h4 class="effect-title">透視雙方觀念落差</h4>
+            <p class="effect-detail">透過雙人同機作答，系統能以雙色指示標（伴侶 A/B）直接比對兩人的選項相同點與歧異點。</p>
+          </div>
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 02</span>
+            <h4 class="effect-title">覆蓋敏感防雷區</h4>
+            <p class="effect-detail">深入金錢開銷、異性社交界線、未來藍圖及底線退場機制等平時難以主動啟齒的嚴肅話題。</p>
+          </div>
+          <div class="effect-item">
+            <span class="effect-num-badge">EFFECT 03</span>
+            <h4 class="effect-title">專屬愛情契約列印</h4>
+            <p class="effect-detail">在溫馨告白後，可一鍵將填寫結果列印或儲存為 PDF。這是一份屬於你們愛情的「保固證書」。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE STEPS -->
+      <div class="steps-section">
+        <h3 class="section-title">🧭 快速上手三步驟</h3>
+        <div class="steps-timeline">
+          <div class="step-card">
+            <div class="step-circle">1</div>
+            <h4 class="step-name">輸入雙方姓名</h4>
+            <p class="step-desc">在頂部輸入「伴侶 A」與「伴侶 B」的暱稱，選定代表的按鍵顏色，以開啟記錄。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-circle">2</div>
+            <h4 class="step-name">攜手作答共識</h4>
+            <p class="step-desc">依序點擊作答 7 大主題。在填答過程中分享理由，亦可於開放題寫下更細緻的生活描述。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-circle">3</div>
+            <h4 class="step-name">真心話彩蛋與導出</h4>
+            <p class="step-desc">在最後的彩蛋中寫下對彼此最欣賞的心意。完成後，一鍵列印或存為 PDF，留存浪漫紀念。</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="relationship_consensus.html" class="btn-action">立即展開「交往前共識清單」</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      © 2026 UC TRAINING. ALL RIGHTS RESERVED.
+    </footer>
+
+  </div>
+
+</body>
+</html>
