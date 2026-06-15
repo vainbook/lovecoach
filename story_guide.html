@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個人故事整理指南 — UC Training</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS RESET & VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --bg-color: #131B2E;
+      --text-color: #E8E4DC;
+      --text-muted: rgba(232, 228, 220, 0.6);
+      --card-bg: rgba(232, 228, 220, 0.035);
+      --card-border: rgba(232, 228, 220, 0.12);
+      --card-hover: rgba(232, 228, 220, 0.08);
+      --accent-color: #E8A898;
+      --accent-glow: rgba(232, 168, 152, 0.3);
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+      --blue: #8EC8E8;
+      --blue-glow: rgba(142, 200, 232, 0.25);
+      --green: #8EE8B3;
+      --green-glow: rgba(142, 232, 179, 0.25);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Grid Background Pattern */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.012) 0px, rgba(232, 228, 220, 0.012) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.012) 0px, rgba(232, 228, 220, 0.012) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+    
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      z-index: 1;
+    }
+    
+    /* UC BRAND DECORATIONS */
+    .corner-bracket {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--accent-color);
+      border-style: solid;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .bracket-tl { top: 16px; left: 16px; border-width: 1.5px 0 0 1.5px; }
+    .bracket-tr { top: 16px; right: 16px; border-width: 1.5px 1.5px 0 0; }
+    .bracket-bl { bottom: 16px; left: 16px; border-width: 0 0 1.5px 1.5px; }
+    .bracket-br { bottom: 16px; right: 16px; border-width: 0 1.5px 1.5px 0; }
+    
+    /* TOP NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(19, 27, 46, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-left: -20px;
+      margin-right: -20px;
+      margin-top: -24px;
+      margin-bottom: 24px;
+    }
+    
+    .nav-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--salmon);
+      white-space: nowrap;
+    }
+    
+    .nav-right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    .btn-back {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 6px 14px;
+      border-radius: 18px;
+      border: 1.5px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      white-space: nowrap;
+    }
+    
+    .btn-back:hover {
+      border-color: var(--salmon);
+      background-color: rgba(232, 168, 152, 0.08);
+      color: var(--salmon);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto 32px;
+      text-align: center;
+      padding-top: 12px;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--salmon);
+      border: 1px solid rgba(232, 168, 152, 0.4);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 18px;
+    }
+    
+    .hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: clamp(24px, 5vw, 36px);
+      letter-spacing: .05em;
+      margin-bottom: 14px;
+    }
+    
+    .hero-desc {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+    
+    .hero-quote {
+      font-family: 'Noto Serif TC', serif;
+      font-style: italic;
+      font-size: 13.5px;
+      color: var(--text-color);
+      border-left: 2px solid var(--salmon);
+      padding: 10px 18px;
+      text-align: left;
+      background: rgba(232, 168, 152, 0.04);
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 0;
+      line-height: 1.8;
+    }
+    
+    /* BUTTONS */
+    .btn {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-color), #f7cac1);
+      color: var(--navy);
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--accent-glow);
+      filter: brightness(1.05);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid var(--card-border);
+      color: var(--text-color);
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      background-color: var(--card-hover);
+    }
+    
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.15);
+      border: 1.5px solid rgba(255, 107, 107, 0.3);
+      color: #ff8787;
+    }
+    
+    .btn-danger:hover {
+      background: rgba(255, 107, 107, 0.25);
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+    
+    /* DASHBOARD */
+    .dashboard-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 16px;
+    }
+    
+    .dashboard-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    
+    /* Saved story cards in dashboard */
+    .saved-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .saved-card:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .saved-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    
+    .context-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    
+    .badge-professional { background: rgba(142, 200, 232, 0.15); color: var(--blue); border: 1px solid rgba(142, 200, 232, 0.3); }
+    .badge-life { background: rgba(142, 232, 179, 0.15); color: var(--green); border: 1px solid rgba(142, 232, 179, 0.3); }
+    .badge-major { background: rgba(232, 168, 152, 0.15); color: var(--salmon); border: 1px solid rgba(232, 168, 152, 0.3); }
+    
+    .saved-card-date {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    .saved-card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    
+    .saved-card-hook {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .saved-card-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      border-top: 1px solid rgba(232, 228, 220, 0.06);
+      padding-top: 14px;
+    }
+    
+    .btn-icon-sm {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--card-border);
+      background-color: transparent;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+    
+    .btn-icon-sm:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      background-color: var(--card-hover);
+    }
+    
+    /* Empty dashboard state */
+    .empty-state {
+      background-color: var(--card-bg);
+      border: 1.5px dashed var(--card-border);
+      border-radius: 20px;
+      padding: 60px 40px;
+      text-align: center;
+      max-width: 500px;
+      margin: 40px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .empty-icon {
+      font-size: 48px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    
+    .empty-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .empty-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    
+    /* EDITOR SCREEN LAYOUT */
+    .editor-section {
+      display: none;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: start;
+    }
+    
+    .editor-section.active {
+      display: grid;
+    }
+    
+    .editor-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .editor-right {
+      position: sticky;
+      top: 80px;
+    }
+    
+    /* STEP STEERER / TABS */
+    .step-navigator {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .step-tab {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .step-tab.active {
+      border-color: var(--accent-color);
+      background-color: rgba(232, 168, 152, 0.05);
+    }
+    
+    .step-tab.completed {
+      border-color: rgba(142, 232, 179, 0.4);
+    }
+    
+    .step-tab-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .step-tab.active .step-tab-num {
+      color: var(--accent-color);
+    }
+    .step-tab.completed .step-tab-num {
+      color: var(--green);
+    }
+    
+    .step-tab-label {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    
+    /* GLASS PANEL PANES */
+    .editor-card {
+      position: relative;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .editor-card-header {
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .editor-card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .editor-card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+    
+    /* STEP CONTENT PANES */
+    .step-panel {
+      display: none;
+    }
+    .step-panel.active {
+      display: block;
+    }
+    
+    /* FORM STYLING */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    
+    .form-label {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .form-label-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    
+    .form-input, .form-textarea {
+      width: 100%;
+      background: rgba(232, 228, 220, 0.02);
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text-color);
+      font-family: inherit;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input {
+      padding: 12px 16px;
+      font-size: 14px;
+    }
+    
+    .form-textarea {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--accent-color);
+      background: rgba(232, 168, 152, 0.04);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+    
+    /* CONTEXT SELECTOR RADIOS */
+    .context-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .context-option {
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .context-option:hover {
+      border-color: var(--accent-color);
+      background-color: var(--card-hover);
+    }
+    
+    .context-option.active {
+      border-color: var(--accent-color);
+      background-color: rgba(232, 168, 152, 0.05);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+    
+    .context-option-icon {
+      font-size: 24px;
+    }
+    
+    .context-option-name {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    
+    /* EXAMPLES ACCORDION */
+    .example-accordion {
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 10px;
+      background: rgba(232, 228, 220, 0.01);
+    }
+    
+    .accordion-trigger {
+      padding: 10px 16px;
+      background: rgba(232, 228, 220, 0.03);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent-color);
+      user-select: none;
+      transition: background 0.2s;
+    }
+    
+    .accordion-trigger:hover {
+      background: rgba(232, 228, 220, 0.06);
+    }
+    
+    .accordion-icon {
+      transition: transform 0.3s;
+      font-size: 10px;
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    .accordion-content-inner {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    
+    /* BAD VS GOOD CONTRAST */
+    .compare-box {
+      border-radius: 8px;
+      padding: 12px 14px;
+      position: relative;
+    }
+    
+    .compare-bad {
+      background: rgba(255, 107, 107, 0.05);
+      border: 1px solid rgba(255, 107, 107, 0.15);
+      color: #ffc9c9;
+    }
+    
+    .compare-good {
+      background: rgba(142, 232, 179, 0.05);
+      border: 1px solid rgba(142, 232, 179, 0.15);
+      color: #c9ffd9;
+    }
+    
+    .compare-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .compare-bad .compare-label { color: #ff8787; }
+    .compare-good .compare-label { color: var(--green); }
+    
+    /* NAV ACTIONS IN WIZARD */
+    .step-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      border-top: 1px solid var(--card-border);
+      padding-top: 20px;
+    }
+    
+    /* PREVIEW CARD STYLING (Luxury Index Card) */
+    .preview-sticky-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .preview-title-bar {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    
+    .luxury-card {
+      background: linear-gradient(135deg, rgba(232, 228, 220, 0.05) 0%, rgba(232, 228, 220, 0.01) 100%);
+      border: 1.5px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+    }
+    
+    .luxury-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--salmon), var(--blue), var(--green));
+    }
+    
+    .luxury-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid rgba(232, 228, 220, 0.08);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .card-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+    }
+    
+    .luxury-card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-color);
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    
+    .card-bubble {
+      background: rgba(232, 168, 152, 0.05);
+      border: 1px solid rgba(232, 168, 152, 0.15);
+      border-radius: 0 16px 16px 16px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    
+    .bubble-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      color: var(--salmon);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    
+    .bubble-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-color);
+      font-style: italic;
+    }
+    
+    .card-hook-container {
+      border-left: 2.5px solid var(--salmon);
+      padding: 6px 0 6px 14px;
+      margin-bottom: 20px;
+    }
+    
+    .hook-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      color: var(--salmon);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+    
+    .hook-text {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-color);
+    }
+    
+    .card-story-body {
+      background: rgba(232, 228, 220, 0.02);
+      border: 1px solid rgba(232, 228, 220, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .story-dim {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+    
+    .dim-header {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .dim-text {
+      color: var(--text-color);
+      padding-left: 14px;
+    }
+    
+    .card-bridge-container {
+      border-top: 1.5px dashed rgba(232, 228, 220, 0.08);
+      padding-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .bridge-icon {
+      font-size: 16px;
+      color: var(--salmon);
+      line-height: 1;
+    }
+    
+    .bridge-body {
+      flex: 1;
+    }
+    
+    .bridge-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      color: var(--salmon);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+    
+    .bridge-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-color);
+    }
+    
+    .preview-card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: var(--navy);
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 8px 32px var(--accent-glow);
+      color: var(--text-color);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    /* SCREEN-SPECIFIC UTILITIES */
+    .flex-row-gap {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .text-center { text-align: center; }
+    
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 960px) {
+      .editor-section {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .editor-right {
+        position: static;
+      }
+    }
+    
+    @media (max-width: 560px) {
+      .hero { padding: 24px 12px 12px; }
+      .container { padding-left: 14px; padding-right: 14px; }
+      .context-selector { grid-template-columns: 1fr; }
+      .step-navigator { grid-template-columns: 1fr; gap: 4px; }
+      .preview-card-actions { grid-template-columns: 1fr; }
+      .luxury-card { padding: 24px 18px; }
+      .saved-card { padding: 20px; }
+      .story-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* PRINT MEDIA OVERLAY */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+      
+      body::before, .top-nav, .hero, .dashboard-section, .editor-left, .preview-title-bar, .preview-card-actions, footer, .toast {
+        display: none !important;
+      }
+      
+      .container {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      
+      .editor-section {
+        display: block !important;
+      }
+      
+      .editor-right {
+        position: static !important;
+        width: 100% !important;
+      }
+      
+      .luxury-card {
+        background: #FFFFFF !important;
+        border: 2px solid #000000 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding: 20px !important;
+        page-break-inside: avoid;
+      }
+      
+      .luxury-card::before {
+        display: none !important;
+      }
+      
+      .luxury-card-title, .bubble-text, .hook-text, .dim-text, .bridge-text, .card-brand {
+        color: #000000 !important;
+      }
+      
+      .card-bubble {
+        background: #F5F5F5 !important;
+        border: 1px solid #CCCCCC !important;
+      }
+      
+      .card-story-body {
+        background: #FFFFFF !important;
+        border: 1px solid #CCCCCC !important;
+      }
+      
+      .dim-header {
+        color: #333333 !important;
+      }
+      
+      .bubble-label, .hook-label, .bridge-label {
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- TOP NAV -->
+    <nav class="top-nav">
+      <span class="nav-brand">UC Training · 個人故事整理指南</span>
+      <div class="nav-right">
+        <a href="index.html" class="btn-back">← 返回首頁</a>
+      </div>
+    </nav>
+    
+    <!-- HERO SECTION -->
+    <header class="hero">
+      <div class="hero-badge">📖 UC Training · 故事魅力學</div>
+      <h1>個人故事整理指南</h1>
+      <p class="hero-desc">
+        個人故事是展現獨特特質、生活態度與逆境商數（AQ）最強大的載體。<br>
+        本系統將引導你透過三大故事脈絡與層層挖掘，打造出高吸引力的「個人故事卡」。
+      </p>
+      <div class="hero-quote">
+        「這些特質如果透過故事表達，則是一種吸引力；未被表達的特質不具備吸引力。」
+      </div>
+    </header>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="dashboard-section">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">我的故事打磨卡</h2>
+        <button class="btn btn-primary" onclick="launchNewCreator()">
+          <span>➕ 建立新故事卡</span>
+        </button>
+      </div>
+      
+      <div id="story-grid" class="story-grid">
+        <!-- Rendered dynamically -->
+      </div>
+      
+      <!-- Empty state placeholder -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-icon">📝</div>
+        <h3 class="empty-title">尚未建立任何故事卡</h3>
+        <p class="empty-desc">
+          這裡將會存放你挖掘出的每一張黃金故事卡。<br>
+          點擊下方按鈕，挑選一個最想說的故事，馬上開始你的第一張故事打磨卡吧！
+        </p>
+        <button class="btn btn-primary" onclick="launchNewCreator()">
+          <span>開始第一張故事卡</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- CREATOR/EDITOR VIEW -->
+    <section id="editor-view" class="editor-section">
+      
+      <!-- Left side: Questions, Drafts, Accordion, Worksheet -->
+      <div class="editor-left">
+        
+        <!-- STEP NAV -->
+        <div class="step-navigator">
+          <div class="step-tab active" id="tab-step0" onclick="gotoStep(0)">
+            <div class="step-tab-num">Step 0</div>
+            <div class="step-tab-label">選定故事脈絡</div>
+          </div>
+          <div class="step-tab" id="tab-step1" onclick="gotoStep(1)">
+            <div class="step-tab-num">Step 1</div>
+            <div class="step-tab-label">靈感自我挖掘</div>
+          </div>
+          <div class="step-tab" id="tab-step2" onclick="gotoStep(2)">
+            <div class="step-tab-num">Step 2</div>
+            <div class="step-tab-label">故事打磨填寫</div>
+          </div>
+        </div>
+        
+        <!-- STEP 0 PANEL: CONTEXT SELECTOR -->
+        <div class="editor-card step-panel active" id="panel-step0">
+          <div class="editor-card-header">
+            <h3 class="editor-card-title">【步驟 0】選定故事脈絡</h3>
+            <p class="editor-card-subtitle">請挑選你要整理故事的場景脈絡。不同的脈絡將提供不同的引導問題與對應範例。</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">選擇脈絡分類</label>
+            <div class="context-selector">
+              <div class="context-option" id="opt-professional" onclick="selectContext('professional')">
+                <span class="context-option-icon">💼</span>
+                <span class="context-option-name">職業美化</span>
+              </div>
+              <div class="context-option" id="opt-life" onclick="selectContext('life')">
+                <span class="context-option-icon">🌿</span>
+                <span class="context-option-name">生活經驗</span>
+              </div>
+              <div class="context-option" id="opt-major" onclick="selectContext('major')">
+                <span class="context-option-icon">🏆</span>
+                <span class="context-option-name">人生重大經驗</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Context description box -->
+          <div class="compare-box compare-good" id="context-desc-box" style="display: none;">
+            <div class="compare-label">💡 脈絡思維指引</div>
+            <p id="context-desc-text" style="font-size: 13px; line-height: 1.6;"></p>
+          </div>
+          
+          <div class="step-actions">
+            <div></div> <!-- placeholder -->
+            <button class="btn btn-primary" id="btn-step0-next" onclick="nextStep()" disabled>
+              <span>前進下一步 →</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- STEP 1 PANEL: BRAINSTORMING -->
+        <div class="editor-card step-panel" id="panel-step1">
+          <div class="editor-card-header">
+            <h3 class="editor-card-title">【步驟 1】靈感自我挖掘</h3>
+            <p class="editor-card-subtitle">利用層層遞進的感性問句，把腦中的真實情節勾勒出來。你可以一邊閱讀問題、展開範例，並在下方的靈感草稿區隨手記錄靈感。</p>
+          </div>
+          
+          <!-- Container for dynamically rendered questions and accordion examples -->
+          <div id="brainstorm-questions-container" style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- Rendered in JS -->
+          </div>
+          
+          <div class="step-actions">
+            <button class="btn btn-secondary" onclick="prevStep()">
+              <span>← 上一步</span>
+            </button>
+            <button class="btn btn-primary" onclick="nextStep()">
+              <span>前進下一步 →</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- STEP 2 PANEL: POLISHING WORKSHEET -->
+        <div class="editor-card step-panel" id="panel-step2">
+          <div class="editor-card-header">
+            <h3 class="editor-card-title">【步驟 2】個人故事打磨卡</h3>
+            <p class="editor-card-subtitle">將剛剛挖掘出的零碎素材，套用【故事對話四結構】進行整合。這是輸出個人故事最關鍵的步驟！</p>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label" for="field-title">故事標題 <span class="form-label-desc">（例：一碗暴雨中的泡麵 / 印度大冒險）</span></label>
+              <input type="text" id="field-title" class="form-input" placeholder="輸入一個有畫面感的故事名稱..." oninput="syncFields()">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-step1">步驟 1：素材原形 <span class="form-label-desc">（用一至兩句話描述原始事實，人、事、時、地、物）</span></label>
+              <textarea id="field-step1" class="form-textarea" placeholder="例如：大三自己去印度背包客旅行一個月，中途拉肚子跟丟錢包..." oninput="syncFields()"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-step2">步驟 2：引導問句 (Intro Question) <span class="form-label-desc">（如何自然拋出問句，開啟對談）</span></label>
+              <textarea id="field-step2" class="form-textarea" placeholder="例如：「你有自己去國外背包客旅行過嗎？」先聽對方分享，再接話..." oninput="syncFields()"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-step3">步驟 3：故事一句話簡介 (Logline / Hook) <span class="form-label-desc">（用一到三句話，快速勾起對方期待）</span></label>
+              <textarea id="field-step3" class="form-textarea" placeholder="例如：「那是一趟我本來以為自己會客死異鄉，最後卻改變了我一生的印度大冒險。」" oninput="syncFields()"></textarea>
+            </div>
+            
+            <div class="form-group" style="background: rgba(232, 228, 220, 0.01); border: 1.5px solid var(--card-border); border-radius: 12px; padding: 20px;">
+              <h4 style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; color: var(--accent-color);">
+                <span>✨ 步驟 4：故事精彩大綱 (Story Core)</span>
+              </h4>
+              
+              <div class="form-group">
+                <label class="form-label" for="field-story-plot" style="font-size:12.5px;">1. 劇情 <span class="form-label-desc">（交代因果關係，去除多餘雜訊）</span></label>
+                <textarea id="field-story-plot" class="form-textarea" placeholder="例如：在印度旅行時行李遺失，又染上急性胃炎..." oninput="syncFields()"></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="field-story-exp" style="font-size:12.5px;">2. 體驗 <span class="form-label-desc">（刻畫五感、當下的情緒與想法起伏）</span></label>
+                <textarea id="field-story-exp" class="form-textarea" placeholder="例如：躺在小旅館發燒時非常無力，看著混亂的街頭，內心從恐慌到平靜..." oninput="syncFields()"></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="field-story-purpose" style="font-size:12.5px;">3. 目的 <span class="form-label-desc">（你想表達的核心價值觀、感想或體悟）</span></label>
+                <textarea id="field-story-purpose" class="form-textarea" placeholder="例如：理解到只要跨出第一步，任何困難都可以迎刃而解..." oninput="syncFields()"></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="field-story-value" style="font-size:12.5px;">4. 價值 <span class="form-label-desc">（故事傳達的吸引力特質，如：生存、繁衍、社交或情緒價值）</span></label>
+                <textarea id="field-story-value" class="form-textarea" placeholder="例如：展現強大的生存適應力、冷靜應對危機的心態，與對世界的探索精神..." oninput="syncFields()"></textarea>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-step5">步驟 5：對話接球問句 (Bridge) <span class="form-label-desc">（結尾如何拋回問句，引導對方分享）</span></label>
+              <textarea id="field-step5" class="form-textarea" placeholder="例如：「那你呢？如果現在給你一張免機票，你最想去挑戰哪個國家？」" oninput="syncFields()"></textarea>
+            </div>
+          </div>
+          
+          <div class="step-actions">
+            <button class="btn btn-secondary" onclick="prevStep()">
+              <span>← 上一步</span>
+            </button>
+            <button class="btn btn-primary" onclick="saveStoryCard()">
+              <span>💾 儲存故事卡</span>
+            </button>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Right side: Live Index Card Preview (Sticky) -->
+      <div class="editor-right">
+        <div class="preview-sticky-wrap">
+          <div class="preview-title-bar">💡 即時實體卡片預覽 (列印適用)</div>
+          
+          <!-- PHYSICAL LUXURY CARD -->
+          <div class="luxury-card" id="card-preview">
+            <div class="luxury-card-header">
+              <span class="card-brand">UC TRAINING // STORY CARD</span>
+              <span class="context-badge" id="preview-badge">- 未選 -</span>
+            </div>
+            
+            <div class="luxury-card-title" id="preview-title">《 新的故事卡 》</div>
+            
+            <!-- Step 2: Intro Bubble -->
+            <div class="card-bubble">
+              <div class="bubble-label">Intro Question / 引導對話開場</div>
+              <div class="bubble-text" id="preview-intro">「填寫步驟 2 後，引導問句將在此即時更新...」</div>
+            </div>
+            
+            <!-- Step 3: Logline / Hook -->
+            <div class="card-hook-container">
+              <div class="hook-label">Logline & Hook / 亮點一句話</div>
+              <div class="hook-text" id="preview-logline">「填寫步驟 3 後，具吸引力的故事簡介將會顯示於此...」</div>
+            </div>
+            
+            <!-- Step 4: Story Grid Body -->
+            <div class="card-story-body">
+              <div class="story-dim">
+                <div class="dim-header">🎬 劇情 / Plot Outline</div>
+                <div class="dim-text" id="preview-plot">因果關係與情節走向。</div>
+              </div>
+              <div class="story-dim">
+                <div class="dim-header">🌊 體驗 / Internal Experience</div>
+                <div class="dim-text" id="preview-exp">五感、情緒與想法刻畫。</div>
+              </div>
+              <div class="story-dim">
+                <div class="dim-header">🎯 目的 / Inner Motivation</div>
+                <div class="dim-text" id="preview-purpose">核心心得、價值觀或啟發。</div>
+              </div>
+              <div class="story-dim">
+                <div class="dim-header">💎 價值 / Biological Attraction</div>
+                <div class="dim-text" id="preview-value">演化心理學之高吸引力訊號。</div>
+              </div>
+            </div>
+            
+            <!-- Step 5: Bridge Question -->
+            <div class="card-bridge-container">
+              <div class="bridge-icon">➔</div>
+              <div class="bridge-body">
+                <div class="bridge-label">Bridge Question / 對話接球與過渡</div>
+                <div class="bridge-text" id="preview-bridge">在故事結尾拋出的自然接球問句。</div>
+              </div>
+            </div>
+            
+          </div>
+          
+          <!-- ACTIONS FOR CARD -->
+          <div class="preview-card-actions">
+            <button class="btn btn-secondary" onclick="copyCardContent()">
+              <span>📋 複製 Markdown</span>
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+              <span>🖨 列印此卡</span>
+            </button>
+          </div>
+          
+          <button class="btn btn-danger" style="width: 100%;" onclick="cancelEditor()">
+            <span>🚫 放棄修改並返回儀表板</span>
+          </button>
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; margin-top: 60px; font-size: 11px; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.1em; border-top: 1px solid var(--card-border); padding-top: 24px;">
+      © 2026 UC TRAINING. ALL RIGHTS RESERVED.
+    </footer>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">複製成功！</div>
+
+  <script>
+    // ── DATA: SYSTEM QUESTIONS & EXAMPLES ──────────────────────────────
+    const CONTEXT_DATA = {
+      professional: {
+        id: 'professional',
+        name: '職業美化',
+        icon: '💼',
+        desc: '職業美化絕非「吹噓頭銜或高薪」，而是描述你「對工作的專注與熱情」以及「面對與克服困難的態度」，以此傳遞專注、解決問題、團隊協作與穩定發展的特質。',
+        sections: [
+          {
+            title: '1. 具體在做什麼 (Role & Mission)',
+            questions: [
+              'Q1-1：如果要向一個十歲的小孩解釋你的工作，你會用什麼生活化的比喻？',
+              'Q1-2：你的一天通常是怎麼度過的？請描述一個你「最忙碌但最充實」的日常工作畫面。',
+              'Q1-3：在你的工作流程中，哪一個環節最需要你的「細心」、「創意」或「耐心」？'
+            ],
+            example: {
+              bad: '我是在科技業當 PM，負責催進度跟協調部門。',
+              good: '其實我就像這家餐廳的『總主廚』，工程師負責準備最好的食材，設計師負責擺盤，而我得在旁邊確保每道菜在最完美的火候送上客人的桌子。'
+            }
+          },
+          {
+            title: '2. 有什麼豐功偉業 (Achievements & Highlights)',
+            questions: [
+              'Q2-1：在你的職涯中，遇過最嚴重的危機、出包或緊急狀況是什麼？你當時是怎麼冷靜處理並反敗為勝的？',
+              'Q2-2：有沒有某個專案或任務，是你投入了極大心血、甚至熬夜好幾天，最後順利完成並獲得極大成就感的？',
+              'Q2-3：當你解決了工作上的某個難題時，你的客戶或主管曾給過你什麼讓你印象深刻的稱讚？'
+            ],
+            example: {
+              bad: '我之前幫公司談成了一個幾百萬的合約，業績很好。',
+              good: '那次案子原本因為規格問題卡死，雙方在會議室僵持了五個小時。我當時沒有急著爭論，而是私下幫對方工程主管點了杯黑咖啡，聽他聊聊他擔心的技術瓶頸。最後我們花了一整個晚上找出替代方案，案子才順利推下去。拿到合約那天，我回頭看那一晚的咖啡杯，心裡真的覺得這一切努力都值了。'
+            }
+          },
+          {
+            title: '3. 從事的內在動機 (Inner Motivation & Vision)',
+            questions: [
+              'Q3-1：你當初之所以選擇進入這個行業，最原始的契機、初衷或熱情是什麼？',
+              'Q3-2：除了每個月的薪水，這份工作最能讓你感到「活著、有意義」的瞬間是什麼？',
+              'Q3-3：如果有一天你財務自由了，你還會想做與目前工作相關的什麼事情？為什麼？'
+            ],
+            example: {
+              bad: '因為這個行業薪水穩定，所以就來考考看。',
+              good: '我大學時是學設計的，第一次看到自己設計的網頁被幾萬個人使用、甚至幫一個剛創業的老闆賺到第一筆錢時，我就知道我喜歡這種『用自己的能力去解決別人問題』的感覺。即使現在工作再累，想到這份初衷，心裡還是會有一股傻勁。'
+            }
+          }
+        ]
+      },
+      life: {
+        id: 'life',
+        name: '生活經驗',
+        icon: '🌿',
+        desc: '生活經驗是日常閒聊的主力。透過興趣的延伸，展示你是一個「熱愛生活、有溫度、有好奇心與生活品味」的人，並能透過感官描述將對方帶入你的生活畫面。',
+        sections: [
+          {
+            title: '1. 喜歡做的事情 (Hobbies & Lifestyle)',
+            questions: [
+              'Q4-1：在你的週末或空閒時間，做什麼事情會讓你完全忘記時間流逝（進入心流狀態）？',
+              'Q4-2：你有沒有什麼興趣，是即使再累、需要早起或花錢，你也心甘情願去做的？',
+              'Q4-3：如果用三個形容詞來描述你熱愛的這項活動，你會選哪三個？'
+            ]
+          },
+          {
+            title: '2. 延伸脈絡：印象深刻的事件 (Specific Incident)',
+            questions: [
+              'Q5-1：在你從事這個興趣的過程中，發生過什麼最刺激、最糗、最特別或「差點完蛋」的事件？',
+              'Q5-2：在這個愛好中，你經歷過最渴望突破、或是終於完成某個里程碑的那一刻是怎樣的？',
+              'Q5-3：有沒有哪一次，你因為這個興趣結識了特別的人，或者去到了特別的地方？'
+            ]
+          },
+          {
+            title: '3. 延伸脈絡：感受與心境 (Internal Feelings & Sensory Details)',
+            questions: [
+              'Q6-1：當那個深刻事件發生的瞬間，你眼睛看到了什麼畫面？耳朵聽到了什麼聲音？身體有什麼感覺？',
+              'Q6-2：那一刻，你的內心產生了什麼情緒變化？（例如：緊繃、狂喜、孤獨、踏實）',
+              'Q6-3：現在回過頭來看這段經歷，這項生活經驗帶給你內心最大的平靜或體悟是什麼？'
+            ]
+          },
+          {
+            title: '4. 延伸脈絡：事情發生的原由 (Origin Story)',
+            questions: [
+              'Q7-1：你當初是怎麼接觸到這個興趣的？是誰帶領你、或者是因為什麼樣的偶然機緣？',
+              'Q7-2：在開始這項愛好之前，你原本對它有什麼誤解？開始之後，是什麼改變了你的想法？',
+              'Q7-3：這項興趣的「起源」，是否反映了你個性中某個一直存在的特質？'
+            ]
+          }
+        ],
+        full_example: {
+          title: '戶外露營',
+          bad: '喜歡露營。疫情時焦慮被朋友拉去。半夜下雨天幕垮了，全身濕透去搶修。但喝熱泡麵時看到朋友狼狽在大笑，瞬間覺得生活瓶頸微不足道。',
+          good: '【緣起】前幾年疫情期間工作遇到瓶頸，整天看著螢幕非常焦慮，朋友強行把我拉去沒有訊號的山上露營。\n【印象事件】那次露營半夜突然下暴雨，我們的天幕被風吹垮，大家穿著雨衣、打著手電筒在泥地裡狼狽地搶修營釘。\n【當下感受】當時全身濕透、鞋子都是泥巴，風吹來很冷，但當我們終於把天幕固定好、擠在微弱的卡式爐旁喝著那碗熱泡麵時，我看著朋友滿臉泥巴卻在大笑，那一瞬間我突然覺得，生活中的那些瓶頸好像也沒什麼大不了的。在大自然面前，人很渺小，但生命力可以很頑強。'
+        }
+      },
+      major: {
+        id: 'major',
+        name: '人生重大經驗',
+        icon: '🏆',
+        desc: '重大經驗是塑造你現在個性的關鍵拼圖。透過這些具有高張力的故事，展現你的「勇氣」、「韌性」、「人際連結」與「幽默樂觀」。',
+        sections: [
+          {
+            title: '1. 冒險刺激的事情 (Adventure & Risk-taking)',
+            questions: [
+              'Q8-1：你做過最突破舒適圈、最說走就走，或是旁人聽了覺得你「瘋了」的決定是什麼？',
+              'Q8-2：在你的旅行或生活中，是否曾有過獨自一人面對陌生環境、迷路或需要解決危機的經驗？',
+              'Q8-3：那次冒險帶給你最深刻的衝擊是什麼？它如何改變了你對世界的看法？'
+            ],
+            example: {
+              bad: '我之前自己去日本自由行，去很多地方玩。',
+              good: '大三那年，我突然很想測試自己的極限，就買了一張單程機票，獨自去了印度背包旅行一個月。第一天在德里街頭，我看著完全混亂的交通和滿街的牛隻，站在路邊足足發呆了十分鐘。那一個月我丟了兩次錢包、食物中毒躺在小旅館三天，但也因此學會了用肢體語言跟當地人講價、並跟一位當地的祭司在恆河旁聊了整晚的生死。回來後我發現，很多原本讓我害怕的事，其實只要踏出第一步就解決了。'
+            }
+          },
+          {
+            title: '2. 引以為傲的事情 (Proud Moments & Self-Discipline)',
+            questions: [
+              'Q9-1：在你的生命中，有一件什麼事是即使沒有得到任何物質回報，你回想起來依然會覺得「我真的太棒了」？',
+              'Q9-2：你有沒有經歷過一段需要長時間孤獨奮鬥、嚴格自律，最終達成目標的歷程？（例如減重、考取高難度證照、完成馬拉松）',
+              'Q9-3：你曾為朋友或家人默默付出、兌現過什麼高難度的承諾？'
+            ],
+            example: {
+              bad: '我以前花了一年成功瘦了二十公斤。',
+              good: '大四時因為體重破百，健康亮紅燈。我給自己訂了一個目標，每天早上五點起床跑步。最痛苦的是冬天，寒流來時外面只有十度，被窩暖烘烘的，每次都要在床邊跟自己對話十分鐘。但那一年我沒有一天偷懶。當一年後站在體重計上，看著自己減掉的二十五公斤，最讓我驕傲的不是身材變好，而是我知道自己是一個『只要對自己承諾，就絕對會做到』的人。'
+            }
+          },
+          {
+            title: '3. 遇過最扯/最荒謬的事情 (Crazy & Absurd Stories)',
+            questions: [
+              'Q10-1：你人生中遇過最奇葩、最扯、最像八點檔劇情，或是機率極低的巧合事件是什麼？',
+              'Q10-2：你有沒有經歷過「原本以為是場大災難，結果最後發展成超級好笑」的荒謬故事？',
+              'Q10-3：如果要在聚會中講一個能讓全場瞬間安靜、接著哄堂大笑的「個人奇遇記」，你會講哪一個？'
+            ],
+            example: {
+              bad: '我之前出國搭飛機結果行李被寄丟，滿狼狽的。',
+              good: '去年前往羅馬，下飛機發現我唯一的行李箱被寄到了冰島。我身上只剩下一套夏天的短袖短褲，但羅馬當時只有十二度。我跑去當地的二手市集，隨便買了一件大三碼的復古羊毛大衣跟一頂滑稽的皮帽。那三天我就穿著那套『羅馬流浪漢風』在景點拍照，路人還以為我是什麼街頭藝術家一直找我合照。那次經驗讓我明白，計畫泡湯時，順著風走，反而能看到最不一樣的風景。'
+            }
+          }
+        ]
+      }
+    };
+
+    // ── LOCAL STORAGE SETUP & STATE ──────────────────────────────────
+    const STORAGE_KEY = 'uc-story-cards-v1';
+    let appState = {
+      stories: [],
+      currentId: null,      // null means creating new story, else string UUID
+      currentStep: 0,
+      activeContext: null,  // 'professional', 'life', 'major'
+      drafts: {}            // { [storyId]: { [draftField]: 'content' } }
+    };
+
+    // Load data from localStorage
+    function loadAppState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          appState = JSON.parse(raw);
+        }
+      } catch (e) {
+        console.error("Failed to load appState", e);
+      }
+    }
+
+    // Save data to localStorage
+    function saveAppState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {
+        console.error("Failed to save appState", e);
+      }
+    }
+
+    // Helper to generate IDs
+    function generateId() {
+      return 'story_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+    }
+
+    // ── INITIALIZATION ────────────────────────────────────────────────
+    window.onload = function() {
+      loadAppState();
+      renderDashboard();
+    };
+
+    // ── DASHBOARD ACTIONS ──────────────────────────────────────────────
+    function renderDashboard() {
+      const grid = document.getElementById('story-grid');
+      const empty = document.getElementById('empty-state');
+      
+      // Clear grid
+      grid.innerHTML = '';
+      
+      if (!appState.stories || appState.stories.length === 0) {
+        grid.style.display = 'none';
+        empty.style.display = 'flex';
+        return;
+      }
+      
+      grid.style.display = 'grid';
+      empty.style.display = 'none';
+      
+      appState.stories.forEach(story => {
+        const card = document.createElement('div');
+        card.className = 'saved-card';
+        card.id = `saved-${story.id}`;
+        
+        let badgeClass = '';
+        let badgeText = '';
+        if (story.context === 'professional') {
+          badgeClass = 'badge-professional';
+          badgeText = '💼 職業美化';
+        } else if (story.context === 'life') {
+          badgeClass = 'badge-life';
+          badgeText = '🌿 生活經驗';
+        } else if (story.context === 'major') {
+          badgeClass = 'badge-major';
+          badgeText = '🏆 人生重大';
+        }
+        
+        const dateStr = new Date(story.updatedAt).toLocaleDateString('zh-TW');
+        
+        card.innerHTML = `
+          <div>
+            <div class="saved-card-header">
+              <span class="context-badge ${badgeClass}">${badgeText}</span>
+              <span class="saved-card-date">${dateStr}</span>
+            </div>
+            <h3 class="saved-card-title">${story.title || '未命名故事卡'}</h3>
+            <p class="saved-card-hook">${story.step3 || '尚未填寫故事簡介/Logline...'}</p>
+          </div>
+          <div class="saved-card-actions">
+            <button class="btn-icon-sm" onclick="editStoryCard('${story.id}')" title="編輯故事卡">✏️</button>
+            <button class="btn-icon-sm" onclick="copyIndividualMarkdown('${story.id}')" title="複製 Markdown">📋</button>
+            <button class="btn-icon-sm" onclick="printIndividualCard('${story.id}')" title="列印故事卡">🖨</button>
+            <button class="btn-icon-sm" style="margin-left: auto;" onclick="deleteStoryCard('${story.id}')" title="刪除故事卡">🗑</button>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    function deleteStoryCard(id) {
+      if (confirm('確定要刪除這張故事卡嗎？此操作無法撤銷。')) {
+        appState.stories = appState.stories.filter(s => s.id !== id);
+        if (appState.drafts[id]) delete appState.drafts[id];
+        saveAppState();
+        renderDashboard();
+        showToast('故事卡已成功刪除');
+      }
+    }
+
+    // ── CREATOR/EDITOR FLOW ───────────────────────────────────────────
+    function launchNewCreator() {
+      // Setup state for new card
+      appState.currentId = generateId();
+      appState.activeContext = null;
+      appState.currentStep = 0;
+      
+      // Clear forms
+      document.getElementById('field-title').value = '';
+      document.getElementById('field-step1').value = '';
+      document.getElementById('field-step2').value = '';
+      document.getElementById('field-step3').value = '';
+      document.getElementById('field-story-plot').value = '';
+      document.getElementById('field-story-exp').value = '';
+      document.getElementById('field-story-purpose').value = '';
+      document.getElementById('field-story-value').value = '';
+      document.getElementById('field-step5').value = '';
+      
+      // Set options to inactive
+      document.querySelectorAll('.context-option').forEach(el => el.classList.remove('active'));
+      document.getElementById('context-desc-box').style.display = 'none';
+      document.getElementById('btn-step0-next').disabled = true;
+      
+      // View switches
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('editor-view').className = 'editor-section active';
+      
+      gotoStep(0);
+      syncFields();
+    }
+
+    function editStoryCard(id) {
+      const story = appState.stories.find(s => s.id === id);
+      if (!story) return;
+      
+      appState.currentId = id;
+      appState.activeContext = story.context;
+      appState.currentStep = 0;
+      
+      // Populate fields
+      document.getElementById('field-title').value = story.title || '';
+      document.getElementById('field-step1').value = story.step1 || '';
+      document.getElementById('field-step2').value = story.step2 || '';
+      document.getElementById('field-step3').value = story.step3 || '';
+      document.getElementById('field-story-plot').value = story.storyPlot || '';
+      document.getElementById('field-story-exp').value = story.storyExp || '';
+      document.getElementById('field-story-purpose').value = story.storyPurpose || '';
+      document.getElementById('field-story-value').value = story.storyValue || '';
+      document.getElementById('field-step5').value = story.step5 || '';
+      
+      // Highlight selected context
+      selectContext(story.context);
+      
+      // View switches
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('editor-view').className = 'editor-section active';
+      
+      gotoStep(0);
+      syncFields();
+    }
+
+    function cancelEditor() {
+      if (confirm('確定要放棄目前的修改並返回儀表板嗎？所有未儲存的內容將會遺失。')) {
+        appState.currentId = null;
+        appState.activeContext = null;
+        
+        document.getElementById('editor-view').className = 'editor-section';
+        document.getElementById('dashboard-view').style.display = 'block';
+        
+        renderDashboard();
+      }
+    }
+
+    // ── STEP NAVIGATOR ───────────────────────────────────────────────
+    function gotoStep(step) {
+      if (step > 0 && !appState.activeContext) {
+        alert('請先選擇一個故事脈絡分類！');
+        return;
+      }
+      
+      appState.currentStep = step;
+      
+      // Update Tab UI
+      document.querySelectorAll('.step-tab').forEach((tab, index) => {
+        tab.classList.toggle('active', index === step);
+        tab.classList.toggle('completed', index < step);
+      });
+      
+      // Update Panel UI
+      document.querySelectorAll('.step-panel').forEach((panel, index) => {
+        panel.classList.toggle('active', index === step);
+      });
+      
+      if (step === 1) {
+        renderBrainstormQuestions();
+      }
+      
+      // Scroll left panel back to top
+      document.querySelector('.editor-left').scrollTop = 0;
+    }
+
+    function nextStep() {
+      if (appState.currentStep < 2) {
+        gotoStep(appState.currentStep + 1);
+      }
+    }
+
+    function prevStep() {
+      if (appState.currentStep > 0) {
+        gotoStep(appState.currentStep - 1);
+      }
+    }
+
+    // ── SELECT CONTEXT ───────────────────────────────────────────────
+    function selectContext(contextKey) {
+      appState.activeContext = contextKey;
+      
+      // UI feedback
+      document.querySelectorAll('.context-option').forEach(el => el.classList.remove('active'));
+      document.getElementById(`opt-${contextKey}`).classList.add('active');
+      
+      const details = CONTEXT_DATA[contextKey];
+      const descBox = document.getElementById('context-desc-box');
+      const descText = document.getElementById('context-desc-text');
+      
+      descText.textContent = details.desc;
+      descBox.style.display = 'block';
+      descBox.className = 'compare-box compare-good';
+      
+      document.getElementById('btn-step0-next').disabled = false;
+      
+      syncFields();
+    }
+
+    // ── RENDER DYNAMIC QUESTIONS & EXAMPLES ─────────────────────────
+    function renderBrainstormQuestions() {
+      const container = document.getElementById('brainstorm-questions-container');
+      const contextKey = appState.activeContext;
+      const data = CONTEXT_DATA[contextKey];
+      
+      container.innerHTML = '';
+      
+      if (!data) return;
+      
+      // Ensure drafts structure exists for this story
+      if (!appState.drafts[appState.currentId]) {
+        appState.drafts[appState.currentId] = {};
+      }
+      const currentStoryDrafts = appState.drafts[appState.currentId];
+      
+      // Render general instructions if available
+      if (data.full_example) {
+        const accordion = document.createElement('div');
+        accordion.className = 'example-accordion';
+        accordion.style.marginBottom = '20px';
+        accordion.innerHTML = `
+          <div class="accordion-trigger" onclick="toggleAccordion('acc-full-example')">
+            <span>💡 點此查看【生活經驗】完整撰寫範例 (戶外露營)</span>
+            <span class="accordion-icon" id="icon-acc-full-example">▼</span>
+          </div>
+          <div class="accordion-content" id="acc-full-example">
+            <div class="accordion-content-inner">
+              <div class="compare-box compare-bad">
+                <div class="compare-label">❌ 粗糙回答</div>
+                <p>${data.full_example.bad}</p>
+              </div>
+              <div class="compare-box compare-good" style="margin-top: 10px;">
+                <div class="compare-label">✅ 美化呈現</div>
+                <p style="white-space: pre-line;">${data.full_example.good}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(accordion);
+      }
+      
+      // Render subsections
+      data.sections.forEach((sec, index) => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.style.borderBottom = '1px solid rgba(232, 228, 220, 0.08)';
+        sectionDiv.style.paddingBottom = '24px';
+        
+        let qListHtml = sec.questions.map(q => `<li>${q}</li>`).join('');
+        
+        let exampleHtml = '';
+        if (sec.example) {
+          const accId = `acc-sec-${index}`;
+          exampleHtml = `
+            <div class="example-accordion">
+              <div class="accordion-trigger" onclick="toggleAccordion('${accId}')">
+                <span>🔍 點此展開本小節美化心法與範例對照</span>
+                <span class="accordion-icon" id="icon-${accId}">▼</span>
+              </div>
+              <div class="accordion-content" id="${accId}">
+                <div class="accordion-content-inner">
+                  <div class="compare-box compare-bad">
+                    <div class="compare-label">❌ 粗糙回答</div>
+                    <p>${sec.example.bad}</p>
+                  </div>
+                  <div class="compare-box compare-good">
+                    <div class="compare-label">✅ 美化呈現</div>
+                    <p>${sec.example.good}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        
+        const draftValue = currentStoryDrafts[`sec_${index}`] || '';
+        
+        sectionDiv.innerHTML = `
+          <h4 style="font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; color: var(--accent-color); margin-bottom: 8px;">${sec.title}</h4>
+          <ul style="padding-left: 20px; font-size: 13px; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
+            ${qListHtml}
+          </ul>
+          ${exampleHtml}
+          <div class="form-group" style="margin-top: 12px;">
+            <label class="form-label" style="font-size: 12px; font-weight: normal; color: var(--text-muted);">本節靈感草稿區（隨手筆記你的素材）</label>
+            <textarea class="form-textarea" placeholder="在這裡寫下你的想法或上述問句的回答粗稿，稍後可以在 Step 2 組裝打磨..." 
+              oninput="saveDraft('sec_${index}', this.value)">${draftValue}</textarea>
+          </div>
+        `;
+        
+        container.appendChild(sectionDiv);
+      });
+    }
+
+    function toggleAccordion(id) {
+      const content = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      
+      if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        content.style.maxHeight = '0px';
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    function saveDraft(fieldKey, value) {
+      if (!appState.drafts[appState.currentId]) {
+        appState.drafts[appState.currentId] = {};
+      }
+      appState.drafts[appState.currentId][fieldKey] = value;
+      saveAppState();
+    }
+
+    // ── SYNC FORM FIELDS TO PREVIEW CARD ────────────────────────────────
+    function syncFields() {
+      // Context Badge
+      const activeCtx = appState.activeContext;
+      const previewBadge = document.getElementById('preview-badge');
+      
+      if (activeCtx === 'professional') {
+        previewBadge.textContent = '💼 職業美化';
+        previewBadge.className = 'context-badge badge-professional';
+      } else if (activeCtx === 'life') {
+        previewBadge.textContent = '🌿 生活經驗';
+        previewBadge.className = 'context-badge badge-life';
+      } else if (activeCtx === 'major') {
+        previewBadge.textContent = '🏆 人生重大';
+        previewBadge.className = 'context-badge badge-major';
+      } else {
+        previewBadge.textContent = '- 未選 -';
+        previewBadge.className = 'context-badge';
+      }
+      
+      // Fields values
+      const title = document.getElementById('field-title').value.trim();
+      const step2 = document.getElementById('field-step2').value.trim();
+      const step3 = document.getElementById('field-step3').value.trim();
+      const storyPlot = document.getElementById('field-story-plot').value.trim();
+      const storyExp = document.getElementById('field-story-exp').value.trim();
+      const storyPurpose = document.getElementById('field-story-purpose').value.trim();
+      const storyValue = document.getElementById('field-story-value').value.trim();
+      const step5 = document.getElementById('field-step5').value.trim();
+      
+      // Set to preview DOM nodes with defaults
+      document.getElementById('preview-title').textContent = title ? `《 ${title} 》` : '《 新的故事卡 》';
+      document.getElementById('preview-intro').textContent = step2 || '填寫步驟 2 後，引導問句將在此即時更新...';
+      document.getElementById('preview-logline').textContent = step3 || '填寫步驟 3 後，具吸引力的故事簡介將會顯示於此...';
+      
+      document.getElementById('preview-plot').textContent = storyPlot || '因果關係與情節走向。';
+      document.getElementById('preview-exp').textContent = storyExp || '五感、情緒與想法刻畫。';
+      document.getElementById('preview-purpose').textContent = storyPurpose || '核心心得、價值觀或啟發。';
+      document.getElementById('preview-value').textContent = storyValue || '演化心理學之高吸引力訊號。';
+      
+      document.getElementById('preview-bridge').textContent = step5 || '在故事結尾拋出的自然接球問句。';
+    }
+
+    // ── SAVE STORY CARD ────────────────────────────────────────────────
+    function saveStoryCard() {
+      const title = document.getElementById('field-title').value.trim();
+      if (!title) {
+        alert('請填寫的故事標題，以方便在儀表板中識別。');
+        document.getElementById('field-title').focus();
+        return;
+      }
+      
+      const storyId = appState.currentId;
+      
+      // Find if exists
+      let storyIndex = appState.stories.findIndex(s => s.id === storyId);
+      
+      const storyObj = {
+        id: storyId,
+        context: appState.activeContext,
+        title: title,
+        step1: document.getElementById('field-step1').value.trim(),
+        step2: document.getElementById('field-step2').value.trim(),
+        step3: document.getElementById('field-step3').value.trim(),
+        storyPlot: document.getElementById('field-story-plot').value.trim(),
+        storyExp: document.getElementById('field-story-exp').value.trim(),
+        storyPurpose: document.getElementById('field-story-purpose').value.trim(),
+        storyValue: document.getElementById('field-story-value').value.trim(),
+        step5: document.getElementById('field-step5').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      if (storyIndex >= 0) {
+        // Update
+        appState.stories[storyIndex] = storyObj;
+      } else {
+        // Insert
+        appState.stories.unshift(storyObj);
+      }
+      
+      saveAppState();
+      
+      // Return to dashboard
+      appState.currentId = null;
+      appState.activeContext = null;
+      document.getElementById('editor-view').className = 'editor-section';
+      document.getElementById('dashboard-view').style.display = 'block';
+      
+      renderDashboard();
+      showToast('故事卡已成功儲存！');
+    }
+
+    // ── TOAST NOTIFICATION ────────────────────────────────────────────
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // ── EXPORTING / COPY MARKDOWN ─────────────────────────────────────
+    function getMarkdownFormat(story) {
+      let contextName = '';
+      if (story.context === 'professional') contextName = '💼 職業美化';
+      if (story.context === 'life') contextName = '🌿 生活經驗';
+      if (story.context === 'major') contextName = '🏆 人生重大經驗';
+      
+      return `# UC Training 個人故事打磨卡：《${story.title}》
+- **故事脈絡**：${contextName}
+- **素材原形**：${story.step1 || '無'}
+
+---
+
+## 💬 步驟 2：引導問句 (Intro Question)
+> ${story.step2 || '無'}
+
+## ⚡ 步驟 3：故事簡介 (Logline / Hook)
+> ${story.step3 || '無'}
+
+## 🎬 步驟 4：故事精彩大綱 (Story Core)
+- **劇情 (Plot)**：${story.storyPlot || '無'}
+- **體驗 (Experience)**：${story.storyExp || '無'}
+- **目的 (Purpose)**：${story.storyPurpose || '無'}
+- **價值 (Value)**：${story.storyValue || '無'}
+
+## 🔄 步驟 5：對話接球問句 (Bridge)
+> ${story.step5 || '無'}
+
+---
+© UC Training 關係解讀學習系統`;
+    }
+
+    function copyCardContent() {
+      // Compile current form to object for copy
+      const storyObj = {
+        context: appState.activeContext,
+        title: document.getElementById('field-title').value.trim() || '未命名故事',
+        step1: document.getElementById('field-step1').value.trim(),
+        step2: document.getElementById('field-step2').value.trim(),
+        step3: document.getElementById('field-step3').value.trim(),
+        storyPlot: document.getElementById('field-story-plot').value.trim(),
+        storyExp: document.getElementById('field-story-exp').value.trim(),
+        storyPurpose: document.getElementById('field-story-purpose').value.trim(),
+        storyValue: document.getElementById('field-story-value').value.trim(),
+        step5: document.getElementById('field-step5').value.trim()
+      };
+      
+      const md = getMarkdownFormat(storyObj);
+      
+      navigator.clipboard.writeText(md).then(() => {
+        showToast('已複製卡片 Markdown 內容！');
+      }).catch(err => {
+        alert('複製失敗，請手動複製右側預覽的文字');
+      });
+    }
+
+    function copyIndividualMarkdown(id) {
+      const story = appState.stories.find(s => s.id === id);
+      if (!story) return;
+      const md = getMarkdownFormat(story);
+      
+      navigator.clipboard.writeText(md).then(() => {
+        showToast('已複製卡片 Markdown 內容！');
+      }).catch(err => {
+        alert('複製失敗');
+      });
+    }
+
+    // ── INDIVIDUAL CARD PRINTING ──────────────────────────────────────
+    function printIndividualCard(id) {
+      const story = appState.stories.find(s => s.id === id);
+      if (!story) return;
+      
+      // Temporarily populate form and preview, call print, then restore dashboard
+      editStoryCard(id);
+      
+      // Tiny delay to allow preview DOM sync and paint
+      setTimeout(() => {
+        window.print();
+        
+        // Return back to dashboard without confirm prompt
+        appState.currentId = null;
+        appState.activeContext = null;
+        document.getElementById('editor-view').className = 'editor-section';
+        document.getElementById('dashboard-view').style.display = 'block';
+        renderDashboard();
+      }, 200);
+    }
+  </script>
+</body>
+</html>
