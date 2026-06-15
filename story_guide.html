@@ -316,6 +316,8 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     
     .context-badge {
@@ -770,6 +772,8 @@
       border-bottom: 1.5px solid rgba(232, 228, 220, 0.08);
       padding-bottom: 14px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     
     .card-brand {
@@ -909,7 +913,7 @@
     
     .preview-card-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 10px;
     }
     
@@ -966,70 +970,181 @@
       .saved-card { padding: 20px; }
       .story-grid { grid-template-columns: 1fr; }
     }
-    
-    /* PRINT MEDIA OVERLAY */
-    @media print {
-      body {
-        background: #FFFFFF !important;
-        color: #000000 !important;
+
+    /* PROGRESS BOARD STYLES */
+    .progress-board-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin-bottom: 28px;
+    }
+    .progress-board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .progress-board-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .progress-board-count {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--salmon);
+    }
+    .progress-board-bar-bg {
+      width: 100%;
+      height: 6px;
+      background-color: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-board-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--salmon), var(--blue), var(--green));
+      border-radius: 3px;
+      transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .progress-board-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .progress-board-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
-      
-      body::before, .top-nav, .hero, .dashboard-section, .editor-left, .preview-title-bar, .preview-card-actions, footer, .toast {
-        display: none !important;
-      }
-      
-      .container {
-        padding: 0 !important;
-        margin: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
-      }
-      
-      .editor-section {
-        display: block !important;
-      }
-      
-      .editor-right {
-        position: static !important;
-        width: 100% !important;
-      }
-      
-      .luxury-card {
-        background: #FFFFFF !important;
-        border: 2px solid #000000 !important;
-        color: #000000 !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        min-height: auto !important;
-        padding: 20px !important;
-        page-break-inside: avoid;
-      }
-      
-      .luxury-card::before {
-        display: none !important;
-      }
-      
-      .luxury-card-title, .bubble-text, .hook-text, .dim-text, .bridge-text, .card-brand {
-        color: #000000 !important;
-      }
-      
-      .card-bubble {
-        background: #F5F5F5 !important;
-        border: 1px solid #CCCCCC !important;
-      }
-      
-      .card-story-body {
-        background: #FFFFFF !important;
-        border: 1px solid #CCCCCC !important;
-      }
-      
-      .dim-header {
-        color: #333333 !important;
-      }
-      
-      .bubble-label, .hook-label, .bridge-label {
-        color: #000000 !important;
-      }
+    }
+    .progress-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .progress-column-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-color);
+      border-bottom: 1.5px solid rgba(232, 228, 220, 0.08);
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    .progress-item.completed {
+      color: var(--text-color);
+    }
+    .progress-item-checkbox {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1.5px solid var(--card-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: transparent;
+      transition: all 0.3s ease;
+      background: transparent;
+      flex-shrink: 0;
+    }
+    .progress-item.completed .progress-item-checkbox {
+      border-color: var(--green);
+      background-color: rgba(142, 232, 179, 0.15);
+      color: var(--green);
+    }
+
+    /* THEME SELECTION STYLES */
+    .theme-option-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .theme-option-card {
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(232, 228, 220, 0.01);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+    }
+    .theme-option-card:hover {
+      border-color: var(--accent-color);
+      background-color: var(--card-hover);
+    }
+    .theme-option-card.active {
+      border-color: var(--accent-color);
+      background-color: rgba(232, 168, 152, 0.05);
+      font-weight: 600;
+    }
+    .theme-option-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--card-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: transparent;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-option-card.active .theme-option-check {
+      border-color: var(--accent-color);
+      background-color: var(--accent-color);
+      color: var(--navy);
+    }
+
+    /* STEP 1 HIGHLIGHT SECTION STYLES */
+    .highlighted-section {
+      border: 1.5px solid var(--accent-color) !important;
+      background: rgba(232, 168, 152, 0.02) !important;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(232, 168, 152, 0.08);
+      position: relative;
+    }
+    .highlighted-section::before {
+      content: "🎯 目前選定之主題";
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      background: var(--accent-color);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.05em;
     }
   </style>
 </head>
@@ -1065,6 +1180,9 @@
           <span>➕ 建立新故事卡</span>
         </button>
       </div>
+
+      <!-- 故事庫整理進度表 -->
+      <div id="progress-board" class="progress-board-card"></div>
       
       <div id="story-grid" class="story-grid">
         <!-- Rendered dynamically -->
@@ -1136,6 +1254,14 @@
             <div class="compare-label">💡 脈絡思維指引</div>
             <p id="context-desc-text" style="font-size: 13px; line-height: 1.6;"></p>
           </div>
+
+          <!-- Theme Selector -->
+          <div class="form-group" id="theme-selector-group" style="display: none; margin-top: 20px;">
+            <label class="form-label">選擇欲整理的故事主題 <span class="form-label-desc">（每個故事代表一個核心特質）</span></label>
+            <div id="theme-option-list" class="theme-option-list">
+              <!-- Dynamically populated in JavaScript -->
+            </div>
+          </div>
           
           <div class="step-actions">
             <div></div> <!-- placeholder -->
@@ -1186,7 +1312,7 @@
             </div>
             
             <div class="form-group">
-              <label class="form-label" for="field-step2">步驟 2：引導問句 (Intro Question) <span class="form-label-desc">（如何自然拋出問句，開啟對談）</span></label>
+              <label class="form-label" for="field-step2">步驟 2：引難問句 (Intro Question) <span class="form-label-desc">（如何自然拋出問句，開啟對談）</span></label>
               <textarea id="field-step2" class="form-textarea" placeholder="例如：「你有自己去國外背包客旅行過嗎？」先聽對方分享，再接話..." oninput="syncFields()"></textarea>
             </div>
             
@@ -1242,7 +1368,7 @@
       <!-- Right side: Live Index Card Preview (Sticky) -->
       <div class="editor-right">
         <div class="preview-sticky-wrap">
-          <div class="preview-title-bar">💡 即時實體卡片預覽 (列印適用)</div>
+          <div class="preview-title-bar">💡 即時實體卡片預覽</div>
           
           <!-- PHYSICAL LUXURY CARD -->
           <div class="luxury-card" id="card-preview">
@@ -1297,12 +1423,9 @@
           </div>
           
           <!-- ACTIONS FOR CARD -->
-          <div class="preview-card-actions">
-            <button class="btn btn-secondary" onclick="copyCardContent()">
+          <div class="preview-card-actions" style="display: block;">
+            <button class="btn btn-secondary" style="width: 100%;" onclick="copyCardContent()">
               <span>📋 複製 Markdown</span>
-            </button>
-            <button class="btn btn-secondary" onclick="window.print()">
-              <span>🖨 列印此卡</span>
             </button>
           </div>
           
@@ -1325,6 +1448,19 @@
 
   <script>
     // ── DATA: SYSTEM QUESTIONS & EXAMPLES ──────────────────────────────
+    const THEME_MAP = {
+      professional_role: { context: 'professional', name: '具體在做什麼', desc: '解釋你的日常工作與譬喻' },
+      professional_achievements: { context: 'professional', name: '有什麼豐功偉業', desc: '克服工作危機或重大成就' },
+      professional_motivation: { context: 'professional', name: '從事的內在動機', desc: '入行契機、初衷與自我價值感' },
+      life_hobbies: { context: 'life', name: '喜歡做的事情', desc: '沉浸且享受的愛好與質感生活' },
+      life_incident: { context: 'life', name: '印象深刻的事件', desc: '該愛好中具體、有衝突性情節' },
+      life_feelings: { context: 'life', name: '感受與心境', desc: '感官細節描述與體驗所得之平靜' },
+      life_origin: { context: 'life', name: '事情發生的原由', desc: '該興趣相遇的起源或人生轉折' },
+      major_adventure: { context: 'major', name: '冒險刺激的事情', desc: '突破舒適圈、旅行危機解決' },
+      major_proud: { context: 'major', name: '引以為傲的事情', desc: '孤獨奮鬥與實踐自我承諾' },
+      major_crazy: { context: 'major', name: '最扯/最荒謬的事情', desc: '自嘲幽默與隨遇而安的豁達' }
+    };
+
     const CONTEXT_DATA = {
       professional: {
         id: 'professional',
@@ -1333,6 +1469,7 @@
         desc: '職業美化絕非「吹噓頭銜或高薪」，而是描述你「對工作的專注與熱情」以及「面對與克服困難的態度」，以此傳遞專注、解決問題、團隊協作與穩定發展的特質。',
         sections: [
           {
+            themeId: 'professional_role',
             title: '1. 具體在做什麼 (Role & Mission)',
             questions: [
               'Q1-1：如果要向一個十歲的小孩解釋你的工作，你會用什麼生活化的比喻？',
@@ -1345,6 +1482,7 @@
             }
           },
           {
+            themeId: 'professional_achievements',
             title: '2. 有什麼豐功偉業 (Achievements & Highlights)',
             questions: [
               'Q2-1：在你的職涯中，遇過最嚴重的危機、出包或緊急狀況是什麼？你當時是怎麼冷靜處理並反敗為勝的？',
@@ -1357,11 +1495,12 @@
             }
           },
           {
+            themeId: 'professional_motivation',
             title: '3. 從事的內在動機 (Inner Motivation & Vision)',
             questions: [
               'Q3-1：你當初之所以選擇進入這個行業，最原始的契機、初衷或熱情是什麼？',
               'Q3-2：除了每個月的薪水，這份工作最能讓你感到「活著、有意義」的瞬間是什麼？',
-              'Q3-3：如果有一天你財務自由了，你還會想做與目前工作相關的什麼事情？為什麼？'
+              'Q3-3：如果有一天你財務自由了，你還會想做與目前工作相關的什麼事情？原因？'
             ],
             example: {
               bad: '因為這個行業薪水穩定，所以就來考考看。',
@@ -1377,6 +1516,7 @@
         desc: '生活經驗是日常閒聊的主力。透過興趣的延伸，展示你是一個「熱愛生活、有溫度、有好奇心與生活品味」的人，並能透過感官描述將對方帶入你的生活畫面。',
         sections: [
           {
+            themeId: 'life_hobbies',
             title: '1. 喜歡做的事情 (Hobbies & Lifestyle)',
             questions: [
               'Q4-1：在你的週末或空閒時間，做什麼事情會讓你完全忘記時間流逝（進入心流狀態）？',
@@ -1385,6 +1525,7 @@
             ]
           },
           {
+            themeId: 'life_incident',
             title: '2. 延伸脈絡：印象深刻的事件 (Specific Incident)',
             questions: [
               'Q5-1：在你從事這個興趣的過程中，發生過什麼最刺激、最糗、最特別或「差點完蛋」的事件？',
@@ -1393,6 +1534,7 @@
             ]
           },
           {
+            themeId: 'life_feelings',
             title: '3. 延伸脈絡：感受與心境 (Internal Feelings & Sensory Details)',
             questions: [
               'Q6-1：當那個深刻事件發生的瞬間，你眼睛看到了什麼畫面？耳朵聽到了什麼聲音？身體有什麼感覺？',
@@ -1401,6 +1543,7 @@
             ]
           },
           {
+            themeId: 'life_origin',
             title: '4. 延伸脈絡：事情發生的原由 (Origin Story)',
             questions: [
               'Q7-1：你當初是怎麼接觸到這個興趣的？是誰帶領你、或者是因為什麼樣的偶然機緣？',
@@ -1422,6 +1565,7 @@
         desc: '重大經驗是塑造你現在個性的關鍵拼圖。透過這些具有高張力的故事，展現你的「勇氣」、「韌性」、「人際連結」與「幽默樂觀」。',
         sections: [
           {
+            themeId: 'major_adventure',
             title: '1. 冒險刺激的事情 (Adventure & Risk-taking)',
             questions: [
               'Q8-1：你做過最突破舒適圈、最說走就走，或是旁人聽了覺得你「瘋了」的決定是什麼？',
@@ -1434,6 +1578,7 @@
             }
           },
           {
+            themeId: 'major_proud',
             title: '2. 引以為傲的事情 (Proud Moments & Self-Discipline)',
             questions: [
               'Q9-1：在你的生命中，有一件什麼事是即使沒有得到任何物質回報，你回想起來依然會覺得「我真的太棒了」？',
@@ -1446,6 +1591,7 @@
             }
           },
           {
+            themeId: 'major_crazy',
             title: '3. 遇過最扯/最荒謬的事情 (Crazy & Absurd Stories)',
             questions: [
               'Q10-1：你人生中遇過最奇葩、最扯、最像八點檔劇情，或是機率極低的巧合事件是什麼？',
@@ -1468,6 +1614,7 @@
       currentId: null,      // null means creating new story, else string UUID
       currentStep: 0,
       activeContext: null,  // 'professional', 'life', 'major'
+      activeTheme: null,    // selected theme key (e.g., 'professional_role')
       drafts: {}            // { [storyId]: { [draftField]: 'content' } }
     };
 
@@ -1508,6 +1655,9 @@
       const grid = document.getElementById('story-grid');
       const empty = document.getElementById('empty-state');
       
+      // Render Progress Board
+      renderProgressBoard();
+      
       // Clear grid
       grid.innerHTML = '';
       
@@ -1526,24 +1676,29 @@
         card.id = `saved-${story.id}`;
         
         let badgeClass = '';
-        let badgeText = '';
+        let contextText = '';
         if (story.context === 'professional') {
           badgeClass = 'badge-professional';
-          badgeText = '💼 職業美化';
+          contextText = '💼 職業美化';
         } else if (story.context === 'life') {
           badgeClass = 'badge-life';
-          badgeText = '🌿 生活經驗';
+          contextText = '🌿 生活經驗';
         } else if (story.context === 'major') {
           badgeClass = 'badge-major';
-          badgeText = '🏆 人生重大';
+          contextText = '🏆 人生重大';
         }
+        
+        // Find human readable theme name
+        const themeInfo = THEME_MAP[story.theme];
+        const themeText = themeInfo ? ` · ${themeInfo.name}` : '';
+        const fullBadgeText = `${contextText}${themeText}`;
         
         const dateStr = new Date(story.updatedAt).toLocaleDateString('zh-TW');
         
         card.innerHTML = `
           <div>
             <div class="saved-card-header">
-              <span class="context-badge ${badgeClass}">${badgeText}</span>
+              <span class="context-badge ${badgeClass}">${fullBadgeText}</span>
               <span class="saved-card-date">${dateStr}</span>
             </div>
             <h3 class="saved-card-title">${story.title || '未命名故事卡'}</h3>
@@ -1552,13 +1707,86 @@
           <div class="saved-card-actions">
             <button class="btn-icon-sm" onclick="editStoryCard('${story.id}')" title="編輯故事卡">✏️</button>
             <button class="btn-icon-sm" onclick="copyIndividualMarkdown('${story.id}')" title="複製 Markdown">📋</button>
-            <button class="btn-icon-sm" onclick="printIndividualCard('${story.id}')" title="列印故事卡">🖨</button>
             <button class="btn-icon-sm" style="margin-left: auto;" onclick="deleteStoryCard('${story.id}')" title="刪除故事卡">🗑</button>
           </div>
         `;
         
         grid.appendChild(card);
       });
+    }
+
+    function renderProgressBoard() {
+      const pboard = document.getElementById('progress-board');
+      
+      // Calculate unlocked themes
+      const savedThemes = new Set();
+      if (appState.stories) {
+        appState.stories.forEach(s => {
+          if (s.theme) savedThemes.add(s.theme);
+        });
+      }
+      
+      const totalThemes = Object.keys(THEME_MAP).length; // should be 10
+      const unlockedCount = savedThemes.size;
+      const progressPercent = Math.round((unlockedCount / totalThemes) * 100);
+      
+      // Divide themes by context
+      const contexts = {
+        professional: { name: '💼 職業美化', icon: '💼', list: [] },
+        life: { name: '🌿 生活經驗', icon: '🌿', list: [] },
+        major: { name: '🏆 人生重大經驗', icon: '🏆', list: [] }
+      };
+      
+      Object.entries(THEME_MAP).forEach(([key, info]) => {
+        contexts[info.context].list.push({
+          key: key,
+          name: info.name,
+          completed: savedThemes.has(key)
+        });
+      });
+      
+      // Render HTML
+      let columnsHtml = '';
+      Object.entries(contexts).forEach(([ctxKey, ctxInfo]) => {
+        const completedInCtx = ctxInfo.list.filter(item => item.completed).length;
+        const totalInCtx = ctxInfo.list.length;
+        
+        let itemsHtml = ctxInfo.list.map(item => {
+          const compClass = item.completed ? 'completed' : '';
+          const checkIcon = item.completed ? '✓' : '';
+          return `
+            <div class="progress-item ${compClass}">
+              <span class="progress-item-checkbox">${checkIcon}</span>
+              <span class="progress-item-text" title="${THEME_MAP[item.key].desc}">${item.name}</span>
+            </div>
+          `;
+        }).join('');
+        
+        columnsHtml += `
+          <div class="progress-column">
+            <div class="progress-column-title">
+              <span>${ctxInfo.name}</span>
+              <span style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; margin-left: auto; color: var(--accent-color);">${completedInCtx}/${totalInCtx}</span>
+            </div>
+            ${itemsHtml}
+          </div>
+        `;
+      });
+      
+      pboard.innerHTML = `
+        <div class="progress-board-header">
+          <div class="progress-board-title">
+            <span>📖 故事庫解鎖進度表</span>
+          </div>
+          <div class="progress-board-count">${progressPercent}% (${unlockedCount}/${totalThemes} 已打磨)</div>
+        </div>
+        <div class="progress-board-bar-bg">
+          <div class="progress-board-bar-fill" style="width: ${progressPercent}%;"></div>
+        </div>
+        <div class="progress-board-grid">
+          ${columnsHtml}
+        </div>
+      `;
     }
 
     function deleteStoryCard(id) {
@@ -1576,6 +1804,7 @@
       // Setup state for new card
       appState.currentId = generateId();
       appState.activeContext = null;
+      appState.activeTheme = null;
       appState.currentStep = 0;
       
       // Clear forms
@@ -1592,6 +1821,7 @@
       // Set options to inactive
       document.querySelectorAll('.context-option').forEach(el => el.classList.remove('active'));
       document.getElementById('context-desc-box').style.display = 'none';
+      document.getElementById('theme-selector-group').style.display = 'none';
       document.getElementById('btn-step0-next').disabled = true;
       
       // View switches
@@ -1608,6 +1838,7 @@
       
       appState.currentId = id;
       appState.activeContext = story.context;
+      appState.activeTheme = story.theme;
       appState.currentStep = 0;
       
       // Populate fields
@@ -1623,6 +1854,8 @@
       
       // Highlight selected context
       selectContext(story.context);
+      // Select theme
+      selectTheme(story.theme);
       
       // View switches
       document.getElementById('dashboard-view').style.display = 'none';
@@ -1636,6 +1869,7 @@
       if (confirm('確定要放棄目前的修改並返回儀表板嗎？所有未儲存的內容將會遺失。')) {
         appState.currentId = null;
         appState.activeContext = null;
+        appState.activeTheme = null;
         
         document.getElementById('editor-view').className = 'editor-section';
         document.getElementById('dashboard-view').style.display = 'block';
@@ -1648,6 +1882,10 @@
     function gotoStep(step) {
       if (step > 0 && !appState.activeContext) {
         alert('請先選擇一個故事脈絡分類！');
+        return;
+      }
+      if (step > 0 && !appState.activeTheme) {
+        alert('請選定故事的具體主題！');
         return;
       }
       
@@ -1684,11 +1922,12 @@
       }
     }
 
-    // ── SELECT CONTEXT ───────────────────────────────────────────────
+    // ── SELECT CONTEXT & THEME ───────────────────────────────────────
     function selectContext(contextKey) {
       appState.activeContext = contextKey;
+      appState.activeTheme = null; // Reset theme selection when context changes
       
-      // UI feedback
+      // UI feedback for Context
       document.querySelectorAll('.context-option').forEach(el => el.classList.remove('active'));
       document.getElementById(`opt-${contextKey}`).classList.add('active');
       
@@ -1700,8 +1939,48 @@
       descBox.style.display = 'block';
       descBox.className = 'compare-box compare-good';
       
-      document.getElementById('btn-step0-next').disabled = false;
+      // Populate theme selector list
+      renderThemeSelector(contextKey);
+      document.getElementById('theme-selector-group').style.display = 'block';
       
+      document.getElementById('btn-step0-next').disabled = true;
+      
+      syncFields();
+    }
+
+    function renderThemeSelector(contextKey) {
+      const container = document.getElementById('theme-option-list');
+      container.innerHTML = '';
+      
+      Object.entries(THEME_MAP).forEach(([themeKey, info]) => {
+        if (info.context !== contextKey) return;
+        
+        const card = document.createElement('div');
+        card.className = 'theme-option-card';
+        card.id = `opt-theme-${themeKey}`;
+        card.onclick = () => selectTheme(themeKey);
+        
+        card.innerHTML = `
+          <div>
+            <div style="font-weight:700;">${info.name}</div>
+            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">${info.desc}</div>
+          </div>
+          <div class="theme-option-check">✓</div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    function selectTheme(themeKey) {
+      appState.activeTheme = themeKey;
+      
+      // UI feedback for Theme
+      document.querySelectorAll('.theme-option-card').forEach(el => el.classList.remove('active'));
+      const card = document.getElementById(`opt-theme-${themeKey}`);
+      if (card) card.classList.add('active');
+      
+      document.getElementById('btn-step0-next').disabled = false;
       syncFields();
     }
 
@@ -1750,8 +2029,15 @@
       // Render subsections
       data.sections.forEach((sec, index) => {
         const sectionDiv = document.createElement('div');
-        sectionDiv.style.borderBottom = '1px solid rgba(232, 228, 220, 0.08)';
-        sectionDiv.style.paddingBottom = '24px';
+        
+        // Highlight section if it corresponds to the selected theme
+        const isHighlighted = (sec.themeId === appState.activeTheme);
+        if (isHighlighted) {
+          sectionDiv.className = 'highlighted-section';
+        } else {
+          sectionDiv.style.borderBottom = '1px solid rgba(232, 228, 220, 0.08)';
+          sectionDiv.style.paddingBottom = '24px';
+        }
         
         let qListHtml = sec.questions.map(q => `<li>${q}</li>`).join('');
         
@@ -1783,7 +2069,7 @@
         const draftValue = currentStoryDrafts[`sec_${index}`] || '';
         
         sectionDiv.innerHTML = `
-          <h4 style="font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; color: var(--accent-color); margin-bottom: 8px;">${sec.title}</h4>
+          <h4 style="font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; color: var(--accent-color); margin-top: 6px; margin-bottom: 8px;">${sec.title}</h4>
           <ul style="padding-left: 20px; font-size: 13px; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
             ${qListHtml}
           </ul>
@@ -1796,12 +2082,20 @@
         `;
         
         container.appendChild(sectionDiv);
+        
+        // Auto expand example accordion if highlighted
+        if (isHighlighted && sec.example) {
+          setTimeout(() => {
+            toggleAccordion(`acc-sec-${index}`);
+          }, 100);
+        }
       });
     }
 
     function toggleAccordion(id) {
       const content = document.getElementById(id);
       const icon = document.getElementById(`icon-${id}`);
+      if (!content || !icon) return;
       
       if (content.style.maxHeight && content.style.maxHeight !== '0px') {
         content.style.maxHeight = '0px';
@@ -1822,19 +2116,30 @@
 
     // ── SYNC FORM FIELDS TO PREVIEW CARD ────────────────────────────────
     function syncFields() {
-      // Context Badge
+      // Context & Theme Badge
       const activeCtx = appState.activeContext;
+      const activeTh = appState.activeTheme;
       const previewBadge = document.getElementById('preview-badge');
       
+      let badgeClass = '';
+      let contextText = '';
       if (activeCtx === 'professional') {
-        previewBadge.textContent = '💼 職業美化';
-        previewBadge.className = 'context-badge badge-professional';
+        badgeClass = 'context-badge badge-professional';
+        contextText = '💼 職業美化';
       } else if (activeCtx === 'life') {
-        previewBadge.textContent = '🌿 生活經驗';
-        previewBadge.className = 'context-badge badge-life';
+        badgeClass = 'context-badge badge-life';
+        contextText = '🌿 生活經驗';
       } else if (activeCtx === 'major') {
-        previewBadge.textContent = '🏆 人生重大';
-        previewBadge.className = 'context-badge badge-major';
+        badgeClass = 'context-badge badge-major';
+        contextText = '🏆 人生重大';
+      }
+      
+      const themeInfo = THEME_MAP[activeTh];
+      const themeText = themeInfo ? ` · ${themeInfo.name}` : '';
+      
+      if (activeCtx) {
+        previewBadge.textContent = `${contextText}${themeText}`;
+        previewBadge.className = badgeClass;
       } else {
         previewBadge.textContent = '- 未選 -';
         previewBadge.className = 'context-badge';
@@ -1867,7 +2172,7 @@
     function saveStoryCard() {
       const title = document.getElementById('field-title').value.trim();
       if (!title) {
-        alert('請填寫的故事標題，以方便在儀表板中識別。');
+        alert('請填寫故事標題，以方便在儀表板中識別。');
         document.getElementById('field-title').focus();
         return;
       }
@@ -1880,6 +2185,7 @@
       const storyObj = {
         id: storyId,
         context: appState.activeContext,
+        theme: appState.activeTheme,
         title: title,
         step1: document.getElementById('field-step1').value.trim(),
         step2: document.getElementById('field-step2').value.trim(),
@@ -1905,6 +2211,7 @@
       // Return to dashboard
       appState.currentId = null;
       appState.activeContext = null;
+      appState.activeTheme = null;
       document.getElementById('editor-view').className = 'editor-section';
       document.getElementById('dashboard-view').style.display = 'block';
       
@@ -1929,8 +2236,12 @@
       if (story.context === 'life') contextName = '🌿 生活經驗';
       if (story.context === 'major') contextName = '🏆 人生重大經驗';
       
+      const themeInfo = THEME_MAP[story.theme];
+      const themeText = themeInfo ? ` · ${themeInfo.name}` : '';
+      const fullContextStr = `${contextName}${themeText}`;
+      
       return `# UC Training 個人故事打磨卡：《${story.title}》
-- **故事脈絡**：${contextName}
+- **故事脈絡**：${fullContextStr}
 - **素材原形**：${story.step1 || '無'}
 
 ---
@@ -1958,6 +2269,7 @@
       // Compile current form to object for copy
       const storyObj = {
         context: appState.activeContext,
+        theme: appState.activeTheme,
         title: document.getElementById('field-title').value.trim() || '未命名故事',
         step1: document.getElementById('field-step1').value.trim(),
         step2: document.getElementById('field-step2').value.trim(),
@@ -1988,27 +2300,6 @@
       }).catch(err => {
         alert('複製失敗');
       });
-    }
-
-    // ── INDIVIDUAL CARD PRINTING ──────────────────────────────────────
-    function printIndividualCard(id) {
-      const story = appState.stories.find(s => s.id === id);
-      if (!story) return;
-      
-      // Temporarily populate form and preview, call print, then restore dashboard
-      editStoryCard(id);
-      
-      // Tiny delay to allow preview DOM sync and paint
-      setTimeout(() => {
-        window.print();
-        
-        // Return back to dashboard without confirm prompt
-        appState.currentId = null;
-        appState.activeContext = null;
-        document.getElementById('editor-view').className = 'editor-section';
-        document.getElementById('dashboard-view').style.display = 'block';
-        renderDashboard();
-      }, 200);
     }
   </script>
 </body>
