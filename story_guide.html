@@ -1223,24 +1223,50 @@
         <div class="step-navigator">
           <div class="step-tab active" id="tab-step1" onclick="gotoStep(1)">
             <div class="step-tab-num">Step 1</div>
-            <div class="step-tab-label">靈感自我挖掘</div>
+            <div class="step-tab-label">故事大綱 (Story Core)</div>
           </div>
           <div class="step-tab" id="tab-step2" onclick="gotoStep(2)">
             <div class="step-tab-num">Step 2</div>
-            <div class="step-tab-label">故事打磨填寫</div>
+            <div class="step-tab-label">對話與標題設計</div>
           </div>
         </div>
         
-        <!-- STEP 1 PANEL: BRAINSTORMING -->
+        <!-- STEP 1 PANEL: STORY CORE -->
         <div class="editor-card step-panel active" id="panel-step1">
           <div class="editor-card-header">
-            <h3 class="editor-card-title">【步驟 1】靈感自我挖掘</h3>
-            <p class="editor-card-subtitle">利用層層遞進的感性問句，把腦中的真實情節勾勒出來。你可以一邊閱讀問題、展開範例，並在下方的靈感草稿區隨手記錄靈感。</p>
+            <h3 class="editor-card-title">【步驟 1】故事大綱 (Story Core)</h3>
+            <p class="editor-card-subtitle">利用上方對應的感性引導問句與範例，在下方直接打磨出你故事的核心主體（包含劇情、體驗、目的與價值）。</p>
           </div>
           
           <!-- Container for dynamically rendered questions and accordion examples -->
-          <div id="brainstorm-questions-container" style="display: flex; flex-direction: column; gap: 24px;">
+          <div id="brainstorm-questions-container" style="display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px;">
             <!-- Rendered in JS -->
+          </div>
+
+          <div style="background: rgba(232, 228, 220, 0.01); border: 1.5px solid var(--card-border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px;">
+            <h4 style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; color: var(--accent-color);">
+              <span>✨ 故事大綱 (Story Core) 四大維度填寫</span>
+            </h4>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-story-plot" style="font-size:12.5px;">1. 劇情 <span class="form-label-desc">（交代因果關係，去除多餘雜訊）</span></label>
+              <textarea id="field-story-plot" class="form-textarea" placeholder="例如：在印度旅行時行李遺失，又染上急性胃炎..." oninput="syncFields()"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-story-exp" style="font-size:12.5px;">2. 體驗 <span class="form-label-desc">（刻畫五感、當下的情緒與想法起伏）</span></label>
+              <textarea id="field-story-exp" class="form-textarea" placeholder="例如：躺在小旅館發燒時非常無力，看著混亂的街頭，內心從恐慌到平靜..." oninput="syncFields()"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-story-purpose" style="font-size:12.5px;">3. 目的 <span class="form-label-desc">（你想表達的核心價值觀、感想或體悟）</span></label>
+              <textarea id="field-story-purpose" class="form-textarea" placeholder="例如：理解到只要跨出第一步，任何困難都可以迎刃而解..." oninput="syncFields()"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="field-story-value" style="font-size:12.5px;">4. 價值 <span class="form-label-desc">（故事傳達的吸引力特質，如：生存、繁衍、社交或情緒價值）</span></label>
+              <textarea id="field-story-value" class="form-textarea" placeholder="例如：展現強大的生存適應力、冷靜應對危機的心態，與對世界的探索精神..." oninput="syncFields()"></textarea>
+            </div>
           </div>
           
           <div class="step-actions">
@@ -1251,62 +1277,26 @@
           </div>
         </div>
         
-        <!-- STEP 2 PANEL: POLISHING WORKSHEET -->
+        <!-- STEP 2 PANEL: DIALOGUE DESIGN -->
         <div class="editor-card step-panel" id="panel-step2">
           <div class="editor-card-header">
-            <h3 class="editor-card-title">【步驟 2】個人故事打磨卡</h3>
-            <p class="editor-card-subtitle">將剛剛挖掘出的零碎素材，套用【故事對話四結構】進行整合。這是輸出個人故事最關鍵的步驟！</p>
+            <h3 class="editor-card-title">【步驟 2】對話與標題設計</h3>
+            <p class="editor-card-subtitle">為故事包裝出吸引人的標題與對話設計，讓故事能自然融入社交場景。</p>
           </div>
           
           <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label" for="field-step2">引導問句 (Intro Question) <span class="form-label-desc">（如何自然拋出問句，開啟對談）</span></label>
+              <textarea id="field-step2" class="form-textarea" placeholder="例如：「你有自己去國外背包客旅行過嗎？」先聽對方分享，再接話..." oninput="syncFields()"></textarea>
+            </div>
+            
             <div class="form-group">
               <label class="form-label" for="field-title">故事標題 <span class="form-label-desc">（例：一碗暴雨中的泡麵 / 印度大冒險）</span></label>
               <input type="text" id="field-title" class="form-input" placeholder="輸入一個有畫面感的故事名稱..." oninput="syncFields()">
             </div>
             
             <div class="form-group">
-              <label class="form-label" for="field-step1">步驟 1：素材原形 <span class="form-label-desc">（用一至兩句話描述原始事實，人、事、時、地、物）</span></label>
-              <textarea id="field-step1" class="form-textarea" placeholder="例如：大三自己去印度背包客旅行一個月，中途拉肚子跟丟錢包..." oninput="syncFields()"></textarea>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label" for="field-step2">步驟 2：引難問句 (Intro Question) <span class="form-label-desc">（如何自然拋出問句，開啟對談）</span></label>
-              <textarea id="field-step2" class="form-textarea" placeholder="例如：「你有自己去國外背包客旅行過嗎？」先聽對方分享，再接話..." oninput="syncFields()"></textarea>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label" for="field-step3">步驟 3：故事一句話簡介 (Logline / Hook) <span class="form-label-desc">（用一到三句話，快速勾起對方期待）</span></label>
-              <textarea id="field-step3" class="form-textarea" placeholder="例如：「那是一趟我本來以為自己會客死異鄉，最後卻改變了我一生的印度大冒險。」" oninput="syncFields()"></textarea>
-            </div>
-            
-            <div class="form-group" style="background: rgba(232, 228, 220, 0.01); border: 1.5px solid var(--card-border); border-radius: 12px; padding: 20px;">
-              <h4 style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; color: var(--accent-color);">
-                <span>✨ 步驟 4：故事精彩大綱 (Story Core)</span>
-              </h4>
-              
-              <div class="form-group">
-                <label class="form-label" for="field-story-plot" style="font-size:12.5px;">1. 劇情 <span class="form-label-desc">（交代因果關係，去除多餘雜訊）</span></label>
-                <textarea id="field-story-plot" class="form-textarea" placeholder="例如：在印度旅行時行李遺失，又染上急性胃炎..." oninput="syncFields()"></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label" for="field-story-exp" style="font-size:12.5px;">2. 體驗 <span class="form-label-desc">（刻畫五感、當下的情緒與想法起伏）</span></label>
-                <textarea id="field-story-exp" class="form-textarea" placeholder="例如：躺在小旅館發燒時非常無力，看著混亂的街頭，內心從恐慌到平靜..." oninput="syncFields()"></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label" for="field-story-purpose" style="font-size:12.5px;">3. 目的 <span class="form-label-desc">（你想表達的核心價值觀、感想或體悟）</span></label>
-                <textarea id="field-story-purpose" class="form-textarea" placeholder="例如：理解到只要跨出第一步，任何困難都可以迎刃而解..." oninput="syncFields()"></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label" for="field-story-value" style="font-size:12.5px;">4. 價值 <span class="form-label-desc">（故事傳達的吸引力特質，如：生存、繁衍、社交或情緒價值）</span></label>
-                <textarea id="field-story-value" class="form-textarea" placeholder="例如：展現強大的生存適應力、冷靜應對危機的心態，與對世界的探索精神..." oninput="syncFields()"></textarea>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label" for="field-step5">步驟 5：對話接球問句 (Bridge) <span class="form-label-desc">（結尾如何拋回問句，引導對方分享）</span></label>
+              <label class="form-label" for="field-step5">延伸問句 (Bridge Question) <span class="form-label-desc">（結尾如何拋回問句，引導對方分享）</span></label>
               <textarea id="field-step5" class="form-textarea" placeholder="例如：「那你呢？如果現在給你一張免機票，你最想去挑戰哪個國家？」" oninput="syncFields()"></textarea>
             </div>
           </div>
@@ -1343,12 +1333,7 @@
               <div class="bubble-text" id="preview-intro">「填寫步驟 2 後，引導問句將在此即時更新...」</div>
             </div>
             
-            <!-- Step 3: Logline / Hook -->
-            <div class="card-hook-container">
-              <div class="hook-label">Logline & Hook / 亮點一句話</div>
-              <div class="hook-text" id="preview-logline">「填寫步驟 3 後，具吸引力的故事簡介將會顯示於此...」</div>
-            </div>
-            
+
             <!-- Step 4: Story Grid Body -->
             <div class="card-story-body">
               <div class="story-dim">
@@ -1407,16 +1392,19 @@
   <script>
     // ── DATA: SYSTEM QUESTIONS & EXAMPLES ──────────────────────────────
     const THEME_MAP = {
-      professional_role: { context: 'professional', name: '具體在做什麼', desc: '解釋你的日常工作與譬喻' },
+      professional_role: { context: 'professional', name: '具體在做什麼', desc: '解釋你的日常工作與生活化比喻' },
       professional_achievements: { context: 'professional', name: '有什麼豐功偉業', desc: '克服工作危機或重大成就' },
-      professional_motivation: { context: 'professional', name: '從事的內在動機', desc: '入行契機、初衷與自我價值感' },
-      life_hobbies: { context: 'life', name: '喜歡做的事情', desc: '沉浸且享受的愛好與質感生活' },
-      life_incident: { context: 'life', name: '印象深刻的事件', desc: '該愛好中具體、有衝突性情節' },
-      life_feelings: { context: 'life', name: '感受與心境', desc: '感官細節描述與體驗所得之平靜' },
-      life_origin: { context: 'life', name: '事情發生的原由', desc: '該興趣相遇的起源或人生轉折' },
-      major_adventure: { context: 'major', name: '冒險刺激的事情', desc: '突破舒適圈、旅行危機解決' },
-      major_proud: { context: 'major', name: '引以為傲的事情', desc: '孤獨奮鬥與實踐自我承諾' },
-      major_crazy: { context: 'major', name: '最扯/最荒謬的事情', desc: '自嘲幽默與隨遇而安的豁達' }
+      professional_motivation: { context: 'professional', name: '為什麼做這個工作', desc: '入行契機、初衷與自我意義感' },
+      life_hobbies: { context: 'life', name: '喜歡做的事情', desc: '忘記時間流逝的愛好與心流狀態' },
+      life_adventure: { context: 'life', name: '冒險刺激的事情', desc: '突破舒適圈、旅行危機與衝擊' },
+      life_proud: { context: 'life', name: '引以為傲的事情', desc: '孤獨奮鬥、嚴格自律與承諾' },
+      life_crazy: { context: 'life', name: '最扯/最荒謬的事情', desc: '荒謬奇遇與隨遇而安的豁達' },
+      major_preschool: { context: 'major', name: '學齡前階段', desc: '童年遊戲反映天性、調皮惡作劇或初畫面' },
+      major_elementary: { context: 'major', name: '國小階段', desc: '班級活動、夏日放學回憶與長大瞬間' },
+      major_junior: { context: 'major', name: '國中階段', desc: '青春期叛逆、興趣尋求與升學心境轉變' },
+      major_senior: { context: 'major', name: '高中階段', desc: '廢寢忘食的熱血回憶與挫折成長' },
+      major_university: { context: 'major', name: '大學階段', desc: '說走就走的冒險、與社會初接軌的震撼' },
+      major_freshman: { context: 'major', name: '新鮮人階段', desc: '首份薪水、職場挫折與獨立完成成就' }
     };
 
     const CONTEXT_DATA = {
@@ -1444,7 +1432,7 @@
             title: '2. 有什麼豐功偉業 (Achievements & Highlights)',
             questions: [
               'Q2-1：在你的職涯中，遇過最嚴重的危機、出包或緊急狀況是什麼？你當時是怎麼冷靜處理並反敗為勝的？',
-              'Q2-2：有沒有某個專案或任務，是你投入了極大心血、甚至熬夜好幾天，最後順利完成並獲得極大成就感的？',
+              'Q2-2：有沒有某個專案或任務，是用心（你）投入了極大心血、甚至熬夜好幾天，最後順利完成並獲得極大成就感的？',
               'Q2-3：當你解決了工作上的某個難題時，你的客戶或主管曾給過你什麼讓你印象深刻的稱讚？'
             ],
             example: {
@@ -1454,7 +1442,7 @@
           },
           {
             themeId: 'professional_motivation',
-            title: '3. 從事的內在動機 (Inner Motivation & Vision)',
+            title: '3. 為什麼做這個工作 (Inner Motivation)',
             questions: [
               'Q3-1：你當初之所以選擇進入這個行業，最原始的契機、初衷或熱情是什麼？',
               'Q3-2：除了每個月的薪水，這份工作最能讓你感到「活著、有意義」的瞬間是什麼？',
@@ -1471,7 +1459,7 @@
         id: 'life',
         name: '生活經驗',
         icon: '🌿',
-        desc: '生活經驗是日常閒聊的主力。透過興趣的延伸，展示你是一個「熱愛生活、有溫度、有好奇心與生活品味」的人，並能透過感官描述將對方帶入你的生活畫面。',
+        desc: '生活經驗是日常閒聊的主力。透過興趣與特殊經歷的延伸，展示你是一個「熱愛生活、有溫度、有好奇心與生活品味」的人，並能透過感官描述將對方帶入你的生活畫面。',
         sections: [
           {
             themeId: 'life_hobbies',
@@ -1483,31 +1471,43 @@
             ]
           },
           {
-            themeId: 'life_incident',
-            title: '2. 延伸脈絡：印象深刻的事件 (Specific Incident)',
+            themeId: 'life_adventure',
+            title: '2. 冒險刺激的事情 (Adventure & Risk-taking)',
             questions: [
-              'Q5-1：在你從事這個興趣的過程中，發生過什麼最刺激、最糗、最特別或「差點完蛋」的事件？',
-              'Q5-2：在這個愛好中，你經歷過最渴望突破、或是終於完成某個里程碑的那一刻是怎樣的？',
-              'Q5-3：有沒有哪一次，你因為這個興趣結識了特別的人，或者去到了特別的地方？'
-            ]
+              'Q5-1：你做過最突破舒適圈、最說走就走，或是旁人聽了覺得你「瘋了」的決定是什麼？',
+              'Q5-2：在你的旅行或生活中，是否曾有過獨自一人面對陌生環境、迷路或需要解決危機的經驗？',
+              'Q5-3：那次冒險帶給你最深刻的衝擊是什麼？它如何改變了你對世界的看法？'
+            ],
+            example: {
+              bad: '我之前自己去日本自由行，去很多地方玩。',
+              good: '大三那年，我突然很想測試自己的極限，就買了一張單程機票，獨自去了印度背包旅行一個月。第一天在德里街頭，我看著完全混亂的交通和滿街的牛隻，站在路邊足足發呆了十分鐘。那一個月我丟了兩次錢包、食物中毒躺在小旅館三天，但也因此學會了用肢體語言跟當地人講價、並跟一位當地的祭司在恆河旁聊了整晚的生死。回來後我發現，很多原本讓我害怕的事，其實只要踏出第一步就解決了。'
+            }
           },
           {
-            themeId: 'life_feelings',
-            title: '3. 延伸脈絡：感受與心境 (Internal Feelings & Sensory Details)',
+            themeId: 'life_proud',
+            title: '3. 引以為傲的事情 (Proud Moments & Self-Discipline)',
             questions: [
-              'Q6-1：當那個深刻事件發生的瞬間，你眼睛看到了什麼畫面？耳朵聽到了什麼聲音？身體有什麼感覺？',
-              'Q6-2：那一刻，你的內心產生了什麼情緒變化？（例如：緊繃、狂喜、孤獨、踏實）',
-              'Q6-3：現在回過頭來看這段經歷，這項生活經驗帶給你內心最大的平靜或體悟是什麼？'
-            ]
+              'Q6-1：在你的生命中，有一件什麼事是即使沒有得到任何物質回報，你回想起來依然會覺得「我真的太棒了」？',
+              'Q6-2：你有沒有經歷過一段需要長時間孤獨奮鬥、嚴格自律，最終達成目標的歷程？（例如減重、考取高難度證照、完成馬拉松）',
+              'Q6-3：你曾為朋友或家人默默付出、兌現過什麼高難度的承諾？'
+            ],
+            example: {
+              bad: '我以前花了一年成功瘦了二十公斤。',
+              good: '大四時因為體重破百，健康亮紅燈。我給自己訂了一個目標，每天早上五點起床跑步。最痛苦的是冬天，寒流來時外面只有十度，被窩暖烘烘的，每次都要在床邊跟自己對話十分鐘。但那一年我沒有一天偷懶。當一年後站在體重計上，看著自己減掉的二十五公斤，最讓我驕傲的不是身材變好，而是我知道自己是一個『只要對自己承諾，就絕對會做到』的人。'
+            }
           },
           {
-            themeId: 'life_origin',
-            title: '4. 延伸脈絡：事情發生的原由 (Origin Story)',
+            themeId: 'life_crazy',
+            title: '4. 最扯/最荒謬的事情 (Crazy & Absurd Stories)',
             questions: [
-              'Q7-1：你當初是怎麼接觸到這個興趣的？是誰帶領你、或者是因為什麼樣的偶然機緣？',
-              'Q7-2：在開始這項愛好之前，你原本對它有什麼誤解？開始之後，是什麼改變了你的想法？',
-              'Q7-3：這項興趣的「起源」，是否反映了你個性中某個一直存在的特質？'
-            ]
+              'Q7-1：你人生中遇過最奇葩、最扯、最像八點檔劇情，或是機率極低的巧合事件是什麼？',
+              'Q7-2：你有沒有經歷過「原本以為是場大災難，結果最後發展成超級好笑」的荒謬故事？',
+              'Q7-3：如果要在聚會中講一個能讓全場瞬間安靜、接著哄堂大笑的「個人奇遇記」，你會講哪一個？'
+            ],
+            example: {
+              bad: '我之前出國搭飛機結果行李被寄丟，滿狼狽的。',
+              good: '去年前往羅馬，下飛機發現我唯一的行李箱被寄到了冰島。我身上只剩下一套夏天的短袖短褲，但羅馬當時只有十二度。我跑去當地的二手市集，隨便買了一件大三碼的復古羊毛大衣跟一頂滑稽的皮帽。那三天我就穿著那套『羅馬流浪漢風』在景點拍照，路人還以為我是什麼街頭藝術家一直找我合照。那次經驗讓我明白，計畫泡湯時，順著風走，反而能看到最不一樣的風景。'
+            }
           }
         ],
         full_example: {
@@ -1518,53 +1518,92 @@
       },
       major: {
         id: 'major',
-        name: '人生重大經驗',
+        name: '人生重大事件',
         icon: '🏆',
-        desc: '重大經驗是塑造你現在個性的關鍵拼圖。透過這些具有高張力的故事，展現你的「勇氣」、「韌性」、「人際連結」與「幽默樂觀」。',
+        desc: '成長歷程中的關鍵時期命題，挖掘並展現你當下人生階段的衝撞與人格心態的形塑歷程。',
         sections: [
           {
-            themeId: 'major_adventure',
-            title: '1. 冒險刺激的事情 (Adventure & Risk-taking)',
+            themeId: 'major_preschool',
+            title: '1. 學齡前 (Preschool)',
             questions: [
-              'Q8-1：你做過最突破舒適圈、最說走就走，或是旁人聽了覺得你「瘋了」的決定是什麼？',
-              'Q8-2：在你的旅行或生活中，是否曾有過獨自一人面對陌生環境、迷路或需要解決危機的經驗？',
-              'Q8-3：那次冒險帶給你最深刻的衝擊是什麼？它如何改變了你對世界的看法？'
+              'Q8-1：你小時候（幼稚園前）最常玩的一種玩具或遊戲是什麼？它是否反映了你現在的某種天性？',
+              'Q8-2：你小時候做過最調皮、最讓父母哭笑不得的惡作劇是什麼？',
+              'Q8-3：你記憶中最深的第一個童年畫面是什麼？當時的心情是怎麼樣的？'
             ],
             example: {
-              bad: '我之前自己去日本自由行，去很多地方玩。',
-              good: '大三那年，我突然很想測試自己的極限，就買了一張單程機票，獨自去了印度背包旅行一個月。第一天在德里街頭，我看著完全混亂的交通和滿街的牛隻，站在路邊足足發呆了十分鐘。那一個月我丟了兩次錢包、食物中毒躺在小旅館三天，但也因此學會了用肢體語言跟當地人講價、並跟一位當地的祭司在恆河旁聊了整晚的生死。回來後我發現，很多原本讓我害怕的事，其實只要踏出第一步就解決了。'
+              bad: '小時候很愛跟鄰居玩沙，沒什麼特別的。',
+              good: '四歲時，我最喜歡把家裡所有的抱枕堆成一座『城堡』，然後自己坐在最上面假裝是國王。那時我只要一拿到積木，就可以一個人在客廳安靜地蓋好幾個小時。現在想起來，我那種『喜歡從零開始建構事物』的創造力，其實在學齡前就已經悄悄萌芽了。'
             }
           },
           {
-            themeId: 'major_proud',
-            title: '2. 引以為傲的事情 (Proud Moments & Self-Discipline)',
+            themeId: 'major_elementary',
+            title: '2. 國小 (Elementary School)',
             questions: [
-              'Q9-1：在你的生命中，有一件什麼事是即使沒有得到任何物質回報，你回想起來依然會覺得「我真的太棒了」？',
-              'Q9-2：你有沒有經歷過一段需要長時間孤獨奮鬥、嚴格自律，最終達成目標的歷程？（例如減重、考取高難度證照、完成馬拉松）',
-              'Q9-3：你曾為朋友或家人默默付出、兌現過什麼高難度的承諾？'
+              'Q9-1：國小時期，你當過什麼班級幹部，或是參加過什麼讓你印象深刻的比賽或社團嗎？',
+              'Q9-2：國小放學後，你最期待做的事情是什麼？請描述一個具體的夏日下午畫面。',
+              'Q9-3：國小階段，有沒有發生過什麼讓你第一次覺得「我長大了」的事件？'
             ],
             example: {
-              bad: '我以前花了一年成功瘦了二十公斤。',
-              good: '大四時因為體重破百，健康亮紅燈。我給自己訂了一個目標，每天早上五點起床跑步。最痛苦的是冬天，寒流來時外面只有十度，被窩暖烘烘的，每次都要在床邊跟自己對話十分鐘。但那一年我沒有一天偷懶。當一年後站在體重計上，看著自己減掉的二十五公斤，最讓我驕傲的不是身材變好，而是我知道自己是一個『只要對自己承諾，就絕對會做到』的人。'
+              bad: '國小當過班長，還有參加合唱團。',
+              good: '國小三年級時，我自告奮勇參加了學校的說故事比賽。那時我每天晚上對著鏡子練習表情，連爸媽都覺得我瘋了。比賽那天，當我站在台上看著底下黑壓壓的人群，手心直冒汗。但在我說出第一個笑話、全場哄堂大笑的那一刻，我突然感受到了站在舞台上的魅力，那是我人生中第一次找到自信的起點。'
             }
           },
           {
-            themeId: 'major_crazy',
-            title: '3. 遇過最扯/最荒謬的事情 (Crazy & Absurd Stories)',
+            themeId: 'major_junior',
+            title: '3. 國中 (Junior High School)',
             questions: [
-              'Q10-1：你人生中遇過最奇葩、最扯、最像八點檔劇情，或是機率極低的巧合事件是什麼？',
-              'Q10-2：你有沒有經歷過「原本以為是場大災難，結果最後發展成超級好笑」的荒謬故事？',
-              'Q10-3：如果要在聚會中講一個能讓全場瞬間安靜、接著哄堂大笑的「個人奇遇記」，你會講哪一個？'
+              'Q10-1：國中時期（青春期），你最喜歡聽的歌、或是最崇拜的偶像是誰？為什麼他當時能觸動你？',
+              'Q10-2：國中時，你做過最叛逆、最突破常規、或是最被老師同學關注的事情是什麼？',
+              'Q10-3：國中階段面臨升學壓力或人際風暴時，你的心境是如何轉變的？'
             ],
             example: {
-              bad: '我之前出國搭飛機結果行李被寄丟，滿狼狽的。',
-              good: '去年前往羅馬，下飛機發現我唯一的行李箱被寄到了冰島。我身上只剩下一套夏天的短袖短褲，但羅馬當時只有十二度。我跑去當地的二手市集，隨便買了一件大三碼的復古羊毛大衣跟一頂滑稽的皮帽。那三天我就穿著那套『羅馬流浪漢風』在景點拍照，路人還以為我是什麼街頭藝術家一直找我合照。那次經驗讓我明白，計畫泡湯時，順著風走，反而能看到最不一樣的風景。'
+              bad: '國中都在讀書考高中，生活滿無聊的。',
+              good: '國二那年，我因為偷偷把學校的制服褲改窄，被訓導主任在朝會上點名罰站。當時我覺得自己非常酷，但也因此經歷了一段人際上的『小風暴』，甚至開始感到迷茫。直到我用零用錢買了第一把吉他，每天躲在房間裡彈和弦，那段混亂、敏感卻又渴望被理解的青春期，才終於在琴聲中找到了抒發的出口。'
+            }
+          },
+          {
+            themeId: 'major_senior',
+            title: '4. 高中 (Senior High School)',
+            questions: [
+              'Q11-1：高中時期，你投入最多熱情、甚至到了「廢寢忘食」程度的活動或社團是什麼？',
+              'Q11-2：高中生活裡，最熱血、最像青春電影畫面的一幕是什麼？請描述當下的溫度與氣味。',
+              'Q11-3：高中生涯中最讓你挫折的考試或事件是什麼？你當時是如何在同儕支持下走出來的？'
+            ],
+            example: {
+              bad: '高中參加熱舞社，跟同學一起準備成發。',
+              good: '高三成發前一晚，我們整個舞社在學校的穿堂排練到深夜十一點。當時寒流來襲，大家手腳冰冷，但當音樂一放，看著鏡子裡每個人整齊劃一的動作與汗水，沒有人喊累。隔天站在閃光燈下，聽著台下的尖叫聲，我終於明白，那一整年無數次的摔倒與受傷，都是為了這一刻的閃耀。那段與夥伴並肩作戰的熱血回憶，至今想起來依然溫熱。'
+            }
+          },
+          {
+            themeId: 'major_university',
+            title: '5. 大學 (University)',
+            questions: [
+              'Q12-1：大學時，你第一次擺脫課業枷鎖，做過最自由、最說走就走的「瘋狂冒險」是什麼？',
+              'Q12-2：大學階段，你是否曾嘗試過打工、創業、或籌備大型活動？那次「與社會初次接軌」帶給你什麼震撼？',
+              'Q12-3：面對大學畢業時的茫然，你是如何做出你的職涯或人生方向抉擇的？'
+            ],
+            example: {
+              bad: '大學去打工當家教，賺自己的零用錢。',
+              good: '大二那年暑假，我用打工存來的一萬塊，和同學租了兩台機車開始了環島之旅。我們在蘇花公路上遇到了暴雨，能見度不到三公尺，身旁都是呼嘯而過的大卡車。當我們全身濕透、瑟瑟發抖地騎到台東，看著放晴的蔚藍海岸時，大夥在路邊大吼大叫。那次旅程讓我深刻體會到，只要堅持走過最黑暗的路段，後面迎接你的必定是美景。'
+            }
+          },
+          {
+            themeId: 'major_freshman',
+            title: '6. 新鮮人 (Freshman)',
+            questions: [
+              'Q13-1：作為剛入社會的職場新鮮人，你拿到的第一份薪水是怎麼花掉的？代表什麼心境轉變？',
+              'Q13-2：剛進入職場時，你面臨過最大的「心態挫折」或「理想與現實的衝突」是什麼？你是怎麼克服的？',
+              'Q13-3：描述一個你作為新鮮人，在工作上第一次被主管認可、或独立（獨立）完成重要任務的成就瞬間。'
+            ],
+            example: {
+              bad: '剛開始上班時不太適應，常被主管念，後來熟練就好了。',
+              good: '剛入社會第一年，我負責一個大型提案的主簡報。前一天晚上我緊張到失眠，腦中不斷模擬被客戶問倒的尷尬畫面。簡報當天，當我深呼吸、站上投影幕前，我看著台下的眼睛，告訴自己『這是我努力了一個月的成果，沒有人比我更懂它』。當我順利講完並看到客戶點頭微笑的那一刻，我突然意識到，我已經不再是那個躲在學校保護傘下的學生，而是一個能獨當一面的職場人。'
             }
           }
         ]
       }
     };
-
+    
     // ── LOCAL STORAGE SETUP & STATE ──────────────────────────────────
     const STORAGE_KEY = 'uc-story-cards-v1';
     let appState = {
@@ -1660,7 +1699,7 @@
               <span class="saved-card-date">${dateStr}</span>
             </div>
             <h3 class="saved-card-title">${story.title || '未命名故事卡'}</h3>
-            <p class="saved-card-hook">${story.step3 || '尚未填寫故事簡介/Logline...'}</p>
+            <p class="saved-card-hook">${story.storyPlot || '尚未填寫故事大綱劇情...'}</p>
           </div>
           <div class="saved-card-actions">
             <button class="btn-icon-sm" onclick="editStoryCard('${story.id}')" title="編輯故事卡">✏️</button>
@@ -1755,7 +1794,7 @@
       const existingStory = appState.stories.find(s => s.theme === themeKey);
       
       if (existingStory) {
-        // Edit existing card and jump directly to Step 2 (故事打磨填寫)
+        // Edit existing card and jump directly to Step 1 (故事大綱)
         editStoryCard(existingStory.id);
       } else {
         // Setup state for new card
@@ -1766,9 +1805,7 @@
         
         // Clear forms
         document.getElementById('field-title').value = '';
-        document.getElementById('field-step1').value = '';
         document.getElementById('field-step2').value = '';
-        document.getElementById('field-step3').value = '';
         document.getElementById('field-story-plot').value = '';
         document.getElementById('field-story-exp').value = '';
         document.getElementById('field-story-purpose').value = '';
@@ -1810,13 +1847,11 @@
       appState.currentId = id;
       appState.activeContext = story.context;
       appState.activeTheme = story.theme;
-      appState.currentStep = 2; // Default to step 2 directly
+      appState.currentStep = 1; // Default to step 1 (Story Core) in the new UI
       
       // Populate fields
       document.getElementById('field-title').value = story.title || '';
-      document.getElementById('field-step1').value = story.step1 || '';
       document.getElementById('field-step2').value = story.step2 || '';
-      document.getElementById('field-step3').value = story.step3 || '';
       document.getElementById('field-story-plot').value = story.storyPlot || '';
       document.getElementById('field-story-exp').value = story.storyExp || '';
       document.getElementById('field-story-purpose').value = story.storyPurpose || '';
@@ -1827,7 +1862,7 @@
       document.getElementById('dashboard-view').style.display = 'none';
       document.getElementById('editor-view').className = 'editor-section active';
       
-      gotoStep(2);
+      gotoStep(1);
       syncFields();
     }
 
@@ -1898,14 +1933,8 @@
       
       if (!data) return;
       
-      // Ensure drafts structure exists for this story
-      if (!appState.drafts[appState.currentId]) {
-        appState.drafts[appState.currentId] = {};
-      }
-      const currentStoryDrafts = appState.drafts[appState.currentId];
-      
       // Render general instructions if available
-      if (data.full_example) {
+      if (data.full_example && appState.activeTheme === 'life_hobbies') {
         const accordion = document.createElement('div');
         accordion.className = 'example-accordion';
         accordion.style.marginBottom = '20px';
@@ -1932,16 +1961,10 @@
       
       // Render subsections
       data.sections.forEach((sec, index) => {
-        const sectionDiv = document.createElement('div');
+        if (sec.themeId !== appState.activeTheme) return; // Only show active theme questions
         
-        // Highlight section if it corresponds to the selected theme
-        const isHighlighted = (sec.themeId === appState.activeTheme);
-        if (isHighlighted) {
-          sectionDiv.className = 'highlighted-section';
-        } else {
-          sectionDiv.style.borderBottom = '1px solid rgba(232, 228, 220, 0.08)';
-          sectionDiv.style.paddingBottom = '24px';
-        }
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'highlighted-section';
         
         let qListHtml = sec.questions.map(q => `<li>${q}</li>`).join('');
         
@@ -1970,25 +1993,18 @@
           `;
         }
         
-        const draftValue = currentStoryDrafts[`sec_${index}`] || '';
-        
         sectionDiv.innerHTML = `
           <h4 style="font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; color: var(--accent-color); margin-top: 6px; margin-bottom: 8px;">${sec.title}</h4>
           <ul style="padding-left: 20px; font-size: 13px; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
             ${qListHtml}
           </ul>
           ${exampleHtml}
-          <div class="form-group" style="margin-top: 12px;">
-            <label class="form-label" style="font-size: 12px; font-weight: normal; color: var(--text-muted);">本節靈感草稿區（隨手筆記你的素材）</label>
-            <textarea class="form-textarea" placeholder="在這裡寫下你的想法或上述問句的回答粗稿，稍後可以在 Step 2 組裝打磨..." 
-              oninput="saveDraft('sec_${index}', this.value)">${draftValue}</textarea>
-          </div>
         `;
         
         container.appendChild(sectionDiv);
         
-        // Auto expand example accordion if highlighted
-        if (isHighlighted && sec.example) {
+        // Auto expand example accordion
+        if (sec.example) {
           setTimeout(() => {
             toggleAccordion(`acc-sec-${index}`);
           }, 100);
@@ -2052,7 +2068,6 @@
       // Fields values
       const title = document.getElementById('field-title').value.trim();
       const step2 = document.getElementById('field-step2').value.trim();
-      const step3 = document.getElementById('field-step3').value.trim();
       const storyPlot = document.getElementById('field-story-plot').value.trim();
       const storyExp = document.getElementById('field-story-exp').value.trim();
       const storyPurpose = document.getElementById('field-story-purpose').value.trim();
@@ -2062,7 +2077,6 @@
       // Set to preview DOM nodes with defaults
       document.getElementById('preview-title').textContent = title ? `《 ${title} 》` : '《 新的故事卡 》';
       document.getElementById('preview-intro').textContent = step2 || '填寫步驟 2 後，引導問句將在此即時更新...';
-      document.getElementById('preview-logline').textContent = step3 || '填寫步驟 3 後，具吸引力的故事簡介將會顯示於此...';
       
       document.getElementById('preview-plot').textContent = storyPlot || '因果關係與情節走向。';
       document.getElementById('preview-exp').textContent = storyExp || '五感、情緒與想法刻畫。';
@@ -2091,9 +2105,9 @@
         context: appState.activeContext,
         theme: appState.activeTheme,
         title: title,
-        step1: document.getElementById('field-step1').value.trim(),
+        step1: '',
         step2: document.getElementById('field-step2').value.trim(),
-        step3: document.getElementById('field-step3').value.trim(),
+        step3: '',
         storyPlot: document.getElementById('field-story-plot').value.trim(),
         storyExp: document.getElementById('field-story-exp').value.trim(),
         storyPurpose: document.getElementById('field-story-purpose').value.trim(),
@@ -2138,7 +2152,7 @@
       let contextName = '';
       if (story.context === 'professional') contextName = '💼 職業美化';
       if (story.context === 'life') contextName = '🌿 生活經驗';
-      if (story.context === 'major') contextName = '🏆 人生重大經驗';
+      if (story.context === 'major') contextName = '🏆 人生重大';
       
       const themeInfo = THEME_MAP[story.theme];
       const themeText = themeInfo ? ` · ${themeInfo.name}` : '';
@@ -2146,24 +2160,18 @@
       
       return `# UC Training 個人故事打磨卡：《${story.title}》
 - **故事脈絡**：${fullContextStr}
-- **素材原形**：${story.step1 || '無'}
 
 ---
 
-## 💬 步驟 2：引導問句 (Intro Question)
-> ${story.step2 || '無'}
-
-## ⚡ 步驟 3：故事簡介 (Logline / Hook)
-> ${story.step3 || '無'}
-
-## 🎬 步驟 4：故事精彩大綱 (Story Core)
+## 🎬 步驟 1：故事大綱 (Story Core)
 - **劇情 (Plot)**：${story.storyPlot || '無'}
 - **體驗 (Experience)**：${story.storyExp || '無'}
 - **目的 (Purpose)**：${story.storyPurpose || '無'}
 - **價值 (Value)**：${story.storyValue || '無'}
 
-## 🔄 步驟 5：對話接球問句 (Bridge)
-> ${story.step5 || '無'}
+## 💬 步驟 2：對話與標題設計
+- **引導問句 (Intro Question)**：${story.step2 || '無'}
+- **延伸問句 (Bridge Question)**：${story.step5 || '無'}
 
 ---
 © UC Training 關係解讀學習系統`;
@@ -2175,9 +2183,7 @@
         context: appState.activeContext,
         theme: appState.activeTheme,
         title: document.getElementById('field-title').value.trim() || '未命名故事',
-        step1: document.getElementById('field-step1').value.trim(),
         step2: document.getElementById('field-step2').value.trim(),
-        step3: document.getElementById('field-step3').value.trim(),
         storyPlot: document.getElementById('field-story-plot').value.trim(),
         storyExp: document.getElementById('field-story-exp').value.trim(),
         storyPurpose: document.getElementById('field-story-purpose').value.trim(),
