@@ -6,8 +6,8 @@
   <title>UC Training 情感教育 - Make it Complete</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <!-- Netlify Identity Widget -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     /* CSS RESET & VARIABLES */
@@ -225,6 +225,35 @@
       padding: 8px 0;
     }
 
+    .input-group {
+      width: 100%;
+    }
+    .custom-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(232, 228, 220, 0.02);
+      border: 1.5px solid var(--card-border);
+      border-radius: 20px;
+      color: var(--text-color);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+      margin-top: 4px;
+    }
+    .custom-input:focus {
+      border-color: var(--accent-color);
+      background: rgba(232, 168, 152, 0.04);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+    .error-msg {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: center;
+      min-height: 16px;
+    }
+
     /* DASHBOARD CARD DETAILS */
     .welcome-title {
       font-family: 'Noto Serif TC', serif;
@@ -389,16 +418,54 @@
       <div class="corner-bracket bracket-bl"></div>
       <div class="corner-bracket bracket-br"></div>
 
-      <div class="login-description">
-        使用你的<strong>學員帳號</strong>登入<br>
-        在任何設備都能存取你的學習紀錄
+      <!-- Warning if Supabase credentials are missing -->
+      <div id="config-warning" class="error-msg" style="color: var(--accent-color); font-size: 13px; padding: 12px; background: rgba(232,168,152,0.1); border-radius: 12px; margin-bottom: 18px; display: none; line-height: 1.6;">
+        ⚠️ 請在 <code>index.html</code> 的 Script 區段中設定您的 Supabase 認證（URL & Anon Key）以啟用登入與註冊功能。
       </div>
 
-      <button class="btn btn-primary" id="login-btn" onclick="netlifyIdentity.open('login')">
-        學員登入
-      </button>
-      <button class="btn btn-secondary" id="signup-btn" onclick="netlifyIdentity.open('signup')">
+      <div class="welcome-title" style="text-align: center; border-bottom: none; margin-bottom: 8px;">學員登入</div>
+      <div class="login-description" style="margin-bottom: 20px;">輸入您的電子信箱與密碼登入</div>
+
+      <form id="login-form" onsubmit="handleLoginSubmit(event)">
+        <div class="input-group">
+          <input type="email" id="login-email" placeholder="電子信箱 (Email)" required class="custom-input">
+        </div>
+        <div class="input-group" style="margin-top: 12px;">
+          <input type="password" id="login-password" placeholder="密碼 (Password)" required class="custom-input">
+        </div>
+        <div id="login-error" class="error-msg"></div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">登入系統</button>
+      </form>
+      <button class="btn btn-secondary" onclick="showCard('signup-card')">
         首次使用？立即註冊帳號
+      </button>
+    </div>
+
+    <!-- CARD 1.5: SIGNUP CARD -->
+    <div class="glass-card" id="signup-card">
+      <div class="corner-bracket bracket-tl"></div>
+      <div class="corner-bracket bracket-tr"></div>
+      <div class="corner-bracket bracket-bl"></div>
+      <div class="corner-bracket bracket-br"></div>
+
+      <div class="welcome-title" style="text-align: center; border-bottom: none; margin-bottom: 8px;">註冊學員帳號</div>
+      <div class="login-description" style="margin-bottom: 20px;">請填寫以下資料以建立您的帳號</div>
+
+      <form id="signup-form" onsubmit="handleSignupSubmit(event)">
+        <div class="input-group">
+          <input type="text" id="signup-name" placeholder="您的姓名 / 暱稱" required class="custom-input">
+        </div>
+        <div class="input-group" style="margin-top: 12px;">
+          <input type="email" id="signup-email" placeholder="電子信箱 (Email)" required class="custom-input">
+        </div>
+        <div class="input-group" style="margin-top: 12px;">
+          <input type="password" id="signup-password" placeholder="設定密碼 (至少 6 位數)" required minlength="6" class="custom-input">
+        </div>
+        <div id="signup-error" class="error-msg"></div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">確認註冊</button>
+      </form>
+      <button class="btn btn-secondary" onclick="showCard('login-card')">
+        已經有帳號？返回登入頁面
       </button>
     </div>
 
@@ -466,16 +533,25 @@
 
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // 初始化 Netlify Identity 指向原 Netlify 域名作為 Auth Backend
-    if (window.netlifyIdentity) {
-      netlifyIdentity.init({
-        APIUrl: 'https://uctrainingdating.netlify.app/.netlify/identity'
-      });
+    // ─── SUPABASE CONFIGURATION ──────────────────────────────────
+    // 請至您的 Supabase 控制台 (Settings > API) 取得以下資訊並填入：
+    const SUPABASE_URL       = "YOUR_SUPABASE_URL";
+    const SUPABASE_ANON_KEY  = "YOUR_SUPABASE_ANON_KEY";
+
+    let supabase = null;
+    try {
+      if (SUPABASE_URL !== "YOUR_SUPABASE_URL" && SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY") {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch(e) {
+      console.error("Supabase initialization failed:", e);
     }
 
     // ─── DOM REFERENCES ───────────────────────────────────────────
     const loginCard     = document.getElementById('login-card');
+    const signupCard    = document.getElementById('signup-card');
     const loadingCard   = document.getElementById('loading-card');
     const dashboardCard = document.getElementById('dashboard-card');
     const welcomeMsg    = document.getElementById('welcome-message');
@@ -485,8 +561,11 @@
 
     // ─── HELPERS ──────────────────────────────────────────────────
     function showCard(cardId) {
-      [loginCard, loadingCard, dashboardCard].forEach(c => c.classList.remove('active'));
-      document.getElementById(cardId).classList.add('active');
+      [loginCard, signupCard, loadingCard, dashboardCard].forEach(c => {
+        if (c) c.classList.remove('active');
+      });
+      const target = document.getElementById(cardId);
+      if (target) target.classList.add('active');
     }
 
     function getFormattedDate() {
@@ -537,7 +616,7 @@
         if (history.length > 10) history = history.slice(0, 10);
 
         try {
-          await user.update({ data: { login_history: history } });
+          await supabase.auth.updateUser({ data: { login_history: history } });
         } catch (e) {
           console.warn('Failed to update login history in metadata:', e);
         }
@@ -552,34 +631,93 @@
       showCard('dashboard-card');
     }
 
-    // ─── LOGOUT ───────────────────────────────────────────────────
-    window.handleLogout = function () {
-      netlifyIdentity.logout();
+    // ─── LOGIN & SIGNUP SUBMIT HANDLERS ───────────────────────────
+    window.handleLoginSubmit = async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errorDiv = document.getElementById('login-error');
+      errorDiv.textContent = '';
+
+      if (!supabase) return;
+      showCard('loading-card');
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        showCard('login-card');
+        errorDiv.textContent = `❌ 登入失敗: ${error.message}`;
+      }
     };
 
-    // ─── NETLIFY IDENTITY EVENT HOOKS ─────────────────────────────
-    netlifyIdentity.on('init', user => {
-      if (user) {
-        // Already logged in (token still valid) — don't record a new login
-        handleUserLoggedIn(user, false);
-      } else {
-        showCard('login-card');
+    window.handleSignupSubmit = async function(e) {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const errorDiv = document.getElementById('signup-error');
+      errorDiv.textContent = '';
+      errorDiv.style.color = '#ff6b6b';
+
+      if (!supabase) return;
+      showCard('loading-card');
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+            login_history: []
+          }
+        }
+      });
+
+      if (error) {
+        showCard('signup-card');
+        errorDiv.textContent = `❌ 註冊失敗: ${error.message}`;
+        return;
       }
-    });
 
-    netlifyIdentity.on('login', user => {
-      netlifyIdentity.close();
-      handleUserLoggedIn(user, true);  // record new login entry
-    });
+      if (data.user && data.session === null) {
+        showCard('signup-card');
+        errorDiv.style.color = 'var(--accent-color)';
+        errorDiv.textContent = `✉️ 驗證信已寄出！請至信箱點擊連結啟用帳號。`;
+      }
+    };
 
-    netlifyIdentity.on('logout', () => {
+    // ─── LOGOUT ───────────────────────────────────────────────────
+    window.handleLogout = async function () {
+      if (!supabase) return;
+      showCard('loading-card');
+      await supabase.auth.signOut();
+    };
+
+    // ─── SUPABASE AUTH STATE LISTENER ──────────────────────────────
+    if (supabase) {
+      // Listen to auth state updates
+      supabase.auth.onAuthStateChange((event, session) => {
+        if (session && session.user) {
+          if (event === 'SIGNED_IN') {
+            // Avoid recording duplicate logins on session refresh
+            const isFreshSignIn = !window.sessionStorage.getItem('supabase_session_recorded');
+            if (isFreshSignIn) {
+              window.sessionStorage.setItem('supabase_session_recorded', 'true');
+              handleUserLoggedIn(session.user, true);
+            } else {
+              handleUserLoggedIn(session.user, false);
+            }
+          } else {
+            handleUserLoggedIn(session.user, false);
+          }
+        } else {
+          window.sessionStorage.removeItem('supabase_session_recorded');
+          showCard('login-card');
+        }
+      });
+    } else {
+      document.getElementById('config-warning').style.display = 'block';
       showCard('login-card');
-    });
-
-    netlifyIdentity.on('error', err => {
-      console.error('Netlify Identity error:', err);
-      showCard('login-card');
-    });
+    }
   </script>
 
 </body>
