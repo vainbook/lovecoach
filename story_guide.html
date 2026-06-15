@@ -1329,11 +1329,7 @@
             
             <div class="luxury-card-title" id="preview-title">《 新的故事卡 》</div>
             
-            <!-- Reference Questions list inside the card -->
-            <div class="card-ref-questions" id="preview-ref-questions" style="margin-top: 12px; font-size: 11.5px; color: var(--text-muted); border-bottom: 1.5px dashed var(--card-border); padding-bottom: 12px; display: none; text-align: left;">
-              <!-- Will be synced dynamically -->
-            </div>
-            
+
             <!-- Step 2: Intro Bubble -->
             <div class="card-bubble">
               <div class="bubble-label">Intro Question / 引導對話開場</div>
@@ -1714,6 +1710,7 @@
           <div class="saved-card-actions">
             <button class="btn-icon-sm" onclick="editStoryCard('${story.id}')" title="編輯故事卡">✏️</button>
             <button class="btn-icon-sm" onclick="copyIndividualMarkdown('${story.id}')" title="複製 Markdown">📋</button>
+            <button class="btn-icon-sm" onclick="exportStoryCardAsImage('${story.id}')" title="導出圖片">🖼️</button>
             <button class="btn-icon-sm" style="margin-left: auto;" onclick="deleteStoryCard('${story.id}')" title="刪除故事卡">🗑</button>
           </div>
         `;
@@ -2075,27 +2072,7 @@
         previewBadge.className = 'context-badge';
       }
       
-      // Update reference questions inside card preview
-      const previewRefQuestions = document.getElementById('preview-ref-questions');
-      if (activeCtx && activeTh) {
-        const contextData = CONTEXT_DATA[activeCtx];
-        const section = contextData.sections.find(sec => sec.themeId === activeTh);
-        if (section) {
-          previewRefQuestions.innerHTML = `
-            <div style="font-weight: 700; margin-bottom: 4px; color: var(--accent-color);">🎯 自我挖掘問句引導：</div>
-            <ul style="padding-left: 16px; margin: 0; line-height: 1.5; list-style-type: decimal;">
-              ${section.questions.map(q => `<li>${q}</li>`).join('')}
-            </ul>
-          `;
-          previewRefQuestions.style.display = 'block';
-        } else {
-          previewRefQuestions.style.display = 'none';
-        }
-      } else {
-        previewRefQuestions.style.display = 'none';
-      }
-
-      // Fields values
+// Fields values
       const title = document.getElementById('field-title').value.trim();
       const step2 = document.getElementById('field-step2').value.trim();
       const storyPlot = document.getElementById('field-story-plot').value.trim();
@@ -2230,28 +2207,115 @@
       });
     }
 
-    function exportCardAsImage() {
-      const card = document.getElementById('card-preview');
-      if (!card) return;
-      
+    function exportStoryCardAsImageObject(story) {
       showToast('正在生成卡片圖片，請稍候...');
       
-      html2canvas(card, {
+      let badgeClass = '';
+      let contextText = '';
+      if (story.context === 'professional') {
+        badgeClass = 'badge-professional';
+        contextText = '💼 職業美化';
+      } else if (story.context === 'life') {
+        badgeClass = 'badge-life';
+        contextText = '🌿 生活經驗';
+      } else if (story.context === 'major') {
+        badgeClass = 'badge-major';
+        contextText = '🏆 人生重大';
+      }
+      
+      const themeInfo = THEME_MAP[story.theme];
+      const themeText = themeInfo ? ` · ${themeInfo.name}` : '';
+      const fullBadgeText = `${contextText}${themeText}`;
+      
+      // Create a temporary off-screen container
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0';
+      tempContainer.style.width = '375px';
+      document.body.appendChild(tempContainer);
+      
+      tempContainer.innerHTML = `
+        <div class="luxury-card" style="margin: 0; box-shadow: none;">
+          <div class="luxury-card-header">
+            <span class="card-brand">UC TRAINING // STORY CARD</span>
+            <span class="context-badge ${badgeClass}">${fullBadgeText}</span>
+          </div>
+          
+          <div class="luxury-card-title">《 ${story.title || '未命名故事卡'} 》</div>
+          
+          <div class="card-bubble">
+            <div class="bubble-label">Intro Question / 引導對話開場</div>
+            <div class="bubble-text">${story.step2 || '無'}</div>
+          </div>
+          
+          <div class="card-story-body">
+            <div class="story-dim">
+              <div class="dim-header">🎬 劇情 / Plot Outline</div>
+              <div class="dim-text">${story.storyPlot || '無'}</div>
+            </div>
+            <div class="story-dim">
+              <div class="dim-header">🌊 體驗 / Internal Experience</div>
+              <div class="dim-text">${story.storyExp || '無'}</div>
+            </div>
+            <div class="story-dim">
+              <div class="dim-header">🎯 目的 / Inner Motivation</div>
+              <div class="dim-text">${story.storyPurpose || '無'}</div>
+            </div>
+            <div class="story-dim">
+              <div class="dim-header">💎 價值 / Biological Attraction</div>
+              <div class="dim-text">${story.storyValue || '無'}</div>
+            </div>
+          </div>
+          
+          <div class="card-bridge-container">
+            <div class="bridge-icon">➔</div>
+            <div class="bridge-body">
+              <div class="bridge-label">Bridge Question / 對話接球與過渡</div>
+              <div class="bridge-text">${story.step5 || '無'}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      html2canvas(tempContainer.firstElementChild, {
         backgroundColor: '#131B2E',
-        scale: 2,
+        scale: 2.5,
         useCORS: true,
         logging: false
       }).then(canvas => {
         const link = document.createElement('a');
-        const title = document.getElementById('field-title').value.trim() || '未命名故事卡';
-        link.download = `UC-StoryCard-${title}.png`;
+        link.download = `UC-StoryCard-${story.title || '未命名'}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
         showToast('卡片圖片已成功導出！');
+        document.body.removeChild(tempContainer);
       }).catch(err => {
         console.error('Failed to export image', err);
-        alert('導出圖片失敗，請重試或截圖保存。');
+        alert('導出圖片失敗');
+        document.body.removeChild(tempContainer);
       });
+    }
+
+    function exportStoryCardAsImage(id) {
+      const story = appState.stories.find(s => s.id === id);
+      if (!story) return;
+      exportStoryCardAsImageObject(story);
+    }
+
+    function exportCardAsImage() {
+      const tempStory = {
+        context: appState.activeContext,
+        theme: appState.activeTheme,
+        title: document.getElementById('field-title').value.trim() || '未命名故事',
+        step2: document.getElementById('field-step2').value.trim(),
+        storyPlot: document.getElementById('field-story-plot').value.trim(),
+        storyExp: document.getElementById('field-story-exp').value.trim(),
+        storyPurpose: document.getElementById('field-story-purpose').value.trim(),
+        storyValue: document.getElementById('field-story-value').value.trim(),
+        step5: document.getElementById('field-step5').value.trim()
+      };
+      exportStoryCardAsImageObject(tempStory);
     }
 
     function copyIndividualMarkdown(id) {
