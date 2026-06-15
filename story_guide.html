@@ -1052,10 +1052,21 @@
       gap: 8px;
       font-size: 12.5px;
       color: var(--text-muted);
-      transition: color 0.3s;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      margin: 0 -8px;
+    }
+    .progress-item:hover {
+      background-color: var(--card-hover);
+      color: var(--accent-color);
     }
     .progress-item.completed {
       color: var(--text-color);
+    }
+    .progress-item.completed:hover {
+      color: var(--accent-color);
     }
     .progress-item-checkbox {
       width: 16px;
@@ -1210,11 +1221,7 @@
         
         <!-- STEP NAV -->
         <div class="step-navigator">
-          <div class="step-tab active" id="tab-step0" onclick="gotoStep(0)">
-            <div class="step-tab-num">Step 0</div>
-            <div class="step-tab-label">選定故事脈絡</div>
-          </div>
-          <div class="step-tab" id="tab-step1" onclick="gotoStep(1)">
+          <div class="step-tab active" id="tab-step1" onclick="gotoStep(1)">
             <div class="step-tab-num">Step 1</div>
             <div class="step-tab-label">靈感自我挖掘</div>
           </div>
@@ -1224,55 +1231,8 @@
           </div>
         </div>
         
-        <!-- STEP 0 PANEL: CONTEXT SELECTOR -->
-        <div class="editor-card step-panel active" id="panel-step0">
-          <div class="editor-card-header">
-            <h3 class="editor-card-title">【步驟 0】選定故事脈絡</h3>
-            <p class="editor-card-subtitle">請挑選你要整理故事的場景脈絡。不同的脈絡將提供不同的引導問題與對應範例。</p>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">選擇脈絡分類</label>
-            <div class="context-selector">
-              <div class="context-option" id="opt-professional" onclick="selectContext('professional')">
-                <span class="context-option-icon">💼</span>
-                <span class="context-option-name">職業美化</span>
-              </div>
-              <div class="context-option" id="opt-life" onclick="selectContext('life')">
-                <span class="context-option-icon">🌿</span>
-                <span class="context-option-name">生活經驗</span>
-              </div>
-              <div class="context-option" id="opt-major" onclick="selectContext('major')">
-                <span class="context-option-icon">🏆</span>
-                <span class="context-option-name">人生重大經驗</span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Context description box -->
-          <div class="compare-box compare-good" id="context-desc-box" style="display: none;">
-            <div class="compare-label">💡 脈絡思維指引</div>
-            <p id="context-desc-text" style="font-size: 13px; line-height: 1.6;"></p>
-          </div>
-
-          <!-- Theme Selector -->
-          <div class="form-group" id="theme-selector-group" style="display: none; margin-top: 20px;">
-            <label class="form-label">選擇欲整理的故事主題 <span class="form-label-desc">（每個故事代表一個核心特質）</span></label>
-            <div id="theme-option-list" class="theme-option-list">
-              <!-- Dynamically populated in JavaScript -->
-            </div>
-          </div>
-          
-          <div class="step-actions">
-            <div></div> <!-- placeholder -->
-            <button class="btn btn-primary" id="btn-step0-next" onclick="nextStep()" disabled>
-              <span>前進下一步 →</span>
-            </button>
-          </div>
-        </div>
-        
         <!-- STEP 1 PANEL: BRAINSTORMING -->
-        <div class="editor-card step-panel" id="panel-step1">
+        <div class="editor-card step-panel active" id="panel-step1">
           <div class="editor-card-header">
             <h3 class="editor-card-title">【步驟 1】靈感自我挖掘</h3>
             <p class="editor-card-subtitle">利用層層遞進的感性問句，把腦中的真實情節勾勒出來。你可以一邊閱讀問題、展開範例，並在下方的靈感草稿區隨手記錄靈感。</p>
@@ -1284,9 +1244,7 @@
           </div>
           
           <div class="step-actions">
-            <button class="btn btn-secondary" onclick="prevStep()">
-              <span>← 上一步</span>
-            </button>
+            <div></div> <!-- placeholder -->
             <button class="btn btn-primary" onclick="nextStep()">
               <span>前進下一步 →</span>
             </button>
@@ -1755,7 +1713,7 @@
           const compClass = item.completed ? 'completed' : '';
           const checkIcon = item.completed ? '✓' : '';
           return `
-            <div class="progress-item ${compClass}">
+            <div class="progress-item ${compClass}" onclick="clickProgressItem('${item.key}')">
               <span class="progress-item-checkbox">${checkIcon}</span>
               <span class="progress-item-text" title="${THEME_MAP[item.key].desc}">${item.name}</span>
             </div>
@@ -1789,6 +1747,43 @@
       `;
     }
 
+    function clickProgressItem(themeKey) {
+      const info = THEME_MAP[themeKey];
+      if (!info) return;
+      
+      const contextKey = info.context;
+      const existingStory = appState.stories.find(s => s.theme === themeKey);
+      
+      if (existingStory) {
+        // Edit existing card and jump directly to Step 2 (故事打磨填寫)
+        editStoryCard(existingStory.id);
+      } else {
+        // Setup state for new card
+        appState.currentId = generateId();
+        appState.activeContext = contextKey;
+        appState.activeTheme = themeKey;
+        appState.currentStep = 1;
+        
+        // Clear forms
+        document.getElementById('field-title').value = '';
+        document.getElementById('field-step1').value = '';
+        document.getElementById('field-step2').value = '';
+        document.getElementById('field-step3').value = '';
+        document.getElementById('field-story-plot').value = '';
+        document.getElementById('field-story-exp').value = '';
+        document.getElementById('field-story-purpose').value = '';
+        document.getElementById('field-story-value').value = '';
+        document.getElementById('field-step5').value = '';
+        
+        // View switches
+        document.getElementById('dashboard-view').style.display = 'none';
+        document.getElementById('editor-view').className = 'editor-section active';
+        
+        gotoStep(1);
+        syncFields();
+      }
+    }
+
     function deleteStoryCard(id) {
       if (confirm('確定要刪除這張故事卡嗎？此操作無法撤銷。')) {
         appState.stories = appState.stories.filter(s => s.id !== id);
@@ -1801,35 +1796,11 @@
 
     // ── CREATOR/EDITOR FLOW ───────────────────────────────────────────
     function launchNewCreator() {
-      // Setup state for new card
-      appState.currentId = generateId();
-      appState.activeContext = null;
-      appState.activeTheme = null;
-      appState.currentStep = 0;
-      
-      // Clear forms
-      document.getElementById('field-title').value = '';
-      document.getElementById('field-step1').value = '';
-      document.getElementById('field-step2').value = '';
-      document.getElementById('field-step3').value = '';
-      document.getElementById('field-story-plot').value = '';
-      document.getElementById('field-story-exp').value = '';
-      document.getElementById('field-story-purpose').value = '';
-      document.getElementById('field-story-value').value = '';
-      document.getElementById('field-step5').value = '';
-      
-      // Set options to inactive
-      document.querySelectorAll('.context-option').forEach(el => el.classList.remove('active'));
-      document.getElementById('context-desc-box').style.display = 'none';
-      document.getElementById('theme-selector-group').style.display = 'none';
-      document.getElementById('btn-step0-next').disabled = true;
-      
-      // View switches
-      document.getElementById('dashboard-view').style.display = 'none';
-      document.getElementById('editor-view').className = 'editor-section active';
-      
-      gotoStep(0);
-      syncFields();
+      const pboard = document.getElementById('progress-board');
+      if (pboard) {
+        pboard.scrollIntoView({ behavior: 'smooth' });
+        showToast('請自下方的「故事庫解鎖進度表」點擊您想打磨的話題開始！');
+      }
     }
 
     function editStoryCard(id) {
@@ -1839,7 +1810,7 @@
       appState.currentId = id;
       appState.activeContext = story.context;
       appState.activeTheme = story.theme;
-      appState.currentStep = 0;
+      appState.currentStep = 2; // Default to step 2 directly
       
       // Populate fields
       document.getElementById('field-title').value = story.title || '';
@@ -1852,16 +1823,11 @@
       document.getElementById('field-story-value').value = story.storyValue || '';
       document.getElementById('field-step5').value = story.step5 || '';
       
-      // Highlight selected context
-      selectContext(story.context);
-      // Select theme
-      selectTheme(story.theme);
-      
       // View switches
       document.getElementById('dashboard-view').style.display = 'none';
       document.getElementById('editor-view').className = 'editor-section active';
       
-      gotoStep(0);
+      gotoStep(2);
       syncFields();
     }
 
@@ -1880,26 +1846,24 @@
 
     // ── STEP NAVIGATOR ───────────────────────────────────────────────
     function gotoStep(step) {
-      if (step > 0 && !appState.activeContext) {
-        alert('請先選擇一個故事脈絡分類！');
-        return;
-      }
-      if (step > 0 && !appState.activeTheme) {
-        alert('請選定故事的具體主題！');
+      if (!appState.activeContext || !appState.activeTheme) {
+        alert('請先選擇一個故事話題！');
         return;
       }
       
       appState.currentStep = step;
       
       // Update Tab UI
-      document.querySelectorAll('.step-tab').forEach((tab, index) => {
-        tab.classList.toggle('active', index === step);
-        tab.classList.toggle('completed', index < step);
+      document.querySelectorAll('.step-tab').forEach((tab) => {
+        const tabStep = parseInt(tab.id.replace('tab-step', ''));
+        tab.classList.toggle('active', tabStep === step);
+        tab.classList.toggle('completed', tabStep < step);
       });
       
       // Update Panel UI
-      document.querySelectorAll('.step-panel').forEach((panel, index) => {
-        panel.classList.toggle('active', index === step);
+      document.querySelectorAll('.step-panel').forEach((panel) => {
+        const panelStep = parseInt(panel.id.replace('panel-step', ''));
+        panel.classList.toggle('active', panelStep === step);
       });
       
       if (step === 1) {
@@ -1917,72 +1881,12 @@
     }
 
     function prevStep() {
-      if (appState.currentStep > 0) {
+      if (appState.currentStep > 1) {
         gotoStep(appState.currentStep - 1);
       }
     }
 
-    // ── SELECT CONTEXT & THEME ───────────────────────────────────────
-    function selectContext(contextKey) {
-      appState.activeContext = contextKey;
-      appState.activeTheme = null; // Reset theme selection when context changes
-      
-      // UI feedback for Context
-      document.querySelectorAll('.context-option').forEach(el => el.classList.remove('active'));
-      document.getElementById(`opt-${contextKey}`).classList.add('active');
-      
-      const details = CONTEXT_DATA[contextKey];
-      const descBox = document.getElementById('context-desc-box');
-      const descText = document.getElementById('context-desc-text');
-      
-      descText.textContent = details.desc;
-      descBox.style.display = 'block';
-      descBox.className = 'compare-box compare-good';
-      
-      // Populate theme selector list
-      renderThemeSelector(contextKey);
-      document.getElementById('theme-selector-group').style.display = 'block';
-      
-      document.getElementById('btn-step0-next').disabled = true;
-      
-      syncFields();
-    }
-
-    function renderThemeSelector(contextKey) {
-      const container = document.getElementById('theme-option-list');
-      container.innerHTML = '';
-      
-      Object.entries(THEME_MAP).forEach(([themeKey, info]) => {
-        if (info.context !== contextKey) return;
-        
-        const card = document.createElement('div');
-        card.className = 'theme-option-card';
-        card.id = `opt-theme-${themeKey}`;
-        card.onclick = () => selectTheme(themeKey);
-        
-        card.innerHTML = `
-          <div>
-            <div style="font-weight:700;">${info.name}</div>
-            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">${info.desc}</div>
-          </div>
-          <div class="theme-option-check">✓</div>
-        `;
-        
-        container.appendChild(card);
-      });
-    }
-
-    function selectTheme(themeKey) {
-      appState.activeTheme = themeKey;
-      
-      // UI feedback for Theme
-      document.querySelectorAll('.theme-option-card').forEach(el => el.classList.remove('active'));
-      const card = document.getElementById(`opt-theme-${themeKey}`);
-      if (card) card.classList.add('active');
-      
-      document.getElementById('btn-step0-next').disabled = false;
-      syncFields();
-    }
+    // Context and Theme selection is now handled directly via the dashboard progress board.
 
     // ── RENDER DYNAMIC QUESTIONS & EXAMPLES ─────────────────────────
     function renderBrainstormQuestions() {
