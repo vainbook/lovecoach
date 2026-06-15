@@ -412,7 +412,7 @@
     </header>
 
     <!-- CARD 1: LOGIN CARD -->
-    <div class="glass-card" id="login-card">
+    <div class="glass-card active" id="login-card">
       <div class="corner-bracket bracket-tl"></div>
       <div class="corner-bracket bracket-tr"></div>
       <div class="corner-bracket bracket-bl"></div>
@@ -718,6 +718,22 @@
       document.getElementById('config-warning').style.display = 'block';
       showCard('login-card');
     }
+
+    // ─── INITIAL SESSION CHECK ─────────────────────────────────────
+    async function initSession() {
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user) {
+          handleUserLoggedIn(session.user, false);
+        } else {
+          showCard('login-card');
+        }
+      } else {
+        document.getElementById('config-warning').style.display = 'block';
+        showCard('login-card');
+      }
+    }
+    initSession();
   </script>
 
 </body>
