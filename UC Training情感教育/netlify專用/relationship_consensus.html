@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交往前共識清單 — UC Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#131B2E;--beige:#E8E4DC;--salmon:#E8A898;--blue:#8EC8E8;
+  --salmon-g:rgba(232,168,152,.25);--blue-g:rgba(142,200,232,.25);
+  --muted:rgba(232,228,220,.55);--border:rgba(232,228,220,.13);
+  --card:rgba(232,228,220,.035);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--navy);color:var(--beige);min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(0deg,rgba(232,228,220,.012) 0 1px,transparent 1px 52px),
+             repeating-linear-gradient(90deg,rgba(232,228,220,.012) 0 1px,transparent 1px 52px)}
+
+/* ── TOP NAV ── */
+.top-nav{position:sticky;top:0;z-index:50;background:rgba(19,27,46,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;
+  justify-content:space-between;gap:12px}
+.nav-brand{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--salmon);white-space:nowrap}
+.nav-right{display:flex;gap:8px;align-items:center}
+.btn-sm{font-family:'Noto Serif TC',serif;font-size:12px;padding:6px 14px;border-radius:18px;
+  border:1.5px solid var(--border);background:transparent;color:var(--beige);cursor:pointer;
+  transition:all .2s;text-decoration:none;white-space:nowrap;display:inline-block}
+.btn-sm:hover{border-color:var(--salmon);color:var(--salmon)}
+.btn-back {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 18px;
+  border: 1.5px solid var(--border);
+  background-color: var(--card);
+  color: var(--beige);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  white-space: nowrap;
+}
+.btn-back:hover {
+  border-color: var(--salmon);
+  background-color: rgba(232, 168, 152, 0.08);
+  color: var(--salmon);
+  box-shadow: 0 0 10px var(--salmon-g);
+}
+.btn-sm.print{background:linear-gradient(135deg,var(--salmon),#f7cac1);border-color:transparent;color:var(--navy);font-weight:700}
+.btn-sm.print:hover{filter:brightness(1.08)}
+
+/* ── PROGRESS BAR ── */
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--salmon),var(--blue));
+  width:0;z-index:100;transition:width .4s ease}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:48px 20px 24px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Space Grotesk',sans-serif;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--salmon);
+  border:1px solid rgba(232,168,152,.4);border-radius:20px;padding:5px 14px;margin-bottom:18px}
+.hero h1{font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(24px,5vw,36px);
+  letter-spacing:.05em;margin-bottom:14px}
+.hero-desc{font-size:14px;line-height:1.9;color:var(--muted);max-width:520px;margin:0 auto 20px}
+.hero-quote{font-family:'Noto Serif TC',serif;font-style:italic;font-size:13px;color:var(--muted);
+  border-left:2px solid var(--salmon);padding:10px 18px;text-align:left;
+  background:rgba(232,168,152,.04);border-radius:0 8px 8px 0;margin-bottom:0;line-height:1.8}
+
+/* ── PERSON NAME LABELS ── */
+.person-bar{position:relative;z-index:1;max-width:720px;margin:24px auto 0;padding:0 20px}
+.person-card-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.person-card{background:var(--card);border:2px solid var(--border);border-radius:14px;
+  padding:14px 18px;text-align:center}
+.person-card.p1{border-color:rgba(232,168,152,.4)}
+.person-card.p2{border-color:rgba(142,200,232,.4)}
+.person-card .dot{width:26px;height:26px;border-radius:50%;margin:0 auto 8px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  font-family:'Space Grotesk',sans-serif}
+.person-card.p1 .dot{background:var(--salmon);color:var(--navy)}
+.person-card.p2 .dot{background:var(--blue);color:var(--navy)}
+.person-card .name-input{background:transparent;border:none;border-bottom:1px dashed rgba(232,228,220,.3);
+  color:var(--beige);font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;
+  text-align:center;width:100%;outline:none;padding:2px 4px;transition:border-color .2s}
+.person-card.p1 .name-input:focus{border-color:var(--salmon)}
+.person-card.p2 .name-input:focus{border-color:var(--blue)}
+.person-card .hint{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+.legend{position:relative;z-index:1;max-width:720px;margin:12px auto 0;padding:0 20px;
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
+
+/* ── TOC ── */
+.toc{position:relative;z-index:1;max-width:720px;margin:24px auto 0;padding:0 20px}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.toc-item{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:10px 13px;text-decoration:none;color:var(--beige);font-size:12px;transition:all .2s}
+.toc-item:hover{background:rgba(232,168,152,.06);border-color:var(--salmon);transform:translateY(-1px)}
+.toc-num{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;color:var(--salmon);min-width:18px}
+
+/* ── CONTENT ── */
+.content{position:relative;z-index:1;max-width:720px;margin:28px auto 0;padding:0 20px 80px;
+  display:flex;flex-direction:column;gap:24px}
+
+/* ── SECTION CARD ── */
+.sc{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;
+  transition:box-shadow .3s}
+.sc:hover{box-shadow:0 8px 28px rgba(0,0,0,.22)}
+.sc-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px}
+.sc-num{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;letter-spacing:.15em;
+  color:var(--salmon);padding-top:3px;min-width:28px}
+.sc-title{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:700;line-height:1.4;margin-bottom:3px}
+.sc-sub{font-size:11px;color:var(--muted)}
+.sc-body{padding:20px 24px;display:flex;flex-direction:column;gap:24px}
+
+/* ── QUESTION BLOCK ── */
+.qb{border-bottom:1px solid rgba(232,228,220,.06);padding-bottom:20px}
+.qb:last-child{border-bottom:none;padding-bottom:0}
+.ql{font-size:13.5px;font-weight:500;line-height:1.7;margin-bottom:12px}
+.qtag{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;padding:2px 7px;border-radius:9px;margin-left:5px;vertical-align:middle}
+.tag-m{background:rgba(142,200,232,.15);color:#8EC8E8;border:1px solid rgba(142,200,232,.3)}
+.tag-r{background:rgba(200,168,232,.15);color:#C8A8E8;border:1px solid rgba(200,168,232,.3)}
+.tag-o{background:rgba(184,232,200,.15);color:#B8E8C8;border:1px solid rgba(184,232,200,.3)}
+.qhint{font-size:11.5px;color:var(--muted);font-style:italic;margin-bottom:10px;line-height:1.6}
+
+/* ── OPTION ROW ── */
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:32px 1fr 32px;align-items:center;gap:8px;
+  padding:9px 10px;border-radius:10px;border:1px solid transparent;
+  transition:all .2s;user-select:none;min-height:44px}
+.opt-ind{width:28px;height:28px;border-radius:50%;border:2px solid rgba(232,228,220,.2);
+  display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:12px;font-weight:700;
+  font-family:'Space Grotesk',sans-serif;flex-shrink:0;cursor:pointer;}
+.opt-ind[data-p="1"]{border-color:rgba(232,168,152,.35);color:rgba(232,168,152,.5)}
+.opt-ind[data-p="1"]:hover{background:rgba(232,168,152,.15);border-color:var(--salmon);color:var(--salmon)}
+.opt-ind[data-p="2"]{border-color:rgba(142,200,232,.35);color:rgba(142,200,232,.5)}
+.opt-ind[data-p="2"]:hover{background:rgba(142,200,232,.15);border-color:var(--blue);color:var(--blue)}
+.opt-ind.p1-on{background:var(--salmon);border-color:var(--salmon);color:var(--navy)}
+.opt-ind.p2-on{background:var(--blue);border-color:var(--blue);color:var(--navy)}
+.opt-text{font-size:13px;line-height:1.55;color:var(--beige);text-align:center}
+.opt.both{background:rgba(200,180,220,.06);border-color:rgba(200,180,220,.2)}
+.opt.only-p1{background:rgba(232,168,152,.05);border-color:rgba(232,168,152,.2)}
+.opt.only-p2{background:rgba(142,200,232,.05);border-color:rgba(142,200,232,.2)}
+.opt-text{font-size:13px;line-height:1.55;color:var(--beige);text-align:center}
+.opt-text input.other{background:transparent;border:none;border-bottom:1px dashed rgba(232,228,220,.25);
+  color:var(--beige);font-family:inherit;font-size:12px;padding:1px 4px;outline:none;
+  width:140px;transition:border-color .2s}
+.opt-text input.other:focus{border-color:var(--salmon)}
+
+/* ── TWO-PERSON TEXT AREA ── */
+.dual-text{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.dual-text-single{display:flex;flex-direction:column;gap:6px}
+.dual-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:600;padding:2px 0}
+.dl-p1{color:var(--salmon)}
+.dl-p2{color:var(--blue)}
+.dtarea{width:100%;min-height:90px;background:rgba(232,228,220,.03);border:1.5px solid var(--border);
+  border-radius:10px;color:var(--beige);font-family:inherit;font-size:13px;line-height:1.7;
+  padding:10px 13px;resize:vertical;outline:none;transition:border-color .25s,background .25s}
+.dtarea.p1:focus{border-color:var(--salmon);background:rgba(232,168,152,.04)}
+.dtarea.p2:focus{border-color:var(--blue);background:rgba(142,200,232,.04)}
+.dtarea::placeholder{color:rgba(232,228,220,.2)}
+
+/* ── RANK ── */
+.rank-rows{display:flex;flex-direction:column;gap:7px}
+.rank-row{display:grid;grid-template-columns:28px 28px 1fr;align-items:center;gap:8px;
+  padding:9px 10px;border-radius:10px;border:1px solid var(--border);background:rgba(232,228,220,.02)}
+.rank-in{width:26px;text-align:center;background:rgba(232,228,220,.06);border-radius:5px;
+  color:var(--salmon);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
+  padding:4px;outline:none;transition:border-color .2s;border:1px solid rgba(232,228,220,.2)}
+.rank-in:focus{border-color:var(--salmon)}
+.rank-in.p2{color:var(--blue)}
+.rank-in.p2:focus{border-color:var(--blue)}
+.rank-lbl{font-size:13px;color:var(--beige)}
+
+/* ── DIVIDER ── */
+.sdiv{text-align:center;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.18em;
+  color:rgba(232,168,152,.4);padding:0 8px;display:flex;align-items:center;gap:12px}
+.sdiv::before,.sdiv::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ── CLOSING ── */
+.closing{position:relative;z-index:1;max-width:720px;margin:0 auto 60px;padding:0 20px}
+.closing-in{background:rgba(232,168,152,.06);border:1px solid rgba(232,168,152,.22);
+  border-radius:18px;padding:32px;text-align:center}
+.c-emoji{font-size:28px;margin-bottom:14px}
+.c-title{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:700;color:var(--salmon);margin-bottom:12px}
+.c-text{font-size:13.5px;line-height:1.9;color:rgba(232,228,220,.75);max-width:500px;margin:0 auto 20px}
+.c-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-cta{font-family:'Noto Serif TC',serif;font-weight:700;font-size:14px;letter-spacing:.07em;
+  padding:12px 26px;border-radius:22px;border:none;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-cta.pri{background:linear-gradient(135deg,var(--salmon),#f7cac1);color:var(--navy);box-shadow:0 4px 14px var(--salmon-g)}
+.btn-cta.pri:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--salmon-g)}
+.btn-cta.sec{background:transparent;border:1.5px solid var(--border);color:var(--beige)}
+.btn-cta.sec:hover{border-color:var(--salmon);color:var(--salmon)}
+
+@media print{.top-nav,#pbar,.c-actions{display:none!important}body{background:#fff;color:#111}}
+@media(max-width:560px){
+  .hero{padding:36px 16px 18px}.content,.toc,.person-bar,.closing{padding-left:14px;padding-right:14px}
+  .sc-body{padding:14px 16px}.dual-text{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr 1fr}
+  .rank-row{grid-template-columns:24px 24px 1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="pbar"></div>
+
+<nav class="top-nav">
+  <span class="nav-brand">UC Training · 交往前共識清單</span>
+  <div class="nav-right">
+    <a href="index.html" class="btn-back">← 返回首頁</a>
+    <button class="btn-sm print" onclick="window.print()">🖨 列印</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">💑 UC Training · 交往前必做</div>
+  <h1>交往前共識清單</h1>
+  <p class="hero-desc">這不是一場是非測驗，而是幫助你們共同繪製<strong>專屬愛情設計圖</strong>的第一步。<br>請選擇你是哪一位，然後開始填答。</p>
+  <div class="hero-quote">「找個最放鬆的位置，為自己倒杯舒服的飲料。請盡情對彼此坦誠——把這當成一趟美好的深度對話旅程，準備好我們就開始囉！」</div>
+</section>
+
+<!-- PERSON NAME LABELS -->
+<section class="person-bar">
+  <div class="person-card-wrap">
+    <div class="person-card p1">
+      <div class="dot">P1</div>
+      <input class="name-input" id="name-p1" type="text" placeholder="伴侶 A" maxlength="10" oninput="saveMeta()">
+      <div class="hint">← 點左側圓圈選擇</div>
+    </div>
+    <div class="person-card p2">
+      <div class="dot">P2</div>
+      <input class="name-input" id="name-p2" type="text" placeholder="伴侶 B" maxlength="10" oninput="saveMeta()">
+      <div class="hint">點右側圓圈選擇 →</div>
+    </div>
+  </div>
+</section>
+
+<div class="legend">
+  <span><span class="legend-dot" style="background:var(--salmon)"></span>左側 = <span id="leg-p1">伴侶 A</span> 的選擇</span>
+  <span><span class="legend-dot" style="background:var(--blue)"></span>右側 = <span id="leg-p2">伴侶 B</span> 的選擇</span>
+</div>
+
+<!-- TOC -->
+<section class="toc">
+  <div class="toc-grid">
+    <a class="toc-item" href="#s1"><span class="toc-num">01</span>感情目標與期待</a>
+    <a class="toc-item" href="#s2"><span class="toc-num">02</span>異性界線與社交</a>
+    <a class="toc-item" href="#s3"><span class="toc-num">03</span>金錢觀與開銷</a>
+    <a class="toc-item" href="#s4"><span class="toc-num">04</span>生活習慣與時間</a>
+    <a class="toc-item" href="#s5"><span class="toc-num">05</span>未來藍圖</a>
+    <a class="toc-item" href="#s6"><span class="toc-num">06</span>底線與退場機制</a>
+    <a class="toc-item" href="#s7"><span class="toc-num">07</span>最後的浪漫彩蛋</a>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="content">
+
+<!-- ── S1 ── -->
+<div class="sc" id="s1">
+  <div class="sc-head"><span class="sc-num">01</span>
+    <div><div class="sc-title">感情目標與期待</div><div class="sc-sub">我們在同一條船上嗎？</div></div>
+  </div>
+  <div class="sc-body">
+
+    <div class="qb"><div class="ql">1. 你目前對感情的期待是什麼？</div>
+    <div class="opts">
+      <div class="opt" data-q="s1q1a">
+        <div class="opt-ind" data-p="1"></div>
+        <div class="opt-text">尋找能結婚／長期穩定走下去的對象</div>
+        <div class="opt-ind" data-p="2"></div>
+      </div>
+      <div class="opt" data-q="s1q1b">
+        <div class="opt-ind" data-p="1"></div>
+        <div class="opt-text">想要有個人陪伴，順其自然發展</div>
+        <div class="opt-ind" data-p="2"></div>
+      </div>
+      <div class="opt" data-q="s1q1c">
+        <div class="opt-ind" data-p="1"></div>
+        <div class="opt-text">短期交往，開心談戀愛就好</div>
+        <div class="opt-ind" data-p="2"></div>
+      </div>
+      <div class="opt" data-q="s1q1d">
+        <div class="opt-ind" data-p="1"></div>
+        <div class="opt-text">其實還沒確定，走一步算一步</div>
+        <div class="opt-ind" data-p="2"></div>
+      </div>
+    </div></div>
+
+    <div class="qb"><div class="ql">2. 你如何定義「正式交往」？</div>
+    <div class="opts">
+      <div class="opt" data-q="s1q2a"><div class="opt-ind" data-p="1"></div><div class="opt-text">必須有清楚明確的口頭告白</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q2b"><div class="opt-ind" data-p="1"></div><div class="opt-text">只要牽手、親吻等親密肢體接觸就算</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q2c"><div class="opt-ind" data-p="1"></div><div class="opt-text">雙方有默契就好，不用特別說破</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">3. 交往後最在乎的事情？<span class="qtag tag-m">可圈3點</span></div>
+    <div class="opts">
+      <div class="opt" data-q="s1q3a"><div class="opt-ind" data-p="1"></div><div class="opt-text">常獲讚美與肯定</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3b"><div class="opt-ind" data-p="1"></div><div class="opt-text">專屬的深度約會</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3c"><div class="opt-ind" data-p="1"></div><div class="opt-text">隨時能擁抱牽手</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3d"><div class="opt-ind" data-p="1"></div><div class="opt-text">主動分擔大小事</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3e"><div class="opt-ind" data-p="1"></div><div class="opt-text">節慶專屬小驚喜</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3f"><div class="opt-ind" data-p="1"></div><div class="opt-text">吵架時好好說話</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3g"><div class="opt-ind" data-p="1"></div><div class="opt-text">深度的靈魂對話</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3h"><div class="opt-ind" data-p="1"></div><div class="opt-text">高質量親密生活</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3i"><div class="opt-ind" data-p="1"></div><div class="opt-text">生病低潮時照顧</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q3j"><div class="opt-ind" data-p="1"></div><div class="opt-text">平凡日子的浪漫</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">4. 健康感情中，兩人生活重疊度？</div>
+    <div class="opts">
+      <div class="opt" data-q="s1q4a"><div class="opt-ind" data-p="1"></div><div class="opt-text">🩷 黏踢踢型（80%以上）：希望每天見面</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q4b"><div class="opt-ind" data-p="1"></div><div class="opt-text">🤝 互相依靠型（50~70%）：一週見幾次面</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q4c"><div class="opt-ind" data-p="1"></div><div class="opt-text">🌿 獨立自主型（30%以下）：各自有獨立生活圈</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">5. 意見不合或吵架時，你習慣怎麼處理？</div>
+    <div class="opts">
+      <div class="opt" data-q="s1q5a"><div class="opt-ind" data-p="1"></div><div class="opt-text">當下立刻把話說清楚，絕對不能拖到隔天</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q5b"><div class="opt-ind" data-p="1"></div><div class="opt-text">需要先冷靜幾個小時再來談</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q5c"><div class="opt-ind" data-p="1"></div><div class="opt-text">習慣先各自離開現場，過幾天再說</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s1q5d"><div class="opt-ind" data-p="1"></div><div class="opt-text">容易陷入冷戰，希望對方先低頭</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<div class="sdiv">— 02 —</div>
+
+<!-- ── S2 ── -->
+<div class="sc" id="s2">
+  <div class="sc-head"><span class="sc-num">02</span>
+    <div><div class="sc-title">異性界線與社交</div><div class="sc-sub">給彼此的安全感</div></div>
+  </div>
+  <div class="sc-body">
+
+    <div class="qb"><div class="ql">1. 對於伴侶「跟異性單獨相處」的界線？</div>
+    <div class="opts">
+      <div class="opt" data-q="s2q1a"><div class="opt-ind" data-p="1"></div><div class="opt-text">完全不行，絕對要避嫌</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q1b"><div class="opt-ind" data-p="1"></div><div class="opt-text">純吃飯聊公事可以，但不能看電影或去私密地點</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q1c"><div class="opt-ind" data-p="1"></div><div class="opt-text">只要有先報備，就算單獨出去玩也能接受</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q1d"><div class="opt-ind" data-p="1"></div><div class="opt-text">給予完全的交友自由，不用特別報備</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">2. 你會介意伴侶看你的手機嗎？</div>
+    <div class="opts">
+      <div class="opt" data-q="s2q2a"><div class="opt-ind" data-p="1"></div><div class="opt-text">完全不介意，隨時可以看，密碼也可以給</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q2b"><div class="opt-ind" data-p="1"></div><div class="opt-text">提前說一聲就可以看，但不喜歡被偷偷查勤</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q2c"><div class="opt-ind" data-p="1"></div><div class="opt-text">非常介意，手機是絕對的個人隱私</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">3. 分手後還能跟前任當朋友嗎？</div>
+    <div class="opts">
+      <div class="opt" data-q="s2q3a"><div class="opt-ind" data-p="1"></div><div class="opt-text">絕對不行，分手就是陌生人，不會再聯絡</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q3b"><div class="opt-ind" data-p="1"></div><div class="opt-text">點頭之交可以，但不會主動閒聊</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q3c"><div class="opt-ind" data-p="1"></div><div class="opt-text">和平分手的話，偶爾聯絡或當朋友沒問題</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q3d"><div class="opt-ind" data-p="1"></div><div class="opt-text">可以當好朋友，甚至單獨見面吃飯</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">4. 對於在社群媒體上公開戀情？</div>
+    <div class="opts">
+      <div class="opt" data-q="s2q4a"><div class="opt-ind" data-p="1"></div><div class="opt-text">📣 高調放閃型：很想秀，讓大家都知道</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q4b"><div class="opt-ind" data-p="1"></div><div class="opt-text">🌊 順其自然型：有機會就發，不特別強調</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s2q4c"><div class="opt-ind" data-p="1"></div><div class="opt-text">🤫 極度低調型：感情是兩個人的事，不公開</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<div class="sdiv">— 03 —</div>
+
+<!-- ── S3 ── -->
+<div class="sc" id="s3">
+  <div class="sc-head"><span class="sc-num">03</span>
+    <div><div class="sc-title">金錢觀與約會開銷</div><div class="sc-sub">談錢不傷感情</div></div>
+  </div>
+  <div class="sc-body">
+
+    <div class="qb"><div class="ql">1. 日常約會開銷，你習慣怎麼處理？</div>
+    <div class="opts">
+      <div class="opt" data-q="s3q1a"><div class="opt-ind" data-p="1"></div><div class="opt-text">嚴格 AA 制：一人付一半，算得很清楚</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s3q1b"><div class="opt-ind" data-p="1"></div><div class="opt-text">輪流請客：這餐你請，下一餐換我請</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s3q1c"><div class="opt-ind" data-p="1"></div><div class="opt-text">共同帳戶／戀愛基金：每月各存一筆錢</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s3q1d"><div class="opt-ind" data-p="1"></div><div class="opt-text">依據雙方的薪水比例來分攤</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s3q1e"><div class="opt-ind" data-p="1"></div><div class="opt-text">習慣由男方／女方全額負擔</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb">
+      <div class="ql">2. 你的消費習慣是什麼樣子？<span class="qtag tag-o">各自回答</span></div>
+      <div class="qhint">例如：有沒有記帳習慣？是存錢型還是享受型？大筆花費會跟伴侶討論嗎？</div>
+      <div class="dual-text">
+        <div class="dual-text-single">
+          <div class="dual-label dl-p1" id="lbl-s3q2-p1">伴侶 A</div>
+          <textarea class="dtarea p1" data-key="s3q2-p1" placeholder="寫下你的金錢觀……"></textarea>
+        </div>
+        <div class="dual-text-single">
+          <div class="dual-label dl-p2" id="lbl-s3q2-p2">伴侶 B</div>
+          <textarea class="dtarea p2" data-key="s3q2-p2" placeholder="寫下你的金錢觀……"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="sdiv">— 04 —</div>
+
+<!-- ── S4 ── -->
+<div class="sc" id="s4">
+  <div class="sc-head"><span class="sc-num">04</span>
+    <div><div class="sc-title">生活習慣與時間分配</div><div class="sc-sub">日常的磨合</div></div>
+  </div>
+  <div class="sc-body">
+
+    <div class="qb">
+      <div class="ql">1. 週末或休假時喜歡怎麼度過？<span class="qtag tag-m">可複選</span></div>
+      <div class="opts">
+        <div class="opt" data-q="s4q1a"><div class="opt-ind" data-p="1"></div><div class="opt-text">🏔 戶外派：出門踏青、運動、旅遊</div><div class="opt-ind" data-p="2"></div></div>
+        <div class="opt" data-q="s4q1b"><div class="opt-ind" data-p="1"></div><div class="opt-text">🛋 居家派：待在家放空、追劇、打電動</div><div class="opt-ind" data-p="2"></div></div>
+        <div class="opt" data-q="s4q1c"><div class="opt-ind" data-p="1"></div><div class="opt-text">🎊 社交派：找朋友聚餐、跑趴或逛街</div><div class="opt-ind" data-p="2"></div></div>
+        <div class="opt" data-q="s4q1d"><div class="opt-ind" data-p="1"></div><div class="opt-text">📚 學習派：參加課程、進修、閱讀</div><div class="opt-ind" data-p="2"></div></div>
+      </div>
+    </div>
+
+    <div class="qb"><div class="ql">2. 對於日常訊息回覆頻率的期待？</div>
+    <div class="opts">
+      <div class="opt" data-q="s4q2a"><div class="opt-ind" data-p="1"></div><div class="opt-text">高頻率：希望能秒回，或幾十分鐘內必回</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s4q2b"><div class="opt-ind" data-p="1"></div><div class="opt-text">正常頻率：上班忙可不回，休息時間要熱絡回</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s4q2c"><div class="opt-ind" data-p="1"></div><div class="opt-text">佛系頻率：早出晚睡聊到就好，其他時間各自安好</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">3. 你對於「報備」的定義？</div>
+    <div class="opts">
+      <div class="opt" data-q="s4q3a"><div class="opt-ind" data-p="1"></div><div class="opt-text">需要事無鉅細（到公司了、準備去吃飯、下班了）</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s4q3b"><div class="opt-ind" data-p="1"></div><div class="opt-text">重大行程變動，或跟誰見面說一聲就好</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s4q3c"><div class="opt-ind" data-p="1"></div><div class="opt-text">只有晚上回到家時報個平安即可</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s4q3d"><div class="opt-ind" data-p="1"></div><div class="opt-text">不習慣報備，自己顧好自己就好</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<div class="sdiv">— 05 —</div>
+
+<!-- ── S5 ── -->
+<div class="sc" id="s5">
+  <div class="sc-head"><span class="sc-num">05</span>
+    <div><div class="sc-title">未來藍圖</div><div class="sc-sub">我們未來的方向一致嗎？</div></div>
+  </div>
+  <div class="sc-body">
+
+    <div class="qb"><div class="ql">1. 未來 3~5 年內必定執行的重大個人目標？<span class="qtag tag-m">可複選</span></div>
+    <div class="opts">
+      <div class="opt" data-q="s5q1a"><div class="opt-ind" data-p="1"></div><div class="opt-text">打算出國深造或到外地工作</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q1b"><div class="opt-ind" data-p="1"></div><div class="opt-text">打算回老家或其他縣市發展</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q1c"><div class="opt-ind" data-p="1"></div><div class="opt-text">打算轉換跑道或自己創業</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q1d"><div class="opt-ind" data-p="1"></div><div class="opt-text">都沒變動，傾向維持現狀穩定發展</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">2. 對於婚姻和小孩，你目前的看法是？</div>
+    <div class="opts">
+      <div class="opt" data-q="s5q2a"><div class="opt-ind" data-p="1"></div><div class="opt-text">想結婚，也一定要生小孩</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q2b"><div class="opt-ind" data-p="1"></div><div class="opt-text">想結婚，但不考慮生小孩（頂客族）</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q2c"><div class="opt-ind" data-p="1"></div><div class="opt-text">順其自然，遇到對的人就不排斥</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q2d"><div class="opt-ind" data-p="1"></div><div class="opt-text">完全不想結婚，也不想要小孩（不婚主義）</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s5q2e"><div class="opt-ind" data-p="1"></div><div class="opt-text">目前還沒思考過這個問題</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<div class="sdiv">— 06 —</div>
+
+<!-- ── S6 ── -->
+<div class="sc" id="s6">
+  <div class="sc-head"><span class="sc-num">06</span>
+    <div><div class="sc-title">絕對底線與退場機制</div><div class="sc-sub">Dealbreakers &amp; Exit</div></div>
+  </div>
+  <div class="sc-body">
+
+    <div class="qb"><div class="ql">1. 會不顧一切直接提分手的底線？<span class="qtag tag-m">可複選</span></div>
+    <div class="opts">
+      <div class="opt" data-q="s6q1a"><div class="opt-ind" data-p="1"></div><div class="opt-text">肉體出軌</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q1b"><div class="opt-ind" data-p="1"></div><div class="opt-text">精神出軌（跟別人搞曖昧、頻繁用交友軟體）</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q1c"><div class="opt-ind" data-p="1"></div><div class="opt-text">動手打人或情緒失控砸東西</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q1d"><div class="opt-ind" data-p="1"></div><div class="opt-text">隱瞞重大負債或案底</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q1e"><div class="opt-ind" data-p="1"></div><div class="opt-text">嚴重的賭博或成癮問題</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q1f"><div class="opt-ind" data-p="1"></div><div class="opt-text">對我的家人講話非常不尊重</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q1g"><div class="opt-ind" data-p="1"></div><div class="opt-text">無論如何都會搞消失超過 24 小時</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+    <div class="qb"><div class="ql">2. 感情走到瓶頸時，你希望怎麼溝通？</div>
+    <div class="opts">
+      <div class="opt" data-q="s6q2a"><div class="opt-ind" data-p="1"></div><div class="opt-text">⚡ 直球對決：與其內耗，不如直接把問題攤開來說</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q2b"><div class="opt-ind" data-p="1"></div><div class="opt-text">🧊 冷靜隔離：先給彼此冷靜期，消化後再討論</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q2c"><div class="opt-ind" data-p="1"></div><div class="opt-text">🤝 積極搶救：一起嘗試解決，努力過不行再分開</div><div class="opt-ind" data-p="2"></div></div>
+      <div class="opt" data-q="s6q2d"><div class="opt-ind" data-p="1"></div><div class="opt-text">🌊 順其自然：可能會用漸行漸遠的方式讓對方察覺</div><div class="opt-ind" data-p="2"></div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<div class="sdiv">— 07 —</div>
+
+<!-- ── S7 ── -->
+<div class="sc" id="s7">
+  <div class="sc-head"><span class="sc-num">07</span>
+    <div><div class="sc-title">最後的浪漫彩蛋 💝</div><div class="sc-sub">溫暖收尾</div></div>
+  </div>
+  <div class="sc-body">
+    <div class="qb">
+      <div class="ql">你最喜歡對方哪一點？<span class="qtag tag-o">各自真誠回答</span></div>
+      <div class="qhint">可以是外表、某個微小的個性、一個讓你印象深刻的舉動，或任何讓你心動的理由。</div>
+      <div class="dual-text">
+        <div class="dual-text-single">
+          <div class="dual-label dl-p1" id="lbl-s7-p1">伴侶 A</div>
+          <textarea class="dtarea p1" style="min-height:120px" data-key="s7-p1" placeholder="我最喜歡你的……💌"></textarea>
+        </div>
+        <div class="dual-text-single">
+          <div class="dual-label dl-p2" id="lbl-s7-p2">伴侶 B</div>
+          <textarea class="dtarea p2" style="min-height:120px" data-key="s7-p2" placeholder="我最喜歡你的……💌"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="closing-in">
+    <div class="c-emoji">🎊</div>
+    <div class="c-title">恭喜你們攜手完成了這場深度對話！</div>
+    <p class="c-text">能坐在彼此身邊，坦誠地分享了內心的想法。只要願意持續地互相傾聽，所有的不同都能找到最舒服的交集。帶著這張屬於你們的<strong>愛情設計圖</strong>，一起展開美好的新生活吧！</p>
+    <div class="c-actions">
+      <button class="btn-cta pri" onclick="window.print()">🖨 列印 / 存成 PDF</button>
+      <a href="dating_topics.html" class="btn-cta sec">前往約會話題製造機 →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────
+const SAVE_KEY = 'uc-consensus-v3';
+let state = { p1Name:'', p2Name:'', opts:{}, texts:{}, ranks:{} };
+
+// ── LOAD ───────────────────────────────────────────────────────
+function loadState() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) state = JSON.parse(raw);
+  } catch(e) {}
+}
+
+function save() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+window.saveMeta = function() {
+  state.p1Name = document.getElementById('name-p1').value;
+  state.p2Name = document.getElementById('name-p2').value;
+  updateNameLabels();
+  save();
+};
+
+function updateNameLabels() {
+  const n1 = state.p1Name || '伴侶 A';
+  const n2 = state.p2Name || '伴侶 B';
+  document.getElementById('leg-p1').textContent = n1;
+  document.getElementById('leg-p2').textContent = n2;
+  // dual text labels
+  document.querySelectorAll('[id^="lbl-"][id$="-p1"]').forEach(el => el.textContent = n1);
+  document.querySelectorAll('[id^="lbl-"][id$="-p2"]').forEach(el => el.textContent = n2);
+  // rank inputs title
+  document.querySelectorAll('.rank-in.p1').forEach(el => el.title = n1);
+  document.querySelectorAll('.rank-in.p2').forEach(el => el.title = n2);
+}
+
+// ── OPTION TOGGLE — left circle = P1, right circle = P2 ────────
+function initOpts() {
+  document.querySelectorAll('.opt').forEach(opt => {
+    const q = opt.dataset.q;
+    const inds = opt.querySelectorAll('.opt-ind');
+    inds[0].addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (!state.opts[q]) state.opts[q] = { p1: false, p2: false };
+      state.opts[q].p1 = !state.opts[q].p1;
+      renderOpt(opt, state.opts[q]);
+      save(); updateProgress();
+    });
+    inds[1].addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (!state.opts[q]) state.opts[q] = { p1: false, p2: false };
+      state.opts[q].p2 = !state.opts[q].p2;
+      renderOpt(opt, state.opts[q]);
+      save(); updateProgress();
+    });
+  });
+}
+
+function renderOpt(el, v) {
+  const inds = el.querySelectorAll('.opt-ind');
+  inds[0].textContent = v.p1 ? '✓' : '';
+  inds[0].classList.toggle('p1-on', !!v.p1);
+  inds[1].textContent = v.p2 ? '✓' : '';
+  inds[1].classList.toggle('p2-on', !!v.p2);
+  el.classList.toggle('only-p1', !!v.p1 && !v.p2);
+  el.classList.toggle('only-p2', !v.p1 && !!v.p2);
+  el.classList.toggle('both', !!v.p1 && !!v.p2);
+}
+
+function restoreOpts() {
+  document.querySelectorAll('.opt').forEach(opt => {
+    const q = opt.dataset.q;
+    if (state.opts[q]) renderOpt(opt, state.opts[q]);
+  });
+}
+
+// ── TEXT AREAS ─────────────────────────────────────────────────
+function initTexts() {
+  document.querySelectorAll('.dtarea').forEach(ta => {
+    ta.addEventListener('input', function() {
+      state.texts[this.dataset.key] = this.value;
+      save();
+      updateProgress();
+    });
+  });
+}
+
+function restoreTexts() {
+  document.querySelectorAll('.dtarea').forEach(ta => {
+    const k = ta.dataset.key;
+    if (state.texts[k]) ta.value = state.texts[k];
+  });
+}
+
+// ── RANK INPUTS ────────────────────────────────────────────────
+function initRanks() {
+  document.querySelectorAll('.rank-in').forEach(inp => {
+    inp.addEventListener('input', function() {
+      state.ranks[this.dataset.rkey] = this.value;
+      save();
+    });
+  });
+}
+
+function restoreRanks() {
+  document.querySelectorAll('.rank-in').forEach(inp => {
+    const k = inp.dataset.rkey;
+    if (state.ranks[k]) inp.value = state.ranks[k];
+  });
+}
+
+// ── PROGRESS ───────────────────────────────────────────────────
+function updateProgress() {
+  const total = document.querySelectorAll('.opt[data-q]').length;
+  let answered = 0;
+  document.querySelectorAll('.opt[data-q]').forEach(opt => {
+    const v = state.opts[opt.dataset.q];
+    if (v && (v.p1 || v.p2)) answered++;
+  });
+  const pct = total > 0 ? Math.round(answered / total * 100) : 0;
+  document.getElementById('pbar').style.width = pct + '%';
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+loadState();
+document.getElementById('name-p1').value = state.p1Name || '';
+document.getElementById('name-p2').value = state.p2Name || '';
+updateNameLabels();
+initOpts(); initTexts();
+initRanks();
+restoreOpts();
+restoreTexts();
+restoreRanks();
+updateProgress();
+</script>
+</body>
+</html>

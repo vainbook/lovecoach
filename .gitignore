@@ -4,3 +4,6 @@ Thumbs.db
 .gemini/
 *~
 *.swp
+
+# Local Netlify folder
+.netlify

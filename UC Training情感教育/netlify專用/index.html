@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Training 情感教育 - Make it Complete</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <style>
+    /* CSS RESET & VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-color: #131B2E;
+      --text-color: #E8E4DC;
+      --text-muted: rgba(232, 228, 220, 0.6);
+      --card-bg: rgba(232, 228, 220, 0.03);
+      --card-border: rgba(232, 228, 220, 0.12);
+      --card-hover: rgba(232, 228, 220, 0.08);
+      --accent-color: #E8A898;
+      --accent-glow: rgba(232, 168, 152, 0.3);
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+      padding: 24px 20px;
+    }
+
+    /* Grid Background Pattern */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+
+    /* UC BRAND DECORATIONS */
+    .corner-bracket {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: var(--accent-color);
+      border-style: solid;
+      opacity: 0.4;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .bracket-tl { top: 20px; left: 20px; border-width: 1.5px 0 0 1.5px; }
+    .bracket-tr { top: 20px; right: 20px; border-width: 1.5px 1.5px 0 0; }
+    .bracket-bl { bottom: 20px; left: 20px; border-width: 0 0 1.5px 1.5px; }
+    .bracket-br { bottom: 20px; right: 20px; border-width: 0 1.5px 1.5px 0; }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .uc-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      border: 1.5px solid var(--accent-color);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+      text-transform: lowercase;
+      margin: 0 auto 16px;
+    }
+
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 26px;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      color: var(--text-color);
+    }
+
+    .subtitle {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+    }
+
+    /* GLASS CARDS */
+    .glass-card {
+      position: relative;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none;
+      animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .glass-card.active {
+      display: block;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* LOGIN CARD CONTENT */
+    .login-description {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .login-description strong {
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    /* BUTTONS */
+    .btn {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      padding: 14px 24px;
+      border-radius: 24px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      width: 100%;
+      text-align: center;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-color), #f7cac1);
+      color: var(--navy);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+      filter: brightness(1.05);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid var(--card-border);
+      color: var(--text-color);
+      margin-top: 12px;
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      background-color: var(--card-hover);
+    }
+
+    /* LOADING STATE */
+    .loading-text {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      padding: 8px 0;
+    }
+
+    /* DASHBOARD CARD DETAILS */
+    .welcome-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--accent-color);
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      text-align: center;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .info-label { color: var(--text-muted); }
+
+    .info-value {
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* NAVIGATION CARD LINK */
+    .portal-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(232, 228, 220, 0.03);
+      border: 1.5px solid var(--accent-color);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 24px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 12px rgba(232, 168, 152, 0.05);
+    }
+
+    .portal-link:hover {
+      transform: translateY(-4px);
+      background-color: rgba(232, 168, 152, 0.08);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .portal-info h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--accent-color);
+    }
+
+    .portal-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .arrow-icon {
+      font-size: 20px;
+      color: var(--accent-color);
+      transition: transform 0.3s ease;
+    }
+
+    .portal-link:hover .arrow-icon {
+      transform: translateX(6px);
+    }
+
+    /* LOGIN HISTORY */
+    .history-section {
+      margin-top: 28px;
+      border-top: 1px solid var(--card-border);
+      padding-top: 16px;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .history-title {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .history-list {
+      max-height: 160px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      scrollbar-width: none;
+    }
+
+    .history-list::-webkit-scrollbar { display: none; }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(232, 228, 220, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    .history-device {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .history-time {
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .no-history {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 12px 0;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+    }
+
+    /* Netlify Identity Widget override — dark theme */
+    [data-netlify-identity-menu] {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <div class="uc-logo">uc</div>
+      <h1>UC Training 情感教育</h1>
+      <div class="subtitle">Make it Complete</div>
+    </header>
+
+    <!-- CARD 1: LOGIN CARD -->
+    <div class="glass-card" id="login-card">
+      <div class="corner-bracket bracket-tl"></div>
+      <div class="corner-bracket bracket-tr"></div>
+      <div class="corner-bracket bracket-bl"></div>
+      <div class="corner-bracket bracket-br"></div>
+
+      <div class="login-description">
+        使用你的<strong>學員帳號</strong>登入<br>
+        在任何設備都能存取你的學習紀錄
+      </div>
+
+      <button class="btn btn-primary" id="login-btn" onclick="netlifyIdentity.open('login')">
+        學員登入
+      </button>
+      <button class="btn btn-secondary" id="signup-btn" onclick="netlifyIdentity.open('signup')">
+        首次使用？立即註冊帳號
+      </button>
+    </div>
+
+    <!-- CARD 2: LOADING CARD -->
+    <div class="glass-card" id="loading-card">
+      <div class="loading-text">載入中…</div>
+    </div>
+
+    <!-- CARD 3: DASHBOARD CARD -->
+    <div class="glass-card" id="dashboard-card">
+      <div class="corner-bracket bracket-tl"></div>
+      <div class="corner-bracket bracket-tr"></div>
+      <div class="corner-bracket bracket-bl"></div>
+      <div class="corner-bracket bracket-br"></div>
+
+      <div class="welcome-title" id="welcome-message">歡迎回來，學員！</div>
+
+      <div class="info-row">
+        <span class="info-label">身分權限</span>
+        <span class="info-value" style="color: var(--accent-color);">正式學員</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">帳號 Email</span>
+        <span class="info-value" id="user-email">--</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">本次登入時間</span>
+        <span class="info-value" id="current-login-time">--</span>
+      </div>
+
+      <!-- Launch App Buttons -->
+      <a href="dating_topics.html" class="portal-link" id="portal-link">
+        <div class="portal-info">
+          <h3>約會話題製造機</h3>
+          <p>開啟 211 題拉霸式約會對談系統</p>
+        </div>
+        <div class="arrow-icon">➔</div>
+      </a>
+      <a href="relationship_consensus.html" class="portal-link" style="margin-top:12px;">
+        <div class="portal-info">
+          <h3>交往前共識清單</h3>
+          <p>七大主題 · 深度對話 · 愛情設計圖</p>
+        </div>
+        <div class="arrow-icon">➔</div>
+      </a>
+
+      <!-- Login History -->
+      <div class="history-section">
+        <div class="history-header">
+          <span class="history-title">最近登入紀錄</span>
+        </div>
+        <div class="history-list" id="history-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <button class="btn btn-secondary" onclick="handleLogout()">登出學員系統</button>
+    </div>
+
+    <footer>
+      © 2026 UC TRAINING. ALL RIGHTS RESERVED.
+    </footer>
+
+  </div>
+
+  <script>
+    // 初始化 Netlify Identity 指向原 Netlify 域名作為 Auth Backend
+    if (window.netlifyIdentity) {
+      netlifyIdentity.init({
+        APIUrl: 'https://uctrainingdating.netlify.app/.netlify/identity'
+      });
+    }
+
+    // ─── DOM REFERENCES ───────────────────────────────────────────
+    const loginCard     = document.getElementById('login-card');
+    const loadingCard   = document.getElementById('loading-card');
+    const dashboardCard = document.getElementById('dashboard-card');
+    const welcomeMsg    = document.getElementById('welcome-message');
+    const userEmail     = document.getElementById('user-email');
+    const loginTimeEl   = document.getElementById('current-login-time');
+    const historyList   = document.getElementById('history-list');
+
+    // ─── HELPERS ──────────────────────────────────────────────────
+    function showCard(cardId) {
+      [loginCard, loadingCard, dashboardCard].forEach(c => c.classList.remove('active'));
+      document.getElementById(cardId).classList.add('active');
+    }
+
+    function getFormattedDate() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm   = String(now.getMonth() + 1).padStart(2, '0');
+      const dd   = String(now.getDate()).padStart(2, '0');
+      const hh   = String(now.getHours()).padStart(2, '0');
+      const min  = String(now.getMinutes()).padStart(2, '0');
+      const ss   = String(now.getSeconds()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+    }
+
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>'"]/g,
+        tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag] || tag)
+      );
+    }
+
+    function renderHistory(history) {
+      historyList.innerHTML = '';
+      if (!history || history.length === 0) {
+        historyList.innerHTML = '<div class="no-history">尚無任何登入紀錄</div>';
+        return;
+      }
+      history.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.innerHTML = `
+          <span class="history-time">${escapeHTML(item.time)}</span>
+        `;
+        historyList.appendChild(div);
+      });
+    }
+
+    // ─── MAIN LOGIN HANDLER ───────────────────────────────────────
+    async function handleUserLoggedIn(user, recordNewLogin) {
+      showCard('loading-card');
+
+      const name  = user.user_metadata?.full_name || user.email.split('@')[0];
+      const email = user.email;
+      const timeStr = getFormattedDate();
+
+      let history = user.user_metadata?.login_history || [];
+
+      if (recordNewLogin) {
+        history.unshift({ time: timeStr });
+        if (history.length > 10) history = history.slice(0, 10);
+
+        try {
+          await user.update({ data: { login_history: history } });
+        } catch (e) {
+          console.warn('Failed to update login history in metadata:', e);
+        }
+      }
+
+      // Populate dashboard
+      welcomeMsg.textContent  = `歡迎回來，${name} 學員！`;
+      userEmail.textContent   = email;
+      loginTimeEl.textContent = recordNewLogin ? timeStr : (history[0]?.time || '--');
+      renderHistory(history);
+
+      showCard('dashboard-card');
+    }
+
+    // ─── LOGOUT ───────────────────────────────────────────────────
+    window.handleLogout = function () {
+      netlifyIdentity.logout();
+    };
+
+    // ─── NETLIFY IDENTITY EVENT HOOKS ─────────────────────────────
+    netlifyIdentity.on('init', user => {
+      if (user) {
+        // Already logged in (token still valid) — don't record a new login
+        handleUserLoggedIn(user, false);
+      } else {
+        showCard('login-card');
+      }
+    });
+
+    netlifyIdentity.on('login', user => {
+      netlifyIdentity.close();
+      handleUserLoggedIn(user, true);  // record new login entry
+    });
+
+    netlifyIdentity.on('logout', () => {
+      showCard('login-card');
+    });
+
+    netlifyIdentity.on('error', err => {
+      console.error('Netlify Identity error:', err);
+      showCard('login-card');
+    });
+  </script>
+
+</body>
+</html>

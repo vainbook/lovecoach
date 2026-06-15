@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>約會話題製造機 - UC Training 關係解讀工具</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS RESET & VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      /* Dark Theme Default */
+      --bg-color: #131B2E;
+      --text-color: #E8E4DC;
+      --text-muted: rgba(232, 228, 220, 0.6);
+      --card-bg: rgba(232, 228, 220, 0.03);
+      --card-border: rgba(232, 228, 220, 0.12);
+      --card-hover: rgba(232, 228, 220, 0.08);
+      --accent-color: #E8A898;
+      --accent-glow: rgba(232, 168, 152, 0.3);
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+      --white: #FFFFFF;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    [data-theme="light"] {
+      --bg-color: #E8E4DC;
+      --text-color: #131B2E;
+      --text-muted: rgba(19, 27, 46, 0.6);
+      --card-bg: rgba(19, 27, 46, 0.03);
+      --card-border: rgba(19, 27, 46, 0.12);
+      --card-hover: rgba(19, 27, 46, 0.08);
+      --accent-color: #E8A898;
+      --accent-glow: rgba(232, 168, 152, 0.4);
+      
+      --shadow-sm: 0 2px 8px rgba(19, 27, 46, 0.08);
+      --shadow-md: 0 8px 24px rgba(19, 27, 46, 0.12);
+      --shadow-lg: 0 16px 40px rgba(19, 27, 46, 0.15);
+    }
+    
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+    
+    /* Grid Background Pattern */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(19, 27, 46, 0.03) 0px, rgba(19, 27, 46, 0.03) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(19, 27, 46, 0.03) 0px, rgba(19, 27, 46, 0.03) 1px,
+        transparent 1px, transparent 48px
+      );
+      opacity: 0.8;
+    }
+    
+    [data-theme="dark"] body::before {
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.02) 0px, rgba(232, 228, 220, 0.02) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.02) 0px, rgba(232, 228, 220, 0.02) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+    
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 100px; /* offset for bottom bar */
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      z-index: 1;
+    }
+    
+    /* UC BRAND DECORATIONS */
+    .corner-bracket {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--accent-color);
+      border-style: solid;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .bracket-tl { top: 16px; left: 16px; border-width: 1.5px 0 0 1.5px; }
+    .bracket-tr { top: 16px; right: 16px; border-width: 1.5px 1.5px 0 0; }
+    .bracket-bl { bottom: 16px; left: 16px; border-width: 0 0 1.5px 1.5px; }
+    .bracket-br { bottom: 16px; right: 16px; border-width: 0 1.5px 1.5px 0; }
+    
+    /* HEADER STYLES */
+    header {
+      position: relative;
+      margin-bottom: 32px;
+      text-align: center;
+      padding-top: 12px;
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    
+    .uc-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      border: 1.5px solid var(--accent-color);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+      text-transform: lowercase;
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .btn-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-circle:hover {
+      border-color: var(--accent-color);
+      background-color: var(--card-hover);
+      color: var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    
+    .btn-back {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 6px 14px;
+      border-radius: 18px;
+      border: 1.5px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      white-space: nowrap;
+    }
+    
+    .btn-back:hover {
+      border-color: var(--accent-color);
+      background-color: var(--card-hover);
+      color: var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text-color);
+    }
+    
+    .subtitle {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      margin-bottom: 24px;
+    }
+    
+    /* PROGRESS / STAGE SELECTOR */
+    .stage-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .stage-btn {
+      background-color: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+    }
+    
+    .stage-btn:hover {
+      background-color: var(--card-hover);
+      border-color: var(--accent-color);
+    }
+    
+    .stage-btn.active {
+      background-color: var(--navy);
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    [data-theme="light"] .stage-btn.active {
+      background-color: var(--white);
+    }
+    
+    .stage-name {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: var(--text-color);
+    }
+    .stage-btn.active .stage-name {
+      color: var(--accent-color);
+    }
+    
+    .stage-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    /* SUB-THEME SELECTOR */
+    .theme-selector-container {
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 32px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+    .theme-selector-container::-webkit-scrollbar {
+      display: none; /* Safari & Chrome */
+    }
+    
+    .theme-selector {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      min-width: max-content;
+      margin: 0 auto;
+    }
+    
+    .theme-pill {
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+    
+    .theme-pill:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+    
+    .theme-pill.active {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      color: var(--navy);
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    
+    /* SLOT MACHINE SECTION */
+    .slot-machine-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    
+    .reels-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+    }
+    
+    /* REEL CARD */
+    .reel-card {
+      position: relative;
+      height: 310px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    
+    .reel-card:hover {
+      border-color: rgba(232, 168, 152, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .reel-card.chatted {
+      border-color: rgba(46, 204, 113, 0.4);
+      box-shadow: 0 8px 24px rgba(46, 204, 113, 0.08);
+    }
+    
+    /* Question Number Badge */
+    .question-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--accent-color);
+      background: rgba(232, 168, 152, 0.1);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      z-index: 2;
+    }
+    .reel-card.chatted .question-badge {
+      color: #2ecc71;
+      background: rgba(46, 204, 113, 0.1);
+    }
+    
+    /* Manual Navigation Arrows */
+    .nav-arrow {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 6px;
+      transition: color 0.2s, transform 0.2s;
+      z-index: 2;
+      user-select: none;
+    }
+    
+    .nav-arrow:hover {
+      color: var(--accent-color);
+      transform: scale(1.15);
+    }
+    
+    .arrow-up { margin-top: -12px; }
+    .arrow-down { margin-bottom: -12px; }
+    
+    /* Text Display Reel Viewport */
+    .reel-viewport {
+      width: 100%;
+      height: 120px;
+      position: relative;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    
+    .reel-strip {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .reel-item {
+      width: 100%;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+      padding: 0 10px;
+      font-size: 15px;
+      line-height: 1.6;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--text-color);
+      overflow-y: auto;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      scrollbar-width: none;
+    }
+    .reel-item::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Card Controls */
+    .card-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+      z-index: 2;
+    }
+    
+    /* Toggle Chatted Checkbox button */
+    .chatted-btn {
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .chatted-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+    
+    .reel-card.chatted .chatted-btn {
+      border-color: #2ecc71;
+      background-color: rgba(46, 204, 113, 0.08);
+      color: #2ecc71;
+    }
+    
+    /* SPIN TRIGGER BUTTON */
+    .spin-button-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    
+    .spin-btn {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      padding: 16px 56px;
+      border-radius: 30px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-color), #f7cac1);
+      color: var(--navy);
+      cursor: pointer;
+      box-shadow: 0 8px 24px var(--accent-glow);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .spin-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 32px var(--accent-glow);
+      filter: brightness(1.05);
+    }
+    
+    .spin-btn:active {
+      transform: translateY(1px);
+    }
+    
+    .spin-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .spin-btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 40%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.1) 60%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(30deg);
+      transition: transform 0.5s ease;
+      pointer-events: none;
+    }
+    
+    .spin-btn:hover::after {
+      transform: rotate(30deg) translate(20%, 20%);
+    }
+    
+    /* BOTTOM PANEL - TIMER & PROGRESS BAR */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-color);
+      border-top: 1px solid var(--card-border);
+      padding: 14px 24px;
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .bottom-bar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    
+    .timer-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    
+    .timer-clock {
+      color: var(--accent-color);
+    }
+    
+    .progress-wrapper {
+      flex: 1;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    
+    .progress-count {
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .progress-pct {
+      color: var(--accent-color);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+    }
+    
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background-color: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-color);
+      border-radius: 3px;
+      transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+    
+    /* ARCHIVE MODAL / DRAWER */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(19, 27, 46, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 420px;
+      background-color: var(--bg-color);
+      border-left: 1px solid var(--card-border);
+      z-index: 1001;
+      padding: 32px 24px;
+      box-shadow: var(--shadow-lg);
+      transform: translateX(100%);
+      visibility: hidden;
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), visibility 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .drawer.open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+    
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1.5px solid var(--card-border);
+      padding-bottom: 12px;
+    }
+    
+    .drawer-title {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    
+    .drawer-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .drawer-close:hover {
+      color: var(--accent-color);
+    }
+    
+    .save-form {
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .input-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .text-input {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: var(--text-color);
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    .text-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+    
+    .btn-save {
+      background-color: var(--accent-color);
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-save:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 4px 10px var(--accent-glow);
+    }
+    
+    .archives-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .archive-card {
+      background-color: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s;
+    }
+    .archive-card:hover {
+      border-color: var(--accent-color);
+    }
+    
+    .archive-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .archive-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-color);
+    }
+    
+    .archive-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .archive-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .archive-stats span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .archive-stats strong {
+      color: var(--text-color);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .archive-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      border-top: 1px solid var(--card-border);
+      padding-top: 10px;
+    }
+    
+    .btn-action {
+      background: none;
+      border: 1px solid var(--card-border);
+      color: var(--text-color);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-action.load:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+    
+    .btn-action.delete:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+    
+    .no-archives {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      padding: 32px 0;
+    }
+    
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .reels-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .reel-card {
+        height: 250px;
+        padding: 16px 16px;
+      }
+      
+      .reel-viewport {
+        height: 100px;
+        margin: 4px 0;
+      }
+      
+      .reel-item {
+        height: 100px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      
+      .stage-selector {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      
+      .bottom-bar-content {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+      
+      .timer-container {
+        justify-content: center;
+      }
+      
+      .progress-wrapper {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="uc-logo">uc</div>
+          <a href="index.html" class="btn-back">← 返回首頁</a>
+        </div>
+        <div class="header-actions">
+          <button class="btn-circle" id="theme-toggle" title="切換色彩模式">☼</button>
+          <button class="btn-circle" id="archive-toggle" title="存檔紀錄">👤</button>
+        </div>
+      </div>
+      
+      <h1>約會話題製造機</h1>
+      <div class="subtitle">Make You Complete · 約會關係解讀工具</div>
+    </header>
+    
+    <!-- STAGE SELECTOR -->
+    <section class="stage-selector">
+      <button class="stage-btn active" data-stage="1">
+        <div class="stage-name">邂逅吸引</div>
+        <div class="stage-desc">從陌生人到朋友</div>
+      </button>
+      <button class="stage-btn" data-stage="2">
+        <div class="stage-name">走入心房</div>
+        <div class="stage-desc">從朋友到曖昧</div>
+      </button>
+      <button class="stage-btn" data-stage="3">
+        <div class="stage-name">親密關係</div>
+        <div class="stage-desc">曖昧到戀愛</div>
+      </button>
+    </section>
+    
+    <!-- SUB-THEME SELECTOR -->
+    <div class="theme-selector-container">
+      <div class="theme-selector" id="theme-selector-list">
+        <!-- Generated Dynamically -->
+      </div>
+    </div>
+    
+    <!-- SPIN TRIGGER BUTTON -->
+    <div class="spin-button-container" style="margin-bottom: 24px;">
+      <button class="spin-btn" id="spin-trigger">隨機新話題</button>
+    </div>
+    
+    <!-- SLOT MACHINE VIEW -->
+    <section class="slot-machine-container">
+      <div class="reels-container" id="reels-container">
+        
+        <!-- REEL 1 -->
+        <div class="reel-card" id="reel-0">
+          <div class="corner-bracket bracket-tl"></div>
+          <div class="corner-bracket bracket-tr"></div>
+          <div class="corner-bracket bracket-bl"></div>
+          <div class="corner-bracket bracket-br"></div>
+          
+          <span class="question-badge" id="badge-0">#--</span>
+          <button class="nav-arrow arrow-up" onclick="navigateReel(0, -1)">▲</button>
+          
+          <div class="reel-viewport">
+            <div class="reel-strip" id="strip-0">
+              <div class="reel-item" id="qtext-0">請點擊上方獲取隨機話題</div>
+            </div>
+          </div>
+          
+          <button class="nav-arrow arrow-down" onclick="navigateReel(0, 1)">▼</button>
+          <div class="card-controls">
+            <button class="chatted-btn" onclick="toggleChatted(0)">
+              <span class="check-icon">✓</span> 標記已聊
+            </button>
+          </div>
+        </div>
+        
+        <!-- REEL 2 -->
+        <div class="reel-card" id="reel-1">
+          <div class="corner-bracket bracket-tl"></div>
+          <div class="corner-bracket bracket-tr"></div>
+          <div class="corner-bracket bracket-bl"></div>
+          <div class="corner-bracket bracket-br"></div>
+          
+          <span class="question-badge" id="badge-1">#--</span>
+          <button class="nav-arrow arrow-up" onclick="navigateReel(1, -1)">▲</button>
+          
+          <div class="reel-viewport">
+            <div class="reel-strip" id="strip-1">
+              <div class="reel-item" id="qtext-1">請點擊上方獲取隨機話題</div>
+            </div>
+          </div>
+          
+          <button class="nav-arrow arrow-down" onclick="navigateReel(1, 1)">▼</button>
+          <div class="card-controls">
+            <button class="chatted-btn" onclick="toggleChatted(1)">
+              <span class="check-icon">✓</span> 標記已聊
+            </button>
+          </div>
+        </div>
+        
+        <!-- REEL 3 -->
+        <div class="reel-card" id="reel-2">
+          <div class="corner-bracket bracket-tl"></div>
+          <div class="corner-bracket bracket-tr"></div>
+          <div class="corner-bracket bracket-bl"></div>
+          <div class="corner-bracket bracket-br"></div>
+          
+          <span class="question-badge" id="badge-2">#--</span>
+          <button class="nav-arrow arrow-up" onclick="navigateReel(2, -1)">▲</button>
+          
+          <div class="reel-viewport">
+            <div class="reel-strip" id="strip-2">
+              <div class="reel-item" id="qtext-2">請點擊上方獲取隨機話題</div>
+            </div>
+          </div>
+          
+          <button class="nav-arrow arrow-down" onclick="navigateReel(2, 1)">▼</button>
+          <div class="card-controls">
+            <button class="chatted-btn" onclick="toggleChatted(2)">
+              <span class="check-icon">✓</span> 標記已聊
+            </button>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+  </div>
+  
+  <!-- STICKY BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="bottom-bar-content">
+      <div class="timer-container">
+        <span class="timer-clock" id="timer-clock">00:00:00</span>
+        <span class="timer-label">約會計時</span>
+      </div>
+      
+      <div class="progress-wrapper">
+        <div class="progress-info">
+          <span class="progress-count" id="progress-text">已探討 0 / 211 題</span>
+          <span class="progress-pct" id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ARCHIVE DRAWER OVERLAY -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  
+  <!-- ARCHIVE DRAWER -->
+  <div class="drawer" id="archive-drawer">
+    <div class="drawer-header">
+      <h2 class="drawer-title">約會存檔紀錄</h2>
+      <button class="drawer-close" id="drawer-close">×</button>
+    </div>
+    
+    <div class="save-form">
+      <div class="input-group">
+        <label class="input-label" for="partner-name-input">約會對象名字</label>
+        <input type="text" class="text-input" id="partner-name-input" placeholder="例如：小美" maxlength="20">
+      </div>
+      <button class="btn-save" id="save-current-btn">儲存目前約會進度</button>
+    </div>
+    
+    <div class="archives-list" id="archives-list">
+      <!-- Generated Dynamically -->
+    </div>
+  </div>
+
+  <script>
+    // Embedded JSON data of the 211 questions
+    const stagesData = [{"id": 1, "name": "邂逅吸引", "subtitle": "從陌生人到朋友", "themes": [{"id": 1, "name": "主題一：生活品味（習慣、偏好與生活細節）", "questions": [{"id": 1, "text": "你工作累了，通常是找朋友聚會充電，還是自己待著？"}, {"id": 2, "text": "你去旅行是行程排滿的特種兵，還是喜歡隨意放空的類型？"}, {"id": 3, "text": "你最喜歡的一種「me time」（獨處時間）活動是什麼？"}, {"id": 4, "text": "你是屬於早起型（晨型人）還是熬夜型（夜貓子）？你覺得這對你的生活作息有什麼影響？"}, {"id": 5, "text": "你手機上最喜歡的app是什麼？"}, {"id": 6, "text": "你目前去過最喜歡的地方是哪裡？"}, {"id": 7, "text": "你接下來最想去的三個地方是哪裡？"}, {"id": 8, "text": "你最喜歡的放鬆或放縱方式是什麼？"}, {"id": 9, "text": "你覺得自己是個容易感到無聊的人嗎？"}, {"id": 10, "text": "有什麼東西是你很喜歡，但別人一眼不一定能猜到的？"}, {"id": 11, "text": "你這個週末打算做些什麼？"}, {"id": 12, "text": "你最喜歡你現在住的城市或房子裡的哪一點？"}, {"id": 13, "text": "你最近買過最讓你覺得「買了真好，生活品質提升超多」的小東西是什麼？"}, {"id": 14, "text": "你最喜歡吃什麼？"}, {"id": 15, "text": "你最喜歡的餐廳是哪一家？"}, {"id": 16, "text": "有什麼東西是你覺得自己花太多錢在上面的？"}, {"id": 17, "text": "最近有沒有哪間餐廳是你一直很想去試試看的？"}, {"id": 18, "text": "你比較喜歡電影還是電視劇？"}, {"id": 19, "text": "你有刺青嗎？"}, {"id": 20, "text": "你最近發現最棒的新歌手或新歌是什麼？"}, {"id": 21, "text": "你心目中最喜歡的四部電影是什麼？"}, {"id": 22, "text": "有什麼熱門的東西，是你覺得100%名副其實、值得大家這麼捧的？"}, {"id": 23, "text": "你在KTV的招牌歌是什麼？"}, {"id": 24, "text": "你平常喜歡讀什麼類型的書？有沒有哪一本是你特別想推薦的？"}, {"id": 25, "text": "你有過超自然或靈異的經歷嗎？"}, {"id": 26, "text": "最近有沒有什麼事情是讓你一聊起來就特別興奮，或是能讓你心甘情願花很多時間在上面的？"}, {"id": 27, "text": "你最想嘗試但一直還沒有機會去體驗的興趣或活動是什麼？"}, {"id": 28, "text": "最近有沒有什麼事，是你本來以為自己不會喜歡，結果試了之後意外愛上的？"}, {"id": 29, "text": "最近有沒有什麼事情是讓你特別期待的？"}, {"id": 30, "text": "有什麼事情是你自己做過，覺得每個人一輩子都應該嘗試看看的？"}, {"id": 31, "text": "你最喜歡的冷知識是什麼？"}, {"id": 32, "text": "有什麼領域或事物是你想了解更多的？"}, {"id": 33, "text": "在你的工作或專業領域裡，有沒有什麼大眾常有的誤解是你想澄清的？"}, {"id": 34, "text": "撇除薪水不談，你目前工作中最讓你享受、或最想吐槽的部分是什麼？"}, {"id": 35, "text": "你覺得你在工作時的狀態，和私底下跟朋友相處時，差別最大的是什麼？"}, {"id": 36, "text": "你平常如果點飲料或點餐，有沒有什麼「絕對不加」的？"}]}, {"id": 2, "name": "主題二：腦洞狂想（想像題、假設與思維模式）", "questions": [{"id": 37, "text": "如果這週末完全不用工作或社交，除了躺在床上耍廢，你最想做什麼？"}, {"id": 38, "text": "你覺得你像你的星座嗎？"}, {"id": 39, "text": "你會說自己是個迷信的人嗎？"}, {"id": 40, "text": "你做什麼事情時會讓你感到『罪惡的快樂』（Guilty Pleasure）？"}, {"id": 41, "text": "如果你現在可以去任何地方旅行，你會選擇去哪裡？"}, {"id": 42, "text": "如果你現在可以跟任何人一起去渡假，你想跟誰去？"}, {"id": 43, "text": "如果你的人生被拍成一部電影，你認為誰最適合扮演你的角色？"}, {"id": 44, "text": "如果你可以立馬學會一種新的語言或技能，而且不需要花任何時間練習，你會選什麼？"}, {"id": 45, "text": "如果你有機會去太空旅行，但要在太空中待三個月，你會想去嗎？"}, {"id": 46, "text": "如果可以選擇一項超能力，你最想要什麼能力？（例如：隱形、讀心、瞬間移動）"}, {"id": 47, "text": "如果你有一天可以成為任何人，你會選誰？"}, {"id": 48, "text": "如果現實生活中突然佈滿殭屍，你第一反應會做什麼？"}, {"id": 49, "text": "如果你在街上看到哪位名人，你會興奮到失去冷靜？"}, {"id": 50, "text": "如果不考慮省錢這件事，你最近最想買的一樣能讓生活變快樂的禮物是什麼？"}, {"id": 51, "text": "如果你突然中了樂透，但規定一定要在一天之內花完一百萬，你會怎麼花？"}, {"id": 52, "text": "如果你的工作不需要考慮收入，你最想做什麼職業來度過餘生？"}, {"id": 53, "text": "你寧願做一份普通但薪水很好的工作，還是拿少一點錢做自己熱愛的事？"}, {"id": 54, "text": "如果你這輩子完全不用工作也不缺錢，你會想怎麼度過每一天？"}, {"id": 55, "text": "如果你突然決定給自己放假一天逃離現實，你會想怎麼度過那一天？"}]}, {"id": 3, "name": "主題三：價值排序（原則、三觀與人生地雷）", "questions": [{"id": 56, "text": "你以前或現在有去哪裡做過志工嗎？"}, {"id": 57, "text": "你覺得自己是個有競爭心或好勝心的人嗎？"}, {"id": 58, "text": "你最喜歡自己身上的哪一個特質？"}, {"id": 59, "text": "你這輩子收到過最好、或最難忘的讚美是什麼？"}, {"id": 60, "text": "你目前經歷過最糟糕、最奇葩的約會是什麼樣的？"}, {"id": 61, "text": "之前跟你約會或交往過的男生，做過什麼事會讓你瞬間把對方刷掉？"}, {"id": 62, "text": "在人際關係中，你最不能忍受另一半或朋友的什麼行為？"}, {"id": 63, "text": "你現在的生活中，最讓你感到驕傲或有成就感的是什麼？"}, {"id": 64, "text": "你覺得自己人生中最幸運、或最被眷顧的時刻是什麼時候？"}, {"id": 65, "text": "你覺得單身生活最棒的地方是什麼？那最不習慣的又是什麼？"}, {"id": 66, "text": "你覺得自己是個需要談戀愛的人，還是通常單身生活比較舒服？"}, {"id": 67, "text": "如果你在一個社交場合感到很不自在、想提早走，你通常會用什麼理由或方式離開？"}, {"id": 68, "text": "到目前為止，你人生中發生最多事情、對你影響最深的是哪一年？"}, {"id": 69, "text": "你覺得要真正「了解一個人」，最關鍵的指標或細節是什麼？"}, {"id": 70, "text": "你覺得別人的認可或評價對你來說重要嗎？"}, {"id": 71, "text": "你人生中目前最仰慕或敬佩誰？"}, {"id": 72, "text": "誰是目前為止影響你人生軌跡最深的人？"}, {"id": 73, "text": "你在工作或學習上，有沒有遇過什麼貴人，他的一句話或一個舉動改變了你？"}, {"id": 74, "text": "當你發現自己做錯事，或者傷害了別人的感情時，你通常會怎麼去表達歉意？"}, {"id": 75, "text": "你覺得是一個人取得的成就更重要，還是我們身邊和誰在一起更重要？"}, {"id": 76, "text": "你覺得自己到目前為止最驕傲的成就是什麼？"}, {"id": 77, "text": "在生活或關係中，有什麼原則是你不願意妥協的？"}, {"id": 78, "text": "你有沒有什麼深埋在心底、很少跟別人提起的夢想或遺憾？"}, {"id": 79, "text": "有沒有什麼事情是你很希望能重來一次的？"}, {"id": 80, "text": "如果有一天離開了，你最希望大家記住你身上的什麼？"}, {"id": 81, "text": "你覺得我們死後世界會發生什麼？"}]}]}, {"id": 2, "name": "走入心房", "subtitle": "從朋友到曖昧", "themes": [{"id": 4, "name": "主題四：時光回憶（童年、回憶與過去故事）", "questions": [{"id": 82, "text": "你小時候是在哪裡長大的？"}, {"id": 83, "text": "你的名字有什麼特別的故事或含意嗎？小時候有沒有被取過什麼討厭或好笑的綽號？"}, {"id": 84, "text": "你小時候最崇拜的卡通人物、漫畫角色，或者是偶像明星是誰？"}, {"id": 85, "text": "你以前上學的時候，最擅長和最討厭的科目分別是什麼？"}, {"id": 86, "text": "你記得自己買的第一張專輯是什麼嗎？"}, {"id": 87, "text": "你記得你在電影院看的第一部電影是什麼嗎？"}, {"id": 88, "text": "你人生中去的第一個演唱會是聽誰的？"}, {"id": 89, "text": "你覺得自己小時候是個什麼樣的小孩？"}, {"id": 90, "text": "你小時候發生過最搞笑的糗事是什麼？"}, {"id": 91, "text": "你小時候或讀書時做過最叛逆的事是什麼？"}, {"id": 92, "text": "你最喜歡的童年回憶是哪一段？"}, {"id": 93, "text": "你在學生時期和同學或朋友做過最蠢、但也最有趣的事是什麼？"}, {"id": 94, "text": "你讀書時做過最叛逆或最出格的蠢事是什麼？"}, {"id": 95, "text": "你學生時代最難忘的一件事是什麼？"}, {"id": 96, "text": "你覺得你做過最隨性或最說走就走的事是什麼？"}, {"id": 97, "text": "你高中的時候是個怎麼樣的人？過得開心嗎？"}, {"id": 98, "text": "你大學時期的生活是怎麼樣的？有什麼難忘的經歷？"}, {"id": 99, "text": "小時候的你，曾幻想過自己長大後會變成什麼樣的大人？"}, {"id": 100, "text": "你覺得小時候的你，和現在最大的不同是什麼？你喜歡現在的自己嗎？"}, {"id": 101, "text": "有沒有哪一個瞬間，讓你突然覺得自己「真的長大成人了」？"}, {"id": 102, "text": "如果你可以回到過去，對十年前的自己說一句話，你會想對當時的自己說什麼？"}, {"id": 103, "text": "你在工作或實習上，遇過最奇葩或是最讓你傻眼的事情是什麼？"}, {"id": 104, "text": "你在工作上最讓你覺得有成就感的一件事是什麼？"}, {"id": 105, "text": "你上次突然很有靈感去動手做或創作某件事是什麼時候？你做了什麼？"}, {"id": 106, "text": "回想學生時代的自己，你覺得當時的夢想和現在的生活有重疊嗎？"}]}, {"id": 5, "name": "主題五：社交圈子（家庭、朋友與人際關係）", "questions": [{"id": 107, "text": "你覺得我們兩個在哪些方面最相似？"}, {"id": 108, "text": "你身邊感情最要好的朋友，你們是怎麼認識的？你覺得他身上什麼特質最吸引你？"}, {"id": 109, "text": "如果有一天你遇到了重大的挫折（比如工作丟了或搞砸了），你第一個想打電話訴苦的人是誰？"}, {"id": 110, "text": "你有曾經為朋友做過什麼「很講義氣」或自己都覺得不可思議的事嗎？"}, {"id": 111, "text": "你身邊有沒有哪個朋友，他的生活方式或想法跟你完全相反，但你們卻非常合得來？"}, {"id": 112, "text": "你覺得自己是個容易信任別人的人，還是需要花很長時間觀察才能交心的人？"}, {"id": 113, "text": "在你的印象中，別人為你做過最善良、最溫暖的事是什麼？"}, {"id": 114, "text": "你覺得你身邊的人信任你、會把秘密交給你保守嗎？"}, {"id": 115, "text": "在交朋友方面，你覺得自己是重量還是重質的人？"}, {"id": 116, "text": "你平常都和什麼樣的朋友相處？方便跟我聊聊你的朋友們嗎？"}, {"id": 117, "text": "小時候到現在，有沒有哪一個畫面或瞬間，是讓你感到「自己是被深愛著的」？"}, {"id": 118, "text": "你跟家人的關係怎麼樣？你覺得家人的相處模式，對你現在的個性有什麼最明顯的影響？"}, {"id": 119, "text": "你以前和父母吵過最嚴重的架是因為什麼事？後來是怎麼和解的？"}, {"id": 120, "text": "你小時候最寶貝的一件玩具或東西是什麼？它現在還在嗎？"}, {"id": 121, "text": "你小時候是個聽話的乖小孩，還是個常讓父母頭痛的調皮鬼？"}, {"id": 122, "text": "如果你明天就要搬到一個完全陌生的城市生活，你覺得你最不捨的是什麼？"}, {"id": 123, "text": "你平常跟你的父母關係親近嗎？"}, {"id": 124, "text": "你平常跟家裡的哪位成員最親近？"}, {"id": 125, "text": "你平常跟家人的相處模式是怎麼樣的？方便聊聊你的家人嗎？"}]}, {"id": 6, "name": "主題六：交換脆弱（壓力、軟肋與心理健康）", "questions": [{"id": 126, "text": "如果你心情不好或跟人起衝突的時候，你是需要先自己安靜冷靜一下，還是希望有人陪你聊聊？"}, {"id": 127, "text": "當你感到極度疲憊或壓力非常大時，什麼樣的話語或舉動最能安慰到你？"}, {"id": 128, "text": "你曾經歷過人生最低潮的時期是什麼時候？你是怎麼走出來的？"}, {"id": 129, "text": "你覺得自己身上最大的缺點或不完美是什麼？你現在有在試著去接受或改變它嗎？"}, {"id": 130, "text": "當你獨自一人感到孤單時，你通常會做什麼事情來陪伴自己？"}, {"id": 131, "text": "你最害怕的一件事情是什麼？（不一定是具體的昆蟲，可以是某種狀態，例如被遺棄、失去控制）"}, {"id": 132, "text": "你以前有找過諮商師或看過心理治療嗎？"}, {"id": 133, "text": "你覺得自己做過最困難的一件事是什麼？"}, {"id": 134, "text": "你覺得最能讓你感受到被愛的『愛的語言』是什麼？（像是陪伴、貼心舉動或讚美）"}, {"id": 135, "text": "你有沒有任何特別不能接受的恐懼症？（比如幽閉恐懼、深海恐懼）"}, {"id": 136, "text": "你小時候最害怕什麼？"}, {"id": 137, "text": "你平常如果和另一半發生衝突，你通常是怎麼去解決的？"}, {"id": 138, "text": "你平常如果遇到壓力或焦慮，你最常用的排解工具或方法是什麼？"}, {"id": 139, "text": "如果可以改變你自己身上的一件事，你最想改變什麼？"}, {"id": 140, "text": "你平常是怎麼關注和維持自己心理健康的？"}, {"id": 141, "text": "有沒有什麼小事或秘密，是你想分享但目前還沒告訴過別人的？"}, {"id": 142, "text": "你這輩子接過最糟糕、或最讓你手足無措的一通電話，裡面說了什麼？"}]}]}, {"id": 3, "name": "親密關係", "subtitle": "曖昧到戀愛", "themes": [{"id": 7, "name": "主題七：感情共識（觀念、契合與未來共識）", "questions": [{"id": 143, "text": "你相信一見鍾情，還是日久生情？你覺得哪一種比較符合你的戀愛模式？"}, {"id": 144, "text": "你覺得自己被異性吸引時，最先注意到的是外在特質，還是內在散發出來的氣質？"}, {"id": 145, "text": "除了外在跟物質，還有什麼非物質的東西會讓你覺得特別有吸引力？"}, {"id": 146, "text": "你最期待或最喜歡的約會行程是什麼？是一起出門探索新景點，還是待在家裡看電影？"}, {"id": 147, "text": "你心目中完美的約會行程應該是什麼樣的？"}, {"id": 148, "text": "在感情關係中，對方的什麼小舉動（例如摸頭、牽手、眼神）最容易讓你感到心動，或者被點燃？"}, {"id": 149, "text": "在曖昧或感情中，你比較喜歡由對方先主動嗎？"}, {"id": 150, "text": "你覺得在伴侶身上，最不可或缺或最重要的特質是什麼？"}, {"id": 151, "text": "你最羨慕你身邊誰的感情相處模式？為什麼？"}, {"id": 152, "text": "你身邊感情最好的情侶是誰？他們相處的哪部分最讓你羨慕？"}, {"id": 153, "text": "你覺得兩個人在一起，最舒服的狀態應該是什麼樣的？"}, {"id": 154, "text": "你覺得另一半做過最浪漫、最讓你感動的事情是什麼？"}, {"id": 155, "text": "你目前對感情有什麼期待，或者正在尋找什麼樣的關係？"}, {"id": 156, "text": "你覺得自己在另一半眼裡，是屬於什麼類型的伴侶？"}, {"id": 157, "text": "你希望你的另一半在朋友或家人面前，是怎麼介紹或描述你的？"}, {"id": 158, "text": "你覺得情侶在一起之後，財務上應該怎麼規劃比較好？完全 AA制、建立共同基金，還是有其他想法？"}, {"id": 159, "text": "你覺得兩個人交往多久之後，適合開始考慮同居？你對同居生活有什麼期待或擔憂？"}, {"id": 160, "text": "你對「婚姻」的想法是什麼？你覺得它是感情的終點、保障，還是一張可有可無的紙？"}, {"id": 161, "text": "你心目中理想的「求婚」或「承諾」場景應該是什麼樣的？"}, {"id": 162, "text": "你相信一夫一妻制嗎？"}, {"id": 163, "text": "你覺得你老了會是什麼樣子？"}, {"id": 164, "text": "當你老了，回顧你的一生，你希望伴侶陪你一起完成的最後一件事是什麼？"}, {"id": 165, "text": "你在下一段感情中，最想嘗試做些什麼不一樣的調整？"}, {"id": 166, "text": "你覺得在一段健康的關係中，「愛對方」和「愛自己」這兩件事要怎麼取得平衡？"}, {"id": 167, "text": "如果我們在交往中出現嚴重的意見分歧（例如生涯規劃不同），你覺得怎麼樣的溝通和協商方式最健康？"}, {"id": 168, "text": "你覺得什麼事是感情關係中最無法容忍的致命傷？"}, {"id": 169, "text": "你在親密關係中，有沒有什麼想要嘗試、但一直不敢說出口的性幻想或體驗？"}, {"id": 170, "text": "你怎麼看待「肉體出軌」與「精神出軌」？哪一個對你來說是絕對無法原諒的？"}]}, {"id": 8, "name": "主題八：情史歷程（初戀、情傷與戀愛成長）", "questions": [{"id": 171, "text": "你容易陷入愛情嗎？"}, {"id": 172, "text": "在感情關係中，你是進展很快還是慢慢來的人？"}, {"id": 173, "text": "你覺得現在的人約會，最糟糕或最不健康的現象是什麼？"}, {"id": 174, "text": "你還記得你第一次接吻是什麼時候嗎？當時的情況是怎麼樣的？"}, {"id": 175, "text": "你以前有談過戀愛嗎？你還記得你的初戀是個怎麼樣的人嗎？"}, {"id": 176, "text": "你暗戀別人時，曾做過最傻或印象最深的事是什麼？"}, {"id": 177, "text": "你曾經跟人告白（或被表白）的經驗是什麼？當時的情況是怎樣的？"}, {"id": 178, "text": "在你的戀愛經歷中，有沒有什麼瞬間是讓你覺得「這就是心動的感覺」？"}, {"id": 179, "text": "回想你的初戀，你當初為什麼會喜歡對方？這段經歷對你現在的戀愛觀有什麼影響？"}, {"id": 180, "text": "在你的戀愛回憶中，別人為你做過最浪漫的事是什麼？"}, {"id": 181, "text": "在你的回憶中，別人為你做過最性感、最吸引你的舉動是什麼？"}, {"id": 182, "text": "你過去在感情中，心有被狠狠傷害過嗎？"}, {"id": 183, "text": "你過去有傷過別人的心嗎？"}, {"id": 184, "text": "你在以前的感情或友情中，有被背叛過嗎？"}, {"id": 185, "text": "你覺得過去經歷過的哪件事，對你現在的感情價值觀影響最深？"}, {"id": 186, "text": "你上一段感情，最後是因為什麼原因分手的？你花了多久時間才走出來？"}, {"id": 187, "text": "在過去的感情中，你犯過最大的錯誤或覺得對前任最虧欠的事情是什麼？"}, {"id": 188, "text": "你從過去的感情挫折或失敗中，獲得最大的成長或學習是什麼？"}, {"id": 189, "text": "你最難忘、或印象最深刻的一次親密接觸（或性經驗）是什麼樣的情境？"}]}, {"id": 9, "name": "主題九：感官火花（第一印象、調情與感官情趣）", "questions": [{"id": 190, "text": "我們初次見面時，你對我的第一印象是什麼？"}, {"id": 191, "text": "你的朋友們對我了解多少？"}, {"id": 192, "text": "為什麼我這麼喜歡和你聊天？有什麼理論嗎？"}, {"id": 193, "text": "你覺得我們約會相處下來，最讓你感到放鬆或好笑的是哪一個片段？"}, {"id": 194, "text": "如果可以用三個形容詞來描述你目前對我的感覺，你會選哪三個？"}, {"id": 195, "text": "你跟我在一起的時候，會覺得有社交壓力，還是覺得可以很自然地做自己？"}, {"id": 196, "text": "你覺得我們兩個人在性格或生活方式上，最大的共同點和最大的反差點分別是什麼？"}, {"id": 197, "text": "你覺得我最吸引你、或最讓你好奇的是什麼？"}, {"id": 198, "text": "如果可以讓我為你做一件事（任何事，比如煮飯、跑腿或講故事），你現在最想叫我做什麼？"}, {"id": 199, "text": "如果我們以後一起去一個地方旅行，你最期待跟我一起做什麼？"}, {"id": 200, "text": "如果今天晚上我們兩個突然決定逃離這座城市，去一場說走就走的冒險，你會想帶我一起去哪裡？"}, {"id": 201, "text": "想像一下，如果我們兩個人一起去荒島求生，你覺得我們各自會扮演什麼角色？誰會先被餓死？"}, {"id": 202, "text": "你最欣賞我哪一個特質？那有沒有什麼地方是你覺得我「這人怎麼這樣」、有點讓人哭笑不得的？"}, {"id": 203, "text": "假設我們已經在一起交往三年了，你覺得我們最常因為什麼無聊的小事吵架？"}, {"id": 204, "text": "你相信「靈魂伴侶」嗎？你覺得我們之間有沒有這種特殊的連結？"}, {"id": 205, "text": "如果有一天我們吵架了，而且吵得很兇，你希望我用什麼方式來打破僵局、和你和好？"}, {"id": 206, "text": "如果我們的父母不同意我們在一起，你會選擇堅持還是妥協？"}, {"id": 207, "text": "如果未來我們要一起建立家庭，你對「小孩」的看法是什麼？想生嗎？為什麼？"}, {"id": 208, "text": "你現在對誰有興趣嗎？"}, {"id": 209, "text": "你平常是怎麼定義『性感』這兩個字的？"}, {"id": 210, "text": "你認為自己擅長接吻嗎？"}, {"id": 211, "text": "你覺得最能讓你興奮（不管是生活還是親密上）的三大事情是什麼？"}]}]}];
+    
+    // APP STATE
+    let currentStageId = 1;
+    let currentThemeId = null; // null represents "All Themes" of the stage
+    let chattedQuestionIds = new Set();
+    let elapsedSeconds = 0;
+    let timerInterval = null;
+    let currentSaveName = null;
+    
+    // Active questions currently showing on the 3 reels
+    let activeQuestions = [null, null, null];
+    let currentReelIndices = [0, 0, 0];
+    
+    // SAFE STORAGE UTILITY FOR IOS AND LOCAL FILES PROTOCOLS
+    const safeStorage = {
+      _cache: {},
+      getItem(key) {
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            return window.localStorage.getItem(key);
+          }
+        } catch (e) {
+          console.warn("localStorage.getItem blocked, using fallback:", e);
+        }
+        return this._cache[key] || null;
+      },
+      setItem(key, value) {
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            window.localStorage.setItem(key, value);
+            return;
+          }
+        } catch (e) {
+          console.warn("localStorage.setItem blocked, using fallback:", e);
+        }
+        this._cache[key] = String(value);
+      }
+    };
+    
+    // DOM ELEMENTS
+    const themeSelectorList = document.getElementById('theme-selector-list');
+    const timerClock = document.getElementById('timer-clock');
+    const progressText = document.getElementById('progress-text');
+    const progressPercent = document.getElementById('progress-percent');
+    const progressFill = document.getElementById('progress-fill');
+    const spinTrigger = document.getElementById('spin-trigger');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const archiveToggleBtn = document.getElementById('archive-toggle');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const archiveDrawer = document.getElementById('archive-drawer');
+    const drawerCloseBtn = document.getElementById('drawer-close');
+    const partnerNameInput = document.getElementById('partner-name-input');
+    const saveCurrentBtn = document.getElementById('save-current-btn');
+    const archivesList = document.getElementById('archives-list');
+    
+    // AUDIO SYNTHESIS
+    let globalAudioCtx = null;
+    
+    function getAudioContext() {
+      try {
+        if (!globalAudioCtx) {
+          globalAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (globalAudioCtx.state === 'suspended') {
+          globalAudioCtx.resume();
+        }
+        return globalAudioCtx;
+      } catch (e) {
+        console.warn("Failed to create AudioContext: ", e);
+        return null;
+      }
+    }
+    
+    // Generate tick sound
+    function playTickSound(frequency = 600, duration = 0.04) {
+      try {
+        const audioCtx = getAudioContext();
+        if (!audioCtx) return;
+        
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn("Audio Context error: ", e);
+      }
+    }
+    
+    // Generate settle chime sound (arpeggio chord)
+    function playChimeSound() {
+      try {
+        const audioCtx = getAudioContext();
+        if (!audioCtx) return;
+        
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, index) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
+          gain.gain.setValueAtTime(0, audioCtx.currentTime + index * 0.08);
+          gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + index * 0.08 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.3);
+          
+          osc.start(audioCtx.currentTime + index * 0.08);
+          osc.stop(audioCtx.currentTime + index * 0.08 + 0.4);
+        });
+      } catch (e) {
+        console.warn("Audio Context error: ", e);
+      }
+    }
+    
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup Theme Toggle
+      const savedTheme = safeStorage.getItem('uc-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      themeToggleBtn.textContent = savedTheme === 'light' ? '☾' : '☼';
+      
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        safeStorage.setItem('uc-theme', newTheme);
+        themeToggleBtn.textContent = newTheme === 'light' ? '☾' : '☼';
+      });
+      
+      // Setup Drawer listeners
+      archiveToggleBtn.addEventListener('click', openDrawer);
+      drawerOverlay.addEventListener('click', closeDrawer);
+      drawerCloseBtn.addEventListener('click', closeDrawer);
+      saveCurrentBtn.addEventListener('click', saveCurrentSession);
+      
+      // Setup Stage listeners
+      document.querySelectorAll('.stage-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.currentTarget;
+          document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+          target.classList.add('active');
+          
+          currentStageId = parseInt(target.getAttribute('data-stage'));
+          currentThemeId = null; // reset to all themes of the stage
+          
+          renderThemePills();
+          updateProgress();
+        });
+      });
+      
+      // Spin Listener
+      spinTrigger.addEventListener('click', spinMachine);
+      
+      // Start Timer
+      startTimer();
+      
+      // Render Initial View
+      renderThemePills();
+      updateProgress();
+      loadArchivesList();
+    });
+    
+    // TIMER FUNCTIONS
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        elapsedSeconds++;
+        updateTimerDisplay();
+      }, 1000);
+    }
+    
+    function updateTimerDisplay() {
+      const hrs = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+      const secs = String(elapsedSeconds % 60).padStart(2, '0');
+      timerClock.textContent = `${hrs}:${mins}:${secs}`;
+    }
+    
+    // THEME PILLS RENDER
+    function renderThemePills() {
+      themeSelectorList.innerHTML = '';
+      
+      const currentStage = stagesData.find(s => s.id === currentStageId);
+      if (!currentStage) return;
+      
+      // "All Themes" Pill
+      const allPill = document.createElement('button');
+      allPill.className = `theme-pill ${currentThemeId === null ? 'active' : ''}`;
+      allPill.textContent = '全部主題';
+      allPill.addEventListener('click', () => {
+        document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
+        allPill.classList.add('active');
+        currentThemeId = null;
+      });
+      themeSelectorList.appendChild(allPill);
+      
+      // Theme Specific Pills
+      currentStage.themes.forEach(theme => {
+        const pill = document.createElement('button');
+        pill.className = `theme-pill ${currentThemeId === theme.id ? 'active' : ''}`;
+        // Extract shorthand name if it is long, e.g., "主題一：生活品味"
+        const nameParts = theme.name.split('：');
+        pill.textContent = nameParts.length > 1 ? nameParts[1].split('（')[0] : theme.name;
+        pill.title = theme.name;
+        
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentThemeId = theme.id;
+        });
+        themeSelectorList.appendChild(pill);
+      });
+    }
+    
+    // QUESTION POOL GETTER
+    function getActivePool() {
+      const currentStage = stagesData.find(s => s.id === currentStageId);
+      if (!currentStage) return [];
+      
+      if (currentThemeId === null) {
+        // Gather all questions in the active stage
+        return currentStage.themes.flatMap(t => t.questions);
+      } else {
+        // Gather questions in the active theme
+        const theme = currentStage.themes.find(t => t.id === currentThemeId);
+        return theme ? theme.questions : [];
+      }
+    }
+    
+    // SLOT SPIN LOGIC
+    function spinMachine() {
+      const pool = getActivePool();
+      if (pool.length < 3) {
+        alert("話題庫題目不足，請選擇其他主題。");
+        return;
+      }
+      
+      spinTrigger.disabled = true;
+      
+      // Select 3 random distinct questions
+      const selected = [];
+      const tempPool = [...pool];
+      
+      for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * tempPool.length);
+        selected.push(tempPool.splice(randomIndex, 1)[0]);
+      }
+      
+      const isMobile = window.innerWidth <= 900;
+      const itemHeight = isMobile ? 100 : 120;
+      
+      // Trigger animations
+      for (let i = 0; i < 3; i++) {
+        const reel = document.getElementById(`reel-${i}`);
+        const strip = document.getElementById(`strip-${i}`);
+        const badge = document.getElementById(`badge-${i}`);
+        
+        reel.classList.remove('chatted');
+        
+        // Setup slot strip elements for transition
+        strip.innerHTML = '';
+        
+        // Add current question as first item (if exists) so spin starts from current
+        const startQ = activeQuestions[i] || pool[Math.floor(Math.random() * pool.length)];
+        const startDiv = document.createElement('div');
+        startDiv.className = 'reel-item';
+        startDiv.textContent = startQ.text;
+        strip.appendChild(startDiv);
+        
+        // Add random filler questions for rolling visual effect
+        const numFiller = 12 + i * 4; // Stagger stop times
+        for (let j = 0; j < numFiller; j++) {
+          const fillerQ = pool[Math.floor(Math.random() * pool.length)];
+          const div = document.createElement('div');
+          div.className = 'reel-item';
+          div.textContent = fillerQ.text;
+          strip.appendChild(div);
+        }
+        
+        // Add final selected question at the end
+        const finalDiv = document.createElement('div');
+        finalDiv.className = 'reel-item';
+        finalDiv.textContent = selected[i].text;
+        strip.appendChild(finalDiv);
+        
+        // Reset translation and disable transition
+        strip.style.transition = 'none';
+        strip.style.transform = 'translateY(0)';
+        strip.offsetHeight; // Trigger reflow
+        
+        const duration = 1.8 + i * 0.4; // staggered seconds
+        
+        // Enable transition and translate to show final item
+        const totalItems = numFiller + 2; // start + fillers + final
+        const translateY = -(totalItems - 1) * itemHeight;
+        
+        strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.35, 1)`;
+        strip.style.transform = `translateY(${translateY}px)`;
+        
+        // Tick sound simulation during spin
+        let tickCount = 0;
+        const tickInterval = setInterval(() => {
+          if (tickCount < (10 + i * 3)) {
+            playTickSound(450 + tickCount * 25, 0.02);
+            tickCount++;
+          } else {
+            clearInterval(tickInterval);
+          }
+        }, 120);
+        
+        // Settle callback
+        setTimeout(() => {
+          // Keep only final element and reset layout
+          strip.style.transition = 'none';
+          strip.style.transform = 'translateY(0)';
+          strip.innerHTML = '';
+          
+          const settledDiv = document.createElement('div');
+          settledDiv.className = 'reel-item';
+          settledDiv.id = `qtext-${i}`;
+          settledDiv.textContent = selected[i].text;
+          strip.appendChild(settledDiv);
+          
+          // Update badge
+          badge.textContent = `#${selected[i].id}`;
+          
+          // Save active question
+          activeQuestions[i] = selected[i];
+          currentReelIndices[i] = pool.findIndex(q => q.id === selected[i].id);
+          
+          // If this question is already chatted, add class
+          if (chattedQuestionIds.has(selected[i].id)) {
+            reel.classList.add('chatted');
+          }
+          
+          playChimeSound();
+          
+          // Re-enable trigger when the last one finishes
+          if (i === 2) {
+            spinTrigger.disabled = false;
+          }
+        }, duration * 1000);
+      }
+    }
+    
+    // MANUAL REEL NAVIGATION (Up/Down)
+    window.navigateReel = function(reelIdx, direction) {
+      const pool = getActivePool();
+      if (pool.length === 0) return;
+      
+      // If reel has no question set yet, find first one
+      if (activeQuestions[reelIdx] === null) {
+        activeQuestions[reelIdx] = pool[0];
+        currentReelIndices[reelIdx] = 0;
+      } else {
+        // Adjust index with wrap around
+        let idx = currentReelIndices[reelIdx] + direction;
+        if (idx < 0) idx = pool.length - 1;
+        if (idx >= pool.length) idx = 0;
+        
+        activeQuestions[reelIdx] = pool[idx];
+        currentReelIndices[reelIdx] = idx;
+      }
+      
+      // Update UI with smooth slide fade
+      const qtext = document.getElementById(`qtext-${reelIdx}`);
+      const badge = document.getElementById(`badge-${reelIdx}`);
+      const reel = document.getElementById(`reel-${reelIdx}`);
+      
+      qtext.style.opacity = '0';
+      qtext.style.transform = direction > 0 ? 'translateY(-10px)' : 'translateY(10px)';
+      
+      setTimeout(() => {
+        qtext.textContent = activeQuestions[reelIdx].text;
+        badge.textContent = `#${activeQuestions[reelIdx].id}`;
+        
+        // Sync checked state
+        if (chattedQuestionIds.has(activeQuestions[reelIdx].id)) {
+          reel.classList.add('chatted');
+        } else {
+          reel.classList.remove('chatted');
+        }
+        
+        qtext.style.opacity = '1';
+        qtext.style.transform = 'translateY(0)';
+        playTickSound(700, 0.03);
+      }, 150);
+    };
+    
+    // TOGGLE CHATTED STATE
+    window.toggleChatted = function(reelIdx) {
+      const question = activeQuestions[reelIdx];
+      if (!question) return;
+      
+      const reel = document.getElementById(`reel-${reelIdx}`);
+      
+      if (chattedQuestionIds.has(question.id)) {
+        chattedQuestionIds.delete(question.id);
+        reel.classList.remove('chatted');
+      } else {
+        chattedQuestionIds.add(question.id);
+        reel.classList.add('chatted');
+        playTickSound(900, 0.08);
+      }
+      
+      updateProgress();
+      
+      // If we are currently loaded in a save, auto-save updates to that save
+      if (currentSaveName) {
+        silentSaveProgress();
+      }
+    };
+    
+    // PROGRESS UPDATE
+    function updateProgress() {
+      const chattedCount = chattedQuestionIds.size;
+      const totalCount = 211; // Total questions in all stages
+      
+      progressText.textContent = `已探討 ${chattedCount} / ${totalCount} 題`;
+      
+      const pct = Math.round((chattedCount / totalCount) * 100);
+      progressPercent.textContent = `${pct}%`;
+      progressFill.style.width = `${pct}%`;
+    }
+    
+    // DRAWER CONTROL FUNCTIONS
+    function openDrawer() {
+      archiveDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+      loadArchivesList();
+    }
+    
+    function closeDrawer() {
+      archiveDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    }
+    
+    // ARCHIVE STORAGE FUNCTIONS
+    function getArchives() {
+      try {
+        return JSON.parse(safeStorage.getItem('uc-dating-archives')) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+    
+    function saveArchives(archives) {
+      try {
+        safeStorage.setItem('uc-dating-archives', JSON.stringify(archives));
+      } catch (e) {
+        console.warn("Failed to save archives: ", e);
+      }
+    }
+    
+    function loadArchivesList() {
+      archivesList.innerHTML = '';
+      const archives = getArchives();
+      
+      if (archives.length === 0) {
+        archivesList.innerHTML = '<div class="no-archives">目前無任何約會紀錄</div>';
+        return;
+      }
+      
+      archives.forEach(arc => {
+        const card = document.createElement('div');
+        card.className = 'archive-card';
+        
+        // Format elapsed time string
+        const hrs = String(Math.floor(arc.elapsedSeconds / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((arc.elapsedSeconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(arc.elapsedSeconds % 60).padStart(2, '0');
+        const timeStr = `${hrs}:${mins}:${secs}`;
+        
+        card.innerHTML = `
+          <div class="archive-info">
+            <span class="archive-name">${arc.name}</span>
+            <span class="archive-date">${arc.date}</span>
+          </div>
+          <div class="archive-stats">
+            <span>已聊 <strong>${arc.chattedCount}</strong> 題</span>
+            <span>時長 <strong>${timeStr}</strong></span>
+          </div>
+          <div class="archive-actions">
+            <button class="btn-action load" onclick="loadSession('${arc.name}')">載入進度</button>
+            <button class="btn-action delete" onclick="deleteSession('${arc.name}')">刪除</button>
+          </div>
+        `;
+        
+        archivesList.appendChild(card);
+      });
+    }
+    
+    // SAVE CURRENT SESSION
+    function saveCurrentSession() {
+      const name = partnerNameInput.value.trim();
+      if (!name) {
+        alert("請輸入對象的名字。");
+        return;
+      }
+      
+      const archives = getArchives();
+      const existingIdx = archives.findIndex(a => a.name === name);
+      
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      
+      const newArchive = {
+        name: name,
+        date: dateStr,
+        elapsedSeconds: elapsedSeconds,
+        chattedIds: Array.from(chattedQuestionIds),
+        chattedCount: chattedQuestionIds.size,
+        currentStageId: currentStageId,
+        currentThemeId: currentThemeId,
+        activeQuestions: activeQuestions,
+        currentReelIndices: currentReelIndices
+      };
+      
+      if (existingIdx >= 0) {
+        if (!confirm(`已存在「${name}」的紀錄，是否覆寫？`)) {
+          return;
+        }
+        archives[existingIdx] = newArchive;
+      } else {
+        archives.push(newArchive);
+      }
+      
+      saveArchives(archives);
+      currentSaveName = name;
+      partnerNameInput.value = '';
+      
+      loadArchivesList();
+      alert(`已儲存「${name}」的約會進度！`);
+    }
+    
+    // AUTO SAVE (SILENT) WHEN UPDATING CHATTED STATUS
+    function silentSaveProgress() {
+      if (!currentSaveName) return;
+      const archives = getArchives();
+      const idx = archives.findIndex(a => a.name === currentSaveName);
+      if (idx >= 0) {
+        archives[idx].elapsedSeconds = elapsedSeconds;
+        archives[idx].chattedIds = Array.from(chattedQuestionIds);
+        archives[idx].chattedCount = chattedQuestionIds.size;
+        archives[idx].currentStageId = currentStageId;
+        archives[idx].currentThemeId = currentThemeId;
+        archives[idx].activeQuestions = activeQuestions;
+        archives[idx].currentReelIndices = currentReelIndices;
+        saveArchives(archives);
+      }
+    }
+    
+    // LOAD SESSION
+    window.loadSession = function(name) {
+      const archives = getArchives();
+      const archive = archives.find(a => a.name === name);
+      if (!archive) return;
+      
+      if (!confirm(`載入「${name}」的紀錄將覆蓋目前的進度，是否繼續？`)) {
+        return;
+      }
+      
+      // Restore state
+      currentSaveName = archive.name;
+      elapsedSeconds = archive.elapsedSeconds;
+      chattedQuestionIds = new Set(archive.chattedIds);
+      currentStageId = archive.currentStageId || 1;
+      currentThemeId = archive.currentThemeId !== undefined ? archive.currentThemeId : null;
+      activeQuestions = archive.activeQuestions || [null, null, null];
+      currentReelIndices = archive.currentReelIndices || [0, 0, 0];
+      
+      // Update UI Stage selectors
+      document.querySelectorAll('.stage-btn').forEach(btn => {
+        const stageNum = parseInt(btn.getAttribute('data-stage'));
+        if (stageNum === currentStageId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      // Render components
+      renderThemePills();
+      updateTimerDisplay();
+      updateProgress();
+      
+      // Restore Active Question Reels
+      for (let i = 0; i < 3; i++) {
+        const strip = document.getElementById(`strip-${i}`);
+        const badge = document.getElementById(`badge-${i}`);
+        const reel = document.getElementById(`reel-${i}`);
+        
+        reel.classList.remove('chatted');
+        strip.innerHTML = '';
+        
+        const settledDiv = document.createElement('div');
+        settledDiv.className = 'reel-item';
+        settledDiv.id = `qtext-${i}`;
+        
+        if (activeQuestions[i]) {
+          settledDiv.textContent = activeQuestions[i].text;
+          badge.textContent = `#${activeQuestions[i].id}`;
+          if (chattedQuestionIds.has(activeQuestions[i].id)) {
+            reel.classList.add('chatted');
+          }
+        } else {
+          settledDiv.textContent = '請點擊上方獲取隨機話題';
+          badge.textContent = '#--';
+        }
+        strip.appendChild(settledDiv);
+      }
+      
+      // Start/Resume timer
+      startTimer();
+      
+      closeDrawer();
+      alert(`已載入「${name}」的約會進度！`);
+    };
+    
+    // DELETE SESSION
+    window.deleteSession = function(name) {
+      if (!confirm(`確定要刪除「${name}」的約會進度？此操作無法還原。`)) {
+        return;
+      }
+      
+      let archives = getArchives();
+      archives = archives.filter(a => a.name !== name);
+      saveArchives(archives);
+      
+      if (currentSaveName === name) {
+        currentSaveName = null;
+      }
+      
+      loadArchivesList();
+    };
+  </script>
+
+</body>
+</html>
