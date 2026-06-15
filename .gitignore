@@ -1,9 +1,6 @@
+/UC Training情感教育/
+/個人用/
+*.md
 .DS_Store
-Thumbs.db
-*.log
-.gemini/
-*~
-*.swp
-
-# Local Netlify folder
-.netlify
+.deploy_temp/
+deploy_temp/
