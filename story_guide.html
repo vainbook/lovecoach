@@ -1157,11 +1157,109 @@
       border-radius: 10px;
       letter-spacing: 0.05em;
     }
+
+    /* Range Slider Styling */
+    .range-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(232, 228, 220, 0.15);
+      outline: none;
+      transition: background 0.3s;
+    }
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      cursor: pointer;
+      box-shadow: 0 0 6px var(--accent-color);
+      transition: transform 0.1s;
+    }
+    .range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+    .range-slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      cursor: pointer;
+      box-shadow: 0 0 6px var(--accent-color);
+      transition: transform 0.1s;
+    }
+    .range-slider::-moz-range-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    /* Responsibility Checklist Styling */
+    .responsibility-checklist-panel input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(232, 168, 152, 0.4);
+      border-radius: 4px;
+      background: rgba(19, 27, 46, 0.6);
+      cursor: pointer;
+      display: inline-grid;
+      place-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .responsibility-checklist-panel input[type="checkbox"]::before {
+      content: "✓";
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--navy);
+      transform: scale(0);
+      transition: transform 0.15s ease-in-out;
+    }
+    .responsibility-checklist-panel input[type="checkbox"]:checked {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+    }
+    .responsibility-checklist-panel input[type="checkbox"]:checked::before {
+      transform: scale(1);
+    }
+
+    /* Disabled Save Button */
+    .btn-disabled {
+      background: #4A4E5A !important;
+      color: #8E929E !important;
+      border-color: #4A4E5A !important;
+      cursor: not-allowed !important;
+      opacity: 0.6;
+      box-shadow: none !important;
+      pointer-events: none;
+    }
   </style>
   <!-- html2canvas for image export -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
+  <!-- GLOBAL SVG DEFS FOR GRADIENTS & GLOW EFFECTS -->
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" width="0" height="0">
+    <defs>
+      <!-- Curve gradient: Red (sad/low) -> Yellow (neutral) -> Green (happy/high) -->
+      <linearGradient id="curve-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#ff4b4b" />
+        <stop offset="50%" stop-color="#ffb703" />
+        <stop offset="100%" stop-color="#06C755" />
+      </linearGradient>
+      <!-- Neon Glow Filter -->
+      <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
 
   <div class="container">
     <!-- TOP NAV -->
@@ -1255,6 +1353,46 @@
               <textarea id="field-story-plot" class="form-textarea" placeholder="例如：在印度旅行時行李遺失，又染上急性胃炎..." oninput="syncFields()"></textarea>
             </div>
             
+            <!-- Emotion Curve Drawer -->
+            <div class="emotion-drawer-panel" style="background: rgba(255, 255, 255, 0.02); border: 1px dashed var(--card-border); border-radius: 8px; padding: 16px; margin-top: -8px; margin-bottom: 8px;">
+              <div style="font-size: 12px; font-weight: bold; color: var(--accent-color); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                <span>📈 1.1 情緒起伏折線圖 (畫故事)</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: normal;">拖動滑桿描繪故事張力</span>
+              </div>
+              
+              <!-- SVG Curve Editor Canvas -->
+              <div style="height: 120px; background: rgba(19, 27, 46, 0.6); border: 1px solid var(--card-border); border-radius: 6px; overflow: hidden; position: relative; margin-bottom: 12px;">
+                <svg id="emotion-svg-editor" style="width: 100%; height: 100%; display: block;" viewBox="0 0 400 120">
+                  <!-- Rendered dynamically -->
+                </svg>
+              </div>
+              
+              <!-- Sliders -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                <div class="slider-group">
+                  <label style="font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span>起 (起點)</span>
+                    <span id="val-curve-start" style="color: #ff4b4b; font-weight: bold;">10</span>
+                  </label>
+                  <input type="range" id="curve-start" class="range-slider" min="-50" max="50" value="10" oninput="updateEmotionCurve()">
+                </div>
+                <div class="slider-group">
+                  <label style="font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span>承 (低谷/衝突)</span>
+                    <span id="val-curve-mid" style="color: #ffb703; font-weight: bold;">-30</span>
+                  </label>
+                  <input type="range" id="curve-mid" class="range-slider" min="-50" max="50" value="-30" oninput="updateEmotionCurve()">
+                </div>
+                <div class="slider-group">
+                  <label style="font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span>轉合 (體悟/高點)</span>
+                    <span id="val-curve-end" style="color: #06C755; font-weight: bold;">40</span>
+                  </label>
+                  <input type="range" id="curve-end" class="range-slider" min="-50" max="50" value="40" oninput="updateEmotionCurve()">
+                </div>
+              </div>
+            </div>
+            
             <div class="form-group">
               <label class="form-label" for="field-story-exp" style="font-size:12.5px;">2. 體驗 <span class="form-label-desc">（刻畫五感、當下的情緒與想法起伏）</span></label>
               <textarea id="field-story-exp" class="form-textarea" placeholder="例如：躺在小旅館發燒時非常無力，看著混亂的街頭，內心從恐慌到平靜..." oninput="syncFields()"></textarea>
@@ -1303,11 +1441,31 @@
             </div>
           </div>
           
+          <!-- Responsibility Checklist -->
+          <div class="responsibility-checklist-panel" style="background: rgba(232, 168, 152, 0.04); border: 1.5px solid rgba(232, 168, 152, 0.2); border-radius: 8px; padding: 16px; margin-top: 24px; margin-bottom: 16px; transition: all 0.3s ease;">
+            <div style="font-size: 13px; font-weight: bold; color: var(--accent-color); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+              <span>🛡️ 雲端教練 · 故事負責任改寫檢核</span>
+            </div>
+            <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+              一對一陪跑核心：我們拒絕怨天尤人或把責任推給環境。請確認你的故事已完成「受害者轉變為負責任者」的心態改寫，以展現高吸引力的生存特質。
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <label style="display: flex; gap: 8px; font-size: 12.5px; color: var(--text-color); cursor: pointer; align-items: flex-start;">
+                <input type="checkbox" id="chk-responsibility-1" onchange="validateChecklist()" style="margin-top: 3px;">
+                <span>我已將故事中抱怨伴侶、他人或環境的受害者字眼，改寫為自己主動選擇並為之負責的「負責任版本」。</span>
+              </label>
+              <label style="display: flex; gap: 8px; font-size: 12.5px; color: var(--text-color); cursor: pointer; align-items: flex-start;">
+                <input type="checkbox" id="chk-responsibility-2" onchange="validateChecklist()" style="margin-top: 3px;">
+                <span>此故事確實傳遞出我的核心價值觀、自我啟發，或解決問題的生存適應力。</span>
+              </label>
+            </div>
+          </div>
+          
           <div class="step-actions">
             <button class="btn btn-secondary" onclick="prevStep()">
               <span>← 上一步</span>
             </button>
-            <button class="btn btn-primary" onclick="saveStoryCard()">
+            <button id="btn-save-story" class="btn btn-primary btn-disabled" onclick="saveStoryCard()">
               <span>💾 儲存故事卡</span>
             </button>
           </div>
@@ -1329,6 +1487,12 @@
             
             <div class="luxury-card-title" id="preview-title">《 新的故事卡 》</div>
             
+            <!-- Emotion Curve Preview -->
+            <div id="preview-curve-container" class="preview-curve-wrap" style="height: 50px; background: rgba(19, 27, 46, 0.4); border: 1px solid var(--card-border); border-radius: 8px; margin: 12px 0; overflow: hidden; position: relative;">
+              <svg id="emotion-svg-preview" style="width: 100%; height: 100%; display: block;" viewBox="0 0 400 50" preserveAspectRatio="none">
+                <!-- Rendered dynamically -->
+              </svg>
+            </div>
 
             <!-- Step 2: Intro Bubble -->
             <div class="card-bubble">
@@ -1377,6 +1541,10 @@
               <span>🖼️ 導出圖片</span>
             </button>
           </div>
+          
+          <button id="btn-line-coach" class="btn" style="width: 100%; margin-top: 10px; margin-bottom: 8px; background-color: #06C755; color: #fff; border: none; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(6, 199, 85, 0.2);" onclick="copyToLineCoach()">
+            <span>💬 傳送教練 (LINE)</span>
+          </button>
           
           <button class="btn btn-danger" style="width: 100%;" onclick="cancelEditor()">
             <span>🚫 放棄修改並返回儀表板</span>
@@ -1706,10 +1874,16 @@
             </div>
             <h3 class="saved-card-title">${story.title || '未命名故事卡'}</h3>
             <p class="saved-card-hook">${story.storyPlot || '尚未填寫故事大綱劇情...'}</p>
+            <div class="mini-curve-wrap" style="height: 36px; background: rgba(19, 27, 46, 0.4); border: 1px solid var(--card-border); border-radius: 6px; margin: 8px 0; overflow: hidden; position: relative;">
+              <svg style="width: 100%; height: 100%; display: block;" viewBox="0 0 400 50" preserveAspectRatio="none">
+                ${generateCurveSVGHtml(story.curve || [10, -30, 40], 400, 50, true)}
+              </svg>
+            </div>
           </div>
           <div class="saved-card-actions">
             <button class="btn-icon-sm" onclick="editStoryCard('${story.id}')" title="編輯故事卡">✏️</button>
             <button class="btn-icon-sm" onclick="copyIndividualMarkdown('${story.id}')" title="複製 Markdown">📋</button>
+            <button class="btn-icon-sm" onclick="copyIndividualLine('${story.id}')" title="傳送教練 (LINE)" style="color: #06C755;">💬</button>
             <button class="btn-icon-sm" onclick="exportStoryCardAsImage('${story.id}')" title="導出圖片">🖼️</button>
             <button class="btn-icon-sm" style="margin-left: auto;" onclick="deleteStoryCard('${story.id}')" title="刪除故事卡">🗑</button>
           </div>
@@ -1819,6 +1993,17 @@
         document.getElementById('field-story-value').value = '';
         document.getElementById('field-step5').value = '';
         
+        // Reset curve sliders to defaults
+        document.getElementById('curve-start').value = 10;
+        document.getElementById('curve-mid').value = -30;
+        document.getElementById('curve-end').value = 40;
+        updateEmotionCurve();
+        
+        // Reset checklist
+        document.getElementById('chk-responsibility-1').checked = false;
+        document.getElementById('chk-responsibility-2').checked = false;
+        validateChecklist();
+        
         // View switches
         document.getElementById('dashboard-view').style.display = 'none';
         document.getElementById('editor-view').className = 'editor-section active';
@@ -1864,6 +2049,18 @@
       document.getElementById('field-story-purpose').value = story.storyPurpose || '';
       document.getElementById('field-story-value').value = story.storyValue || '';
       document.getElementById('field-step5').value = story.step5 || '';
+      
+      // Populate curve values
+      const curve = story.curve || [10, -30, 40];
+      document.getElementById('curve-start').value = curve[0];
+      document.getElementById('curve-mid').value = curve[1];
+      document.getElementById('curve-end').value = curve[2];
+      updateEmotionCurve();
+      
+      // Set checklist checked state (since it's already saved)
+      document.getElementById('chk-responsibility-1').checked = true;
+      document.getElementById('chk-responsibility-2').checked = true;
+      validateChecklist();
       
       // View switches
       document.getElementById('dashboard-view').style.display = 'none';
@@ -2072,7 +2269,7 @@
         previewBadge.className = 'context-badge';
       }
       
-// Fields values
+      // Fields values
       const title = document.getElementById('field-title').value.trim();
       const step2 = document.getElementById('field-step2').value.trim();
       const storyPlot = document.getElementById('field-story-plot').value.trim();
@@ -2095,6 +2292,21 @@
 
     // ── SAVE STORY CARD ────────────────────────────────────────────────
     function saveStoryCard() {
+      // Check validation
+      if (!document.getElementById('chk-responsibility-1').checked || !document.getElementById('chk-responsibility-2').checked) {
+        showToast("⚠️ 請先勾選「故事負責任檢核」的兩個項目，確認已完成負責任改寫！");
+        const checklistPanel = document.querySelector('.responsibility-checklist-panel');
+        if (checklistPanel) {
+          checklistPanel.style.borderColor = '#ff4b4b';
+          checklistPanel.style.boxShadow = '0 0 10px rgba(255, 75, 75, 0.2)';
+          setTimeout(() => {
+            checklistPanel.style.borderColor = 'rgba(232, 168, 152, 0.2)';
+            checklistPanel.style.boxShadow = 'none';
+          }, 1500);
+        }
+        return;
+      }
+
       const title = document.getElementById('field-title').value.trim();
       if (!title) {
         alert('請填寫故事標題，以方便在儀表板中識別。');
@@ -2120,6 +2332,11 @@
         storyPurpose: document.getElementById('field-story-purpose').value.trim(),
         storyValue: document.getElementById('field-story-value').value.trim(),
         step5: document.getElementById('field-step5').value.trim(),
+        curve: [
+          parseInt(document.getElementById('curve-start').value),
+          parseInt(document.getElementById('curve-mid').value),
+          parseInt(document.getElementById('curve-end').value)
+        ],
         updatedAt: new Date().toISOString()
       };
       
@@ -2164,9 +2381,11 @@
       const themeInfo = THEME_MAP[story.theme];
       const themeText = themeInfo ? ` · ${themeInfo.name}` : '';
       const fullContextStr = `${contextName}${themeText}`;
+      const curve = story.curve || [10, -30, 40];
       
       return `# UC Training 個人故事打磨卡：《${story.title}》
 - **故事脈絡**：${fullContextStr}
+- **情緒起伏**：起 [${curve[0]}] ➔ 承 [${curve[1]}] ➔ 轉合 [${curve[2]}]
 
 ---
 
@@ -2195,7 +2414,12 @@
         storyExp: document.getElementById('field-story-exp').value.trim(),
         storyPurpose: document.getElementById('field-story-purpose').value.trim(),
         storyValue: document.getElementById('field-story-value').value.trim(),
-        step5: document.getElementById('field-step5').value.trim()
+        step5: document.getElementById('field-step5').value.trim(),
+        curve: [
+          parseInt(document.getElementById('curve-start').value),
+          parseInt(document.getElementById('curve-mid').value),
+          parseInt(document.getElementById('curve-end').value)
+        ]
       };
       
       const md = getMarkdownFormat(storyObj);
@@ -2207,6 +2431,197 @@
       });
     }
 
+    // ── CLOUD COACH LINE SUBMISSION LOGIC ─────────────────────────────
+    function getThemeCode(theme) {
+      const mapping = {
+        'professional_role': 'Q1-1',
+        'professional_achievements': 'Q2-1',
+        'professional_motivation': 'Q3-1',
+        'life_hobbies': 'Q4-1',
+        'life_adventure': 'Q5-1',
+        'life_proud': 'Q6-1',
+        'life_crazy': 'Q7-1',
+        'major_preschool': 'Q8-1',
+        'major_elementary': 'Q9-1',
+        'major_junior': 'Q10-1',
+        'major_senior': 'Q11-1',
+        'major_university': 'Q12-1',
+        'major_freshman': 'Q13-1'
+      };
+      return mapping[theme] || 'Q-Unknown';
+    }
+
+    // Context mapping to OKRs
+    function getOkrCategory(theme) {
+      if (!theme) return '【未知 OKR】';
+      if (theme.startsWith('professional')) {
+        return '【外在社交名片 / 職場吸引 KR】';
+      } else if (theme.startsWith('life')) {
+        return '【生活態度 / 熱情度展現 KR】';
+      } else if (theme.startsWith('major')) {
+        return '【深度共鳴 / 情感脆弱揭露 KR】';
+      }
+      return '【其它關係學習 KR】';
+    }
+
+    function getLineCoachFormat(story) {
+      let contextName = '';
+      if (story.context === 'professional') contextName = '💼 職業美化';
+      if (story.context === 'life') contextName = '🌿 生活經驗';
+      if (story.context === 'major') contextName = '🏆 人生重大';
+      
+      const themeInfo = THEME_MAP[story.theme];
+      const themeText = themeInfo ? themeInfo.name : '未命名話題';
+      const themeCode = getThemeCode(story.theme);
+      const okrCat = getOkrCategory(story.theme);
+      const curve = story.curve || [10, -30, 40];
+      
+      return `💬 【一對一雲端教練 - 故事打磨覆盤申請】
+
+📌 話題編號與主題：${themeCode} · ${themeText} (${contextName})
+🎯 OKR 對應維度：${okrCat}
+👑 故事標題：《${story.title || '未命名故事'}》
+📈 情緒起伏：起 [${curve[0]}] ➔ 承 [${curve[1]}] ➔ 轉合 [${curve[2]}]
+
+==================================
+
+🎬 故事大綱 (Story Core)：
+- 1. 劇情：${story.storyPlot || '無'}
+- 2. 體驗 (五感與情緒)：${story.storyExp || '無'}
+- 3. 目的 (核心體悟)：${story.storyPurpose || '無'}
+- 4. 價值 (吸引力特質)：${story.storyValue || '無'}
+
+💬 對話與標題設計：
+- 開場引導問句：${story.step2 || '無'}
+- 結尾延伸問句：${story.step5 || '無'}
+
+==================================
+🛡️ 故事負責任檢核 (已通過)：
+✓ 已去除受害者抱怨怨天尤人字眼，改寫為負責任版本。
+✓ 傳遞核心價值觀，展現解決問題之生存特質。
+
+© UC Training 關係智慧隨身學習 App`;
+    }
+
+    function copyToLineCoach() {
+      const storyObj = {
+        context: appState.activeContext,
+        theme: appState.activeTheme,
+        title: document.getElementById('field-title').value.trim() || '未命名故事',
+        step2: document.getElementById('field-step2').value.trim(),
+        storyPlot: document.getElementById('field-story-plot').value.trim(),
+        storyExp: document.getElementById('field-story-exp').value.trim(),
+        storyPurpose: document.getElementById('field-story-purpose').value.trim(),
+        storyValue: document.getElementById('field-story-value').value.trim(),
+        step5: document.getElementById('field-step5').value.trim(),
+        curve: [
+          parseInt(document.getElementById('curve-start').value),
+          parseInt(document.getElementById('curve-mid').value),
+          parseInt(document.getElementById('curve-end').value)
+        ]
+      };
+      
+      const lineText = getLineCoachFormat(storyObj);
+      
+      navigator.clipboard.writeText(lineText).then(() => {
+        showToast('已複製 LINE 教練覆盤格式，快去傳送給教練吧！💬');
+      }).catch(err => {
+        alert('複製失敗，請手動複製右側預覽的文字');
+      });
+    }
+
+    function copyIndividualLine(id) {
+      const story = appState.stories.find(s => s.id === id);
+      if (!story) return;
+      const text = getLineCoachFormat(story);
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('已複製 LINE 教練覆盤格式！💬');
+      }).catch(err => {
+        alert('複製失敗');
+      });
+    }
+
+    // ── EMOTION CURVE DRAWING HELPERS ────────────────────────────────
+    function mapValueToY(val, height) {
+      const half = height / 2;
+      const margin = 12; // safety margin for glow/markers
+      const scale = (half - margin) / 50;
+      return half - val * scale;
+    }
+
+    function generateCurveSVGHtml(values, width, height, isMini = false) {
+      const y0 = mapValueToY(values[0], height);
+      const y1 = mapValueToY(values[1], height);
+      const y2 = mapValueToY(values[2], height);
+      
+      // Bezier curve calculation to pass exactly through mid-point (y1)
+      const yc = 2 * y1 - 0.5 * (y0 + y2);
+      
+      const pathD = `M 40,${y0} Q 200,${yc} 360,${y2}`;
+      
+      let elements = `
+        <path d="${pathD}" fill="none" stroke="url(#curve-gradient)" stroke-width="${isMini ? 2.5 : 4}" filter="url(#neon-glow)" />
+      `;
+      
+      if (!isMini) {
+        elements += `
+          <!-- Start point -->
+          <circle cx="40" cy="${y0}" r="6" fill="#ff4b4b" stroke="#fff" stroke-width="1.5" />
+          <text x="40" y="${y0 > 25 ? y0 - 12 : y0 + 18}" fill="#E8E4DC" font-size="10" font-weight="bold" text-anchor="middle" font-family="'Space Grotesk', sans-serif">起 (${values[0]})</text>
+          
+          <!-- Mid point -->
+          <circle cx="200" cy="${y1}" r="6" fill="#ffb703" stroke="#fff" stroke-width="1.5" />
+          <text x="200" y="${y1 > 25 ? y1 - 12 : y1 + 18}" fill="#E8E4DC" font-size="10" font-weight="bold" text-anchor="middle" font-family="'Space Grotesk', sans-serif">承 (${values[1]})</text>
+          
+          <!-- End point -->
+          <circle cx="360" cy="${y2}" r="6" fill="#06C755" stroke="#fff" stroke-width="1.5" />
+          <text x="360" y="${y2 > 25 ? y2 - 12 : y2 + 18}" fill="#E8E4DC" font-size="10" font-weight="bold" text-anchor="middle" font-family="'Space Grotesk', sans-serif">轉合 (${values[2]})</text>
+        `;
+      } else {
+        elements += `
+          <circle cx="40" cy="${y0}" r="3.5" fill="#ff4b4b" />
+          <circle cx="200" cy="${y1}" r="3.5" fill="#ffb703" />
+          <circle cx="360" cy="${y2}" r="3.5" fill="#06C755" />
+        `;
+      }
+      return elements;
+    }
+
+    function updateEmotionCurve() {
+      const vStart = parseInt(document.getElementById('curve-start').value);
+      const vMid = parseInt(document.getElementById('curve-mid').value);
+      const vEnd = parseInt(document.getElementById('curve-end').value);
+      
+      document.getElementById('val-curve-start').textContent = vStart;
+      document.getElementById('val-curve-mid').textContent = vMid;
+      document.getElementById('val-curve-end').textContent = vEnd;
+      
+      const editorSvg = document.getElementById('emotion-svg-editor');
+      const previewSvg = document.getElementById('emotion-svg-preview');
+      
+      if (editorSvg) {
+        editorSvg.innerHTML = generateCurveSVGHtml([vStart, vMid, vEnd], 400, 120, false);
+      }
+      if (previewSvg) {
+        previewSvg.innerHTML = generateCurveSVGHtml([vStart, vMid, vEnd], 400, 50, true);
+      }
+    }
+
+    function validateChecklist() {
+      const chk1 = document.getElementById('chk-responsibility-1').checked;
+      const chk2 = document.getElementById('chk-responsibility-2').checked;
+      const btn = document.getElementById('btn-save-story');
+      if (btn) {
+        if (chk1 && chk2) {
+          btn.classList.remove('btn-disabled');
+        } else {
+          btn.classList.add('btn-disabled');
+        }
+      }
+    }
+
+    // ── IMAGE EXPORT ──────────────────────────────────────────────────
     function exportStoryCardAsImageObject(story) {
       showToast('正在生成卡片圖片，請稍候...');
       
@@ -2235,6 +2650,29 @@
       tempContainer.style.width = '375px';
       document.body.appendChild(tempContainer);
       
+      const curve = story.curve || [10, -30, 40];
+      const curveSvgHtml = `
+        <div class="preview-curve-wrap" style="height: 50px; background: rgba(19, 27, 46, 0.4); border: 1px solid var(--card-border); border-radius: 8px; margin: 12px 0; overflow: hidden; position: relative;">
+          <svg style="width: 100%; height: 100%; display: block;" viewBox="0 0 400 50" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="curve-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ff4b4b" />
+                <stop offset="50%" stop-color="#ffb703" />
+                <stop offset="100%" stop-color="#06C755" />
+              </linearGradient>
+              <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            ${generateCurveSVGHtml(curve, 400, 50, true)}
+          </svg>
+        </div>
+      `;
+      
       tempContainer.innerHTML = `
         <div class="luxury-card" style="margin: 0; box-shadow: none;">
           <div class="luxury-card-header">
@@ -2243,6 +2681,8 @@
           </div>
           
           <div class="luxury-card-title">《 ${story.title || '未命名故事卡'} 》</div>
+          
+          ${curveSvgHtml}
           
           <div class="card-bubble">
             <div class="bubble-label">Intro Question / 引導對話開場</div>
@@ -2313,7 +2753,12 @@
         storyExp: document.getElementById('field-story-exp').value.trim(),
         storyPurpose: document.getElementById('field-story-purpose').value.trim(),
         storyValue: document.getElementById('field-story-value').value.trim(),
-        step5: document.getElementById('field-step5').value.trim()
+        step5: document.getElementById('field-step5').value.trim(),
+        curve: [
+          parseInt(document.getElementById('curve-start').value),
+          parseInt(document.getElementById('curve-mid').value),
+          parseInt(document.getElementById('curve-end').value)
+        ]
       };
       exportStoryCardAsImageObject(tempStory);
     }
