@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Training 關係智慧學習系統 — 顧問/業務實戰銷售指南</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS RESET & VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-print: #FAF8F5;        /* Warm paper beige */
+      --text-main: #131B2E;       /* Deep navy blue */
+      --text-muted: #4F5E7B;      /* Slate grey */
+      --accent-color: #D48370;    /* Terracotta peach */
+      --accent-light: #F2E8E4;   /* Soft terracotta tint */
+      --border-color: rgba(19, 27, 46, 0.1);
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-print);
+      color: var(--text-main);
+      line-height: 1.7;
+      font-size: 14px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* PRINT LAYOUT ADJUSTMENTS */
+    @page {
+      size: A4;
+      margin: 20mm 18mm;
+    }
+
+    /* Container holding the printed content */
+    .print-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Page structure */
+    .page {
+      page-break-after: always;
+      position: relative;
+      padding-bottom: 20px;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    /* COVER PAGE DESIGN */
+    .cover-page {
+      height: 250mm; /* approximate height for full-page centering in print */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      padding: 40mm 0 20mm;
+    }
+
+    .cover-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      border: 1.5px solid var(--accent-color);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .cover-title-group h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 36px;
+      line-height: 1.3;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      margin-bottom: 15px;
+    }
+
+    .cover-title-group h2 {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+    }
+
+    .cover-divider {
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent-color);
+      margin: 30px auto;
+    }
+
+    .cover-footer {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      width: 100%;
+    }
+
+    /* SECTION LAYOUT */
+    .section-header {
+      border-bottom: 2px solid var(--text-main);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      margin-top: 10mm;
+    }
+
+    .section-header h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      color: var(--accent-color);
+      font-weight: 500;
+    }
+
+    .intro-paragraph {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+
+    /* GRID / COLUMN LAYOUTS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(19, 27, 46, 0.02);
+      page-break-inside: avoid;
+    }
+
+    .card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-accent {
+      border-left: 3px solid var(--accent-color);
+      background-color: var(--accent-light);
+    }
+
+    /* SCRIPT BLOCKS */
+    .script-block {
+      background: #FDFDFD;
+      border-left: 3px solid var(--accent-color);
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-main);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .script-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* BULLET LISTS */
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    li strong {
+      color: var(--text-main);
+    }
+
+    /* HIGHLIGHT TEXT */
+    .highlight-peach {
+      color: var(--accent-color);
+      font-weight: 700;
+    }
+
+    /* FOOTER PAGE NUMBER */
+    .page-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(19, 27, 46, 0.05);
+      padding-top: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-container">
+
+    <!-- PAGE 1: COVER PAGE -->
+    <div class="page cover-page">
+      <div></div>
+      <div>
+        <div class="cover-badge">UC Training 業務專用</div>
+        <div class="cover-title-group">
+          <h1>關係智慧學習系統</h1>
+          <h2>顧問實戰銷售指引與話術手冊</h2>
+        </div>
+        <div class="cover-divider"></div>
+        <p style="font-size: 14px; color: var(--text-muted); letter-spacing: 0.05em; max-width: 400px; margin: 0 auto; line-height: 1.6;">
+          將抽象情感轉化為系統化工具，以科學心理學為客戶繪製親密關係的「愛情設計圖」
+        </p>
+      </div>
+      <div class="cover-footer">
+        © 2026 UC TRAINING. ALL RIGHTS RESERVED. CONFIDENTIAL.
+      </div>
+    </div>
+
+    <!-- PAGE 2: POSITIONING & SELLING POINTS -->
+    <div class="page">
+      <div class="section-header">
+        <h2><span>01</span> 系統定位與三大核心賣點</h2>
+      </div>
+
+      <p class="intro-paragraph">
+        在過去，情感諮詢常被客戶質疑是「講大道理、灌雞湯、缺乏具體做法」。<strong>UC Training 關係智慧學習系統</strong>是業界首創的<strong>情感數位隨身教練</strong>。我們不只上課，更透過網頁端系統，將關係的診斷、話題的破冰、故事的打磨、經典心理學底層邏輯，封裝成客戶可以<strong>隨身攜帶、隨時調用、一鍵複製</strong>的實操工具。
+      </p>
+
+      <div class="card card-accent" style="margin-bottom: 24px;">
+        <h3 class="card-title">🎯 顧問對客戶的「核心定位說詞」</h3>
+        <p style="font-size: 14px; font-style: italic; line-height: 1.8; color: var(--text-main);">
+          「我們 UC Training 不只教你談戀愛的心態，我們更為你配備了一套<strong>『關係智慧數位儀表板』</strong>。它就像是你口袋裡的關係教練，當你出門約會不知道聊什麼、當你準備跟對方跨入下一步需要共識、甚至當你受挫需要心態調整時，打開手機，所有的 SOP、話術、工具和心理學大師心法，一秒就能複製使用。這是一套陪伴你一生的關係升級系統。」
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="card-title">💡 賣點一：系統化與實操性</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            將抽象的情感概念（例如調情、破冰、課題分離）拆解為 <strong>SOP 與情境話術</strong>。提供「一鍵複製」按鈕，讓學員在社交現場可以直接套用，無痛上手。
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">🛡️ 賣點二：嚴謹的科學基石</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            以佛洛伊德、阿德勒、薩提爾、依附理論與非暴力溝通為底層框架。這不是隨便編造的戀愛技巧，而是經過心理學與行為科學驗證的系統性知識。
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 24px;">
+        <h3 class="card-title">📊 客戶痛點 vs. 系統解決方案</h3>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 12px; border-bottom: 1px solid rgba(19, 27, 46, 0.03); padding-bottom: 8px;">
+            ❌ <strong>痛點一：聊天常尷尬，話題流於表面。</strong><br>
+            ➡️ <strong>系統解決</strong>：『約會話題製造機』拉霸隨機抽題，透過 211 道循序漸進的題庫突破社交防線。
+          </li>
+          <li style="margin-bottom: 12px; border-bottom: 1px solid rgba(19, 27, 46, 0.03); padding-bottom: 8px;">
+            ❌ <strong>痛點二：不擅自我介紹，顯得生硬或自吹自擂。</strong><br>
+            ➡️ <strong>系統解決</strong>：『個人故事整理指南』透過三大脈絡與挖掘問句，打磨出自然又流暢的「高價值故事卡」。
+          </li>
+          <li style="margin-bottom: 8px;">
+            ❌ <strong>痛點三：曖昧期過長不敢跨出下一步，或害怕婚前三觀磨合。</strong><br>
+            ➡️ <strong>系統解決</strong>：『交往前共識清單』設計了七大三觀主題問卷，幫雙方前置對話，繪製「愛情設計圖」。
+          </li>
+        </ul>
+      </div>
+
+      <div class="page-footer">
+        <span>UC Training 顧問手冊</span>
+        <span>Page 2</span>
+      </div>
+    </div>
+
+    <!-- PAGE 3: THE THREE CORE TOOLS -->
+    <div class="page">
+      <div class="section-header">
+        <h2><span>02</span> 三大核心工具銷售情境與示範話術</h2>
+      </div>
+
+      <!-- Tool 1 -->
+      <div class="card" style="margin-bottom: 20px;">
+        <h3 class="card-title">📄 1. 個人故事整理指南 — 社交名片</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>適用客戶</strong>：自我介紹像在唸履歷、沒自信、聊天只會被動回答問題、常自吹自擂導致反感的學員。
+        </p>
+        <div class="script-block">
+          <div class="script-label">銷售展示話術 (Sales Script)</div>
+          「很多學員自我介紹時，容易講得像面試，讓氣氛很乾。我們的系統設計了『個人故事整理指南』，把故事分成職業、生活、人生事件三大脈絡。它會引導你填寫核心大綱，最厲害的是<strong>『自然引導與延伸問句』</strong>的設計。這能讓你在聊天中自然地丟出梗，引導對方問你，你再順理成章講出精心設計的故事，完全不刻意且能展現高價值。」
+        </div>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="card" style="margin-bottom: 20px;">
+        <h3 class="card-title">🎲 2. 約會話題製造機 — 破冰利器</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>適用客戶</strong>：約會沒話題、怕尷尬、在交友軟體開場就死掉、或想拉近距離卻怕被當變態的學員。
+        </p>
+        <div class="script-block">
+          <div class="script-label">銷售展示話術 (Sales Script)</div>
+          「約會最怕空氣突然安靜。這個『約會話題製造機』把約會分為三個階段。你可以跟對方說：『我們來玩個隨機抽題遊戲，輸的回答。』這能消弭刻意提問的壓力，用<strong>遊戲感</strong>帶出深層的靈魂對話。它內建的 211 題都是行為科學家篩選過的，能讓你們在笑聲中迅速交換脆弱與三觀。」
+        </div>
+      </div>
+
+      <!-- Tool 3 -->
+      <div class="page-break"></div>
+      <div class="card" style="margin-top: 10mm;">
+        <h3 class="card-title">💑 3. 交交往前共識清單 — 避坑護城河</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>適用客戶</strong>：曖昧中不知道對方是否合適、考慮同居或結婚、或過去常因生活瑣事或金錢觀吵架分手的學員。
+        </p>
+        <div class="script-block">
+          <div class="script-label">銷售展示話術 (Sales Script)</div>
+          「很多人交往後才發現金錢觀、界線完全不合。這份『交往前共識清單』把磨合前置。它包含七大主題，從日常約會分攤、異性界線、到未來 3-5 年重大藍圖與分手底線。你們可以在平板上雙人同機輸入暱稱一起答題，系統會直接比對雙方差異。這不是一場測驗，而是幫你們共同繪製<strong>『愛情設計圖』</strong>，能省去未來幾年的爭吵與遺憾。」
+        </div>
+      </div>
+
+      <div class="page-footer" style="position: absolute; bottom: 0;">
+        <span>UC Training 顧問手冊</span>
+        <span>Page 3</span>
+      </div>
+    </div>
+
+    <!-- PAGE 4: BOOKLIST & KNOWLEDGE BASE -->
+    <div class="page">
+      <div class="section-header">
+        <h2><span>03</span> 課程書單與知識庫的銷售情境與幫助</h2>
+      </div>
+
+      <p class="intro-paragraph">
+        <strong>課程推薦書單與知識庫</strong> (booklist.html) 是最能展示課程學術專業與性價比的板塊。它適合用於對課程深度有疑慮、自學能力強、或追求科學佐證的理性客戶。
+      </p>
+
+      <div class="card" style="margin-bottom: 24px;">
+        <h3 class="card-title">🧠 核心底層邏輯（關係心理學五大基石）對銷售的幫助</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+          當客戶質疑「你們的課程是不是只是教搭訕或迎合對方？」時，業務應帶領客戶瀏覽最上方的五大基石：
+        </p>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 10px;">
+            💎 <strong>佛洛伊德（潛意識冰山）</strong>：『我們幫你找出你內心深處的防衛機制，了解你莫名的親密關係恐懼，這不是表面的技巧。』
+          </li>
+          <li style="margin-bottom: 10px;">
+            💎 <strong>阿德勒（選擇與責任）</strong>：『我們教你課題分離，讓你在感情中不內耗，不再當過去創傷的受害者，掌握選擇的權力。』
+          </li>
+          <li style="margin-bottom: 10px;">
+            💎 <strong>薩提爾（冰山溝通與真誠三在乎）</strong>：『我們教你同時在乎自己、他人與情境。讓你學會一致性溝通，不再用指責或討好毀掉感情。』
+          </li>
+          <li style="margin-bottom: 10px;">
+            💎 <strong>依附理論</strong>與<strong>非暴力溝通</strong>：『我們用行為科學與關係心理學，幫助你系統化診斷你與伴侶的依附風格與溝通需求。』
+          </li>
+        </ul>
+      </div>
+
+      <div class="card card-accent" style="margin-bottom: 24px;">
+        <h3 class="card-title">💬 針對「知識庫」的顧問銷售話術</h3>
+        <p style="font-size: 13.5px; font-style: italic; line-height: 1.8; color: var(--text-main);">
+          「我們幫你讀完了 20 本關係心理學的經典書籍（例如《愛之語》、《魅力學》、《了不起的我》）。每本書我們都做成了<strong>『精華免讀指南』</strong>。像這本《愛之語》，我們直接把肯定的言詞、精心的時刻、接受禮物、服務的行動、身體的接觸這五種語言的實操步驟寫出來，並提供<strong>『一鍵複製實踐指南』</strong>。你完全不需要花時間讀厚厚的書，系統直接給你約會和相處時照著做、照著唸的 SOP。這等於是我們把數十萬元的心理學知識，封裝成了你的隨身關係錦囊。」
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="card-title">📈 幫助一：建立高度專業感</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            向客戶證明 UC Training 是基於正統心理學與社會學（如《愛情社會學》）的系統化教育，而非速成的戀愛偏方，大幅提升品牌信任度。
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">💰 幫助二：放大課程性價比</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            20 本精選好書的精華、SOP 與一鍵複製工具終身免費調用，這讓學員覺得「光是拿到這個知識庫的永久使用權，就已經值回票價」。
+          </p>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>UC Training 顧問手冊</span>
+        <span>Page 4</span>
+      </div>
+    </div>
+
+    <!-- PAGE 5: DEMO SOP & OBJECTIONS HANDLING -->
+    <div class="page">
+      <div class="section-header">
+        <h2><span>04</span> 實戰演示步驟 SOP 與常見拒絕處理</h2>
+      </div>
+
+      <div class="card" style="margin-bottom: 20px;">
+        <h3 class="card-title">📱 顧問實戰展示網站四步驟 SOP</h3>
+        <ol style="padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+          <li style="margin-bottom: 6px;">
+            <strong>開啟首頁</strong>：在平板或手機上打開首頁，展示乾淨、現代、高質感的界面，建立第一眼的高級視覺印象。
+          </li>
+          <li style="margin-bottom: 6px;">
+            <strong>演示『約會話題製造機』</strong>：隨機抽取一個題目，念給客戶聽。詢問他：「如果是你遇到這題，你會怎麼回答？」藉此引導客戶思考，並展示這套工具如何自然引導話題。
+          </li>
+          <li style="margin-bottom: 6px;">
+            <strong>進入『書單知識庫』</strong>：滑到最上方，點開一個底層邏輯（如薩提爾真誠三在乎），解釋這如何幫他自我覺察；再隨手搜尋《調情學》或《愛之語》，點擊「一鍵複製」並貼到客戶的 LINE 上，展示工具的實操與即時性。
+          </li>
+          <li style="margin-bottom: 6px;">
+            <strong>帶入銷售閉環</strong>：「這整套系統，只要你是我們的學員，都能終身免費且無限次調用，伴隨你在各個關係階段的升級。」
+          </li>
+        </ol>
+      </div>
+
+      <div class="card card-accent" style="margin-bottom: 20px;">
+        <h3 class="card-title">💬 常見客戶反對問題 (Objections Handling)</h3>
+        
+        <p style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
+          Q1. 「網路上有很多免費的愛情分析文章，我自己看就好，為什麼要付費上課？」
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.6;">
+          👉 <strong>話術應對</strong>：「網晚上的資訊是碎片化且雜亂的，甚至常有互相矛盾的雞湯。我們的系統幫你做好了<strong>『系統化分流』</strong>與<strong>『實操話術化』</strong>。你不需要花好幾天去查，當你在現場需要時，我們的系統 3 秒鐘內就能給你最科學、可以直接複製使用的做法。這買的是你的時間與成功率。」
+        </p>
+
+        <p style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
+          Q2. 「這套工具和系統看起來好複雜，我買了真的會用、能學會嗎？」
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.6;">
+          👉 <strong>話術應對</strong>：「完全不用擔心。這個系統設計得非常直覺。我們在課程中會有助教和教練帶領你操作。它不是功課，而是你的<strong>『遊戲錦囊』</strong>。每次出門約會或遇到感情困惑前，你只需要花 2 分鐘點開來，當作參考工具看一看，不知不覺中你就會把這些心理學的習慣內化成你自己的魅力。」
+        </p>
+
+        <p style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
+          Q3. 「使用這套系統，真的能幫我脫單或改善我跟伴侶的關係嗎？」
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+          👉 <strong>話術應對</strong>：「關係的改變來自於『行為的改變』。很多學員不知道該改什麼，而我們的系統直接告訴你行為的 SOP。例如《原子習慣》的習慣堆疊、《魅力學》的臨在感技巧。當你開始使用系統提供的話術、並用共識清單跟對方核對三觀，你的行為就已經跟過去截然不同。行為改變了，關係的結果自然就會朝你想要的方向發展。」
+        </p>
+      </div>
+
+      <div class="page-footer" style="position: absolute; bottom: 0;">
+        <span>UC Training 顧問手冊</span>
+        <span>Page 5</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

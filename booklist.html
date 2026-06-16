@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>課程推薦書單與知識庫 — UC Training 關係智慧學習系統</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS RESET & VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-color: #131B2E;
+      --text-color: #E8E4DC;
+      --text-muted: rgba(232, 228, 220, 0.6);
+      --card-bg: rgba(232, 228, 220, 0.03);
+      --card-border: rgba(232, 228, 220, 0.12);
+      --card-hover: rgba(232, 228, 220, 0.08);
+      --accent-color: #E8A898;
+      --accent-glow: rgba(232, 168, 152, 0.3);
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+      
+      /* Model Colors */
+      --color-mindset: #A7C5EB;   /* Soft blue */
+      --color-action: #E8A898;    /* Salmon */
+      --color-narrative: #D3BBD2; /* Soft purple */
+      --color-scientific: #C4E3CB;/* Soft green */
+
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+      padding: 0 0 60px 0;
+    }
+
+    /* Grid Background Pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.015) 0px, rgba(232, 228, 220, 0.015) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+
+    /* TOP NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(19, 27, 46, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      background: var(--accent-color);
+      color: var(--navy);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 9px;
+    }
+
+    .btn-back {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 6px 16px;
+      border-radius: 18px;
+      border: 1.5px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--beige);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      white-space: nowrap;
+    }
+
+    .btn-back:hover {
+      border-color: var(--accent-color);
+      background-color: rgba(232, 168, 152, 0.08);
+      color: var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-glow);
+      transform: translateX(-2px);
+    }
+
+    /* CONTAINER */
+    .container {
+      width: 100%;
+      max-width: 800px;
+      z-index: 1;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      margin-bottom: 10px;
+      animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .uc-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      border: 1.5px solid var(--accent-color);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+      text-transform: lowercase;
+      margin: 0 auto 16px;
+    }
+
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text-color);
+    }
+
+    .subtitle {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--accent-color);
+      margin-bottom: 12px;
+    }
+
+    /* SEARCH & FILTER CONTROLS */
+    .filter-panel {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 8px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      opacity: 0;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 18px 14px 44px;
+      background: rgba(232, 228, 220, 0.02);
+      border: 1.5px solid var(--card-border);
+      border-radius: 24px;
+      color: var(--text-color);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-color);
+      background: rgba(232, 168, 152, 0.04);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* FILTER TABS (WORKSHOPS) */
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .tabs-wrapper {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .tabs-wrapper::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: rgba(232, 228, 220, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 8px 16px;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      border-color: rgba(232, 168, 152, 0.5);
+      color: var(--accent-color);
+      background-color: var(--card-hover);
+    }
+
+    .tab-btn.active {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      color: var(--navy);
+      font-weight: 700;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    /* PILLS FILTER (MODELS) */
+    .pills-wrapper {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .pills-wrapper::-webkit-scrollbar { display: none; }
+
+    .pill-btn {
+      background: transparent;
+      border: 1px dashed var(--card-border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      color: var(--text-muted);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .pill-btn:hover {
+      border-color: rgba(232, 228, 220, 0.4);
+      color: var(--text-color);
+    }
+
+    .pill-btn.active {
+      border-style: solid;
+      border-color: var(--model-color, var(--accent-color));
+      color: var(--model-color, var(--accent-color));
+      background-color: rgba(232, 228, 220, 0.02);
+      font-weight: 500;
+    }
+
+    /* STATS & RESULT COUNT */
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 0 8px;
+    }
+
+    /* BOOK ACCORDION LIST */
+    .books-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      opacity: 0;
+    }
+
+    .book-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .book-card:hover {
+      border-color: rgba(232, 228, 220, 0.25);
+    }
+
+    .book-card.expanded {
+      border-color: rgba(232, 168, 152, 0.35);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 15px rgba(232, 168, 152, 0.04);
+    }
+
+    /* CORNER BRACKETS FOR CARDS */
+    .corner-bracket {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--accent-color);
+      border-style: solid;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .bracket-tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .bracket-tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+    .bracket-br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    .book-card.expanded .corner-bracket {
+      opacity: 0.4;
+    }
+
+    /* CARD HEADER / CLICKABLE PORTION */
+    .book-header {
+      padding: 24px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .book-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .book-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .book-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-color);
+      line-height: 1.3;
+    }
+
+    .book-author {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .book-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif;
+    }
+
+    /* Badges Style */
+    .badge-workshop {
+      background: rgba(232, 228, 220, 0.05);
+      border: 1px solid rgba(232, 228, 220, 0.15);
+      color: var(--text-color);
+    }
+
+    .badge-model {
+      background-color: rgba(var(--badge-rgb), 0.06);
+      border: 1px solid rgba(var(--badge-rgb), 0.25);
+      color: var(--badge-color);
+    }
+
+    .toggle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(232, 228, 220, 0.02);
+      border: 1.5px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .book-card:hover .toggle-icon {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .book-card.expanded .toggle-icon {
+      transform: rotate(180deg);
+      background-color: rgba(232, 168, 152, 0.1);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    /* Core Value Intro (Always Visible) */
+    .book-value {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      border-left: 2px solid var(--accent-color);
+      padding-left: 10px;
+    }
+
+    /* EXPANDED CONTENT AREA */
+    .book-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-top: 1px solid transparent;
+    }
+
+    .book-card.expanded .book-content {
+      border-color: var(--card-border);
+      /* Dynamically adjusted by JS, but max-height is safe fallback */
+      max-height: 1200px;
+    }
+
+    .book-inner-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .content-block {
+      background: rgba(232, 228, 220, 0.01);
+      border: 1px solid rgba(232, 228, 220, 0.04);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .concepts-list, .guides-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .concepts-list li, .guides-list li {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 20px;
+    }
+
+    /* Bullet decoration */
+    .concepts-list li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-size: 11px;
+    }
+
+    .guides-list li {
+      padding-left: 24px;
+    }
+
+    .guides-list li::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--accent-color);
+      font-size: 11px;
+      border: 1px solid rgba(232, 168, 152, 0.3);
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 3px;
+    }
+
+    /* ACTION ACTION BUTTON */
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 4px;
+    }
+
+    .btn-copy {
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(232, 168, 152, 0.04);
+      border: 1px solid rgba(232, 168, 152, 0.3);
+      color: var(--accent-color);
+      padding: 6px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-copy:hover {
+      background: var(--accent-color);
+      color: var(--navy);
+      border-color: var(--accent-color);
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: var(--accent-color);
+      color: var(--navy);
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* EMPTY STATE */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-style: italic;
+      background-color: var(--card-bg);
+      border: 1px dashed var(--card-border);
+      border-radius: 16px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.1em;
+      margin-top: 24px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="index.html" class="nav-brand">
+      uc training <span>課程書單</span>
+    </a>
+    <a href="index.html" class="btn-back">← 返回首頁</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+      <div class="uc-logo">uc</div>
+      <h1>推薦書單與知識庫</h1>
+      <div class="subtitle">精華免讀指南 · 四大心智與實操模型</div>
+    </header>
+
+    <!-- CORE FRAMEWORKS CARD -->
+    <div class="guide-card" style="background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow-lg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); position: relative; margin-bottom: 8px; animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+      <div class="corner-bracket bracket-tl" style="opacity: 0.4;"></div>
+      <div class="corner-bracket bracket-tr" style="opacity: 0.4;"></div>
+      <div class="corner-bracket bracket-bl" style="opacity: 0.4;"></div>
+      <div class="corner-bracket bracket-br" style="opacity: 0.4;"></div>
+      
+      <h2 style="font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; color: var(--accent-color); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        🧠 課程核心底層邏輯
+      </h2>
+      <p style="font-size: 13px; line-height: 1.7; color: var(--text-muted); margin-bottom: 20px;">
+        在探索書籍知識庫前，請先掌握 UC Training 情感教育的最核心底層邏輯。這三大關係心理學基石，是穿透親密關係迷霧的理論鑰匙：
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Theory 1 -->
+        <div style="border: 1px solid rgba(232, 228, 220, 0.08); border-radius: 12px; background: rgba(232, 228, 220, 0.01); overflow: hidden;">
+          <div onclick="toggleTheory(1)" style="padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+            <span style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; color: var(--text-color);">1. 佛洛伊德：潛意識冰山（探索深層動機）</span>
+            <span id="theory-arrow-1" style="font-size: 10px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+          </div>
+          <div id="theory-content-1" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease-out; border-top: 1px solid transparent; font-size: 13px; line-height: 1.75; color: var(--text-muted); background: rgba(232, 228, 220, 0.015);">
+            <div style="padding: 16px;">
+              <p style="margin-bottom: 10px;"><strong>核心概念</strong>：人的心智就像一座冰山，意識只是露在水面上的 10%（理性思考、可察覺的行為），水面下 90% 的龐大潛意識則藏著我們的本能欲望、童年創傷、防衛機制與未解衝突。</p>
+              <p style="margin-bottom: 10px;"><strong>情感教育應用</strong>：在關係中產生的莫名焦慮、控制欲或重複愛上特定類型的對象，往往不是理性所能控制，而是水面下潛意識深處的創傷與自我保護機制在拉扯。</p>
+              <p style="margin-bottom: 10px; color: var(--accent-color);"><strong>🔑 核心金句</strong>：「潛意識如果沒有進入意識，就會成為你的命運，而你還稱它為命運。」</p>
+              <p style="background: rgba(232, 168, 152, 0.05); border: 1px solid rgba(232, 168, 152, 0.2); border-radius: 8px; padding: 10px 12px; font-size: 12px;"><strong>🛠️ 自我覺察練習</strong>：當出現失控反應時，停下 5 秒問自己：「這份情緒在水面下的冰山裡，到底藏著我童年的什麼創傷、恐懼或不安全感？」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theory 2 -->
+        <div style="border: 1px solid rgba(232, 228, 220, 0.08); border-radius: 12px; background: rgba(232, 228, 220, 0.01); overflow: hidden;">
+          <div onclick="toggleTheory(2)" style="padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+            <span style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; color: var(--text-color);">2. 阿德勒：選擇與負責任（奪回人生主導權）</span>
+            <span id="theory-arrow-2" style="font-size: 10px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+          </div>
+          <div id="theory-content-2" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease-out; border-top: 1px solid transparent; font-size: 13px; line-height: 1.75; color: var(--text-muted); background: rgba(232, 228, 220, 0.015);">
+            <div style="padding: 16px;">
+              <p style="margin-bottom: 10px;"><strong>核心概念</strong>：阿德勒心理學強調「目的論」與「課題分離」。他反對決定論，認為過去的創傷無法決定你的未來，你有能力在當下「選擇」新的生活，並為自己的選擇「承擔責任」。</p>
+              <p style="margin-bottom: 10px;"><strong>情感教育應用</strong>：學員常陷入受害者思維：「因為被前任傷害過，所以我無法再信任人」。阿德勒點醒我們：這是拿過去當藉口逃避去愛的責任。課題分離則幫助我們劃清「我的課題」與「別人的課題」，拒絕被對方的課題勒索。</p>
+              <p style="margin-bottom: 10px; color: var(--accent-color);"><strong>🔑 核心金句</strong>：「決定我們的不是過去的經歷，而是我們賦予這些經歷的意義。」</p>
+              <p style="background: rgba(232, 168, 152, 0.05); border: 1px solid rgba(232, 168, 152, 0.2); border-radius: 8px; padding: 10px 12px; font-size: 12px;"><strong>🛠️ 自我覺察練習</strong>：在感情起摩擦時，劃清界線，對自己說：「我的感受和行為是我的課題，由我選擇並負責；對方的想法和反應是對方的課題，我無須替他承擔，也不用為此焦慮。」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theory 3 -->
+        <div style="border: 1px solid rgba(232, 228, 220, 0.08); border-radius: 12px; background: rgba(232, 228, 220, 0.01); overflow: hidden;">
+          <div onclick="toggleTheory(3)" style="padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+            <span style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; color: var(--text-color);">3. 薩提爾：冰山溝通（看穿防衛，連結渴望）</span>
+            <span id="theory-arrow-3" style="font-size: 10px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+          </div>
+          <div id="theory-content-3" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease-out; border-top: 1px solid transparent; font-size: 13px; line-height: 1.75; color: var(--text-muted); background: rgba(232, 228, 220, 0.015);">
+            <div style="padding: 16px;">
+              <p style="margin-bottom: 10px;"><strong>核心概念</strong>：薩提爾將人的溝通與心智比喻為冰山。水面上是「言語與行為」，水面下則包含：應對姿態、感受、觀點、期待、渴望與自我本質。</p>
+              <p style="margin-bottom: 10px;"><strong>💡 真誠三在乎（自己、他人、情境）</strong>：一致性溝通的核心是同時在乎這三者，一旦有所偏廢，就會陷入不良的應對姿態（討好、指責、超理智、打岔）。真誠三在乎要求既尊重自己的脆弱，也體貼對方的感受，並理智看待當下的客觀情境。</p>
+              <p style="margin-bottom: 10px;"><strong>情感教育應用</strong>：在關係衝突中，指責行為（水面）背後往往是焦慮（感受）與期待被在乎（渴望）。學員必須學會穿透對方的水面行為，讀懂水面下的渴望，並以「一致性溝通」進行良性互動。</p>
+              <p style="margin-bottom: 10px; color: var(--accent-color);"><strong>🔑 核心金句</strong>：「當我能看見你水面下的渴望，我就看見了真正的你。」</p>
+              <p style="background: rgba(232, 168, 152, 0.05); border: 1px solid rgba(232, 168, 152, 0.2); border-radius: 8px; padding: 10px 12px; font-size: 12px;"><strong>🛠️ 自我覺察練習</strong>：在衝突時，檢視自己是否做到了「三在乎」？接著嘗試用一致性姿態表達：「當你不回訊息時（情境），我感到很焦慮（自己），但我知道你上班很忙（他人），我期待我們每天睡前能聊個 5 分鐘。」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theory 4 -->
+        <div style="border: 1px solid rgba(232, 228, 220, 0.08); border-radius: 12px; background: rgba(232, 228, 220, 0.01); overflow: hidden;">
+          <div onclick="toggleTheory(4)" style="padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+            <span style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; color: var(--text-color);">4. 依附理論（探索關係安全感的底層風格）</span>
+            <span id="theory-arrow-4" style="font-size: 10px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+          </div>
+          <div id="theory-content-4" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease-out; border-top: 1px solid transparent; font-size: 13px; line-height: 1.75; color: var(--text-muted); background: rgba(232, 228, 220, 0.015);">
+            <div style="padding: 16px;">
+              <p style="margin-bottom: 10px;"><strong>核心概念</strong>：人類親密關係的運作風格，分為四種類型：安全型（信任自己與他人）、焦慮型（過度渴望親密但害怕被拋棄）、逃避型（抗拒親密與依賴，習慣壓抑感情）、矛盾型（既渴望又害怕親密）。</p>
+              <p style="margin-bottom: 10px;"><strong>情感教育應用</strong>：幫助學員辨識自己在親密關係中的安全感運作模式，在衝突中停止焦慮討好或冷戰逃避，逐步培養安全型的互動能力。</p>
+              <p style="margin-bottom: 10px; color: var(--accent-color);"><strong>🔑 核心金句</strong>：「關係中的不安全感不是因為不夠愛，而是我們的依附風格在玩著老舊的防衛遊戲。」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theory 5 -->
+        <div style="border: 1px solid rgba(232, 228, 220, 0.08); border-radius: 12px; background: rgba(232, 228, 220, 0.01); overflow: hidden;">
+          <div onclick="toggleTheory(5)" style="padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none;">
+            <span style="font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; color: var(--text-color);">5. 非暴力溝通（高價值的坦誠表達）</span>
+            <span id="theory-arrow-5" style="font-size: 10px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+          </div>
+          <div id="theory-content-5" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease-out; border-top: 1px solid transparent; font-size: 13px; line-height: 1.75; color: var(--text-muted); background: rgba(232, 228, 220, 0.015);">
+            <div style="padding: 16px;">
+              <p style="margin-bottom: 10px;"><strong>核心概念</strong>：透過四大步驟進行真誠且無指責的對話：觀察事實 ➡️ 表達感受 ➡️ 釐清需要 ➡️ 提出具體請求。</p>
+              <p style="margin-bottom: 10px;"><strong>情感教育應用</strong>：將情緒化的抱怨（『你很不負責任』）轉譯為清晰、具體且無攻擊性的溝通（『看到你沒洗碗，我感到疲憊，因為我需要家庭分工，你可以現在去洗嗎？』）。</p>
+              <p style="margin-bottom: 10px; color: var(--accent-color);"><strong>🔑 核心金句</strong>：「指責的背後，都隱藏著未被滿足的需要。」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER & SEARCH PANEL -->
+    <div class="filter-panel">
+      <!-- Search -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="搜尋書名、作者或核心概念關鍵字..." autocomplete="off">
+      </div>
+
+      <!-- Workshop Filter -->
+      <div class="filter-group">
+        <span class="filter-label">工作坊階段篩選</span>
+        <div class="tabs-wrapper">
+          <button class="tab-btn active" data-workshop="all">全部工作坊</button>
+          <button class="tab-btn" data-workshop="adventure">冒險工作坊</button>
+          <button class="tab-btn" data-workshop="possession">擁有工作坊</button>
+          <button class="tab-btn" data-workshop="ideal">理想工作坊</button>
+          <button class="tab-btn" data-workshop="freedom">自由工作坊</button>
+        </div>
+      </div>
+
+      <!-- Model Filter -->
+      <div class="filter-group">
+        <span class="filter-label">整理模型篩選</span>
+        <div class="pills-wrapper">
+          <button class="pill-btn active" data-type="all">全部模型</button>
+          <button class="pill-btn" data-type="action" style="--model-color: var(--color-action)">實操工具型 (SOP)</button>
+          <button class="pill-btn" data-type="mindset" style="--model-color: var(--color-mindset)">心智與成長型</button>
+          <button class="pill-btn" data-type="narrative" style="--model-color: var(--color-narrative)">故事與對話型</button>
+          <button class="pill-btn" data-type="scientific" style="--model-color: var(--color-scientific)">學術與科普型</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <span id="resultsCount">正在載入知識庫書籍...</span>
+      <span>🟩 已整理完成</span>
+    </div>
+
+    <!-- BOOKS CONTAINER -->
+    <main class="books-list" id="booksList">
+      <!-- Rendered dynamically by JavaScript -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      © 2026 UC TRAINING. ALL RIGHTS RESERVED.
+    </footer>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="copyToast">已複製實踐指南，隨時與伴侶/朋友圈分享！</div>
+
+  <!-- BOOK DATA & RENDERING LOGIC -->
+  <script>
+    // 20 Books data array
+    const booksData = [
+      {
+        id: 1,
+        title: "愛無能",
+        author: "吳姵瑩",
+        workshop: "adventure",
+        workshopName: "冒險工作坊",
+        type: "mindset",
+        typeName: "心智與成長型",
+        typeColor: "var(--color-mindset)",
+        typeRgb: "167, 197, 235",
+        value: "了解自己在親密關係中的不安全感來源，辨識「愛無能」的心理防衛機制。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「我不值得被愛／他人不可信」轉變為「我的冷漠與逃避是出於害怕受傷的恐懼，而安全感可以由自己建立」。",
+          "<strong>心智模型解析</strong>：關係中的逃避與控制本質上是同一種恐懼的展現（通常對應焦慮型與逃避型依附）。書中詳述了三種因童年創傷形成的防衛：情感隔離（切斷情緒感受）、過度獨立（拒絕依賴他人）及尋求否定（自我預言實現）。"
+        ],
+        guides: [
+          "<strong>覺察防衛機制</strong>：當伴侶試圖靠近、而你感到煩躁想推開時，停下 5 秒，問自己：「我是真的討厭他，還是在害怕如果我投入了，最後會被拋棄？」",
+          "<strong>安全感自建練習</strong>：寫下三個你目前擁有的生活支柱（如事業、友情、興趣），提醒自己「即使這段關係失敗，我也依然完整且安全」。"
+        ]
+      },
+      {
+        id: 2,
+        title: "跟任何人都可以聊得來（1~3部）",
+        author: "Leil Lowndes",
+        workshop: "adventure",
+        workshopName: "冒險工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "掌握人際溝通、破冰與建立信任關係的高級社交技巧。",
+        concepts: [
+          "<strong>一句話心法</strong>：頂尖社交高手不是靠滔滔不絕，而是透過細微的身體語言與精準的傾聽，讓對方感覺自己「無比重要」。",
+          "<strong>核心工具箱</strong>：融化微笑（Flooding Smile - 延遲綻放真誠微笑）、黏性眼神（Sticky Eyes - 維持眼神接觸）、環氧眼神（Epoxy Eyes - 緊盯心儀對象）、聚光燈效應（Limelight - 展現專注）、拒絕機器人轉頭（Rubbernecking - 轉動全身迎向對方）。"
+        ],
+        guides: [
+          "<strong>破冰話術（偵探觀察法）</strong>：在聚會中，觀察對方身上的獨特配件（手錶、手鍊、圖案），作為破冰話題。例如：「你的這隻手錶款式很特別，感覺是有故事的收藏？」",
+          "<strong>鸚鵡回音法</strong>：當不知道聊什麼時，重複對方話語中的最後幾個關鍵字，並用問句結尾，引導對方繼續分享。"
+        ]
+      },
+      {
+        id: 3,
+        title: "原子習慣",
+        author: "James Clear",
+        workshop: "adventure",
+        workshopName: "冒險工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "透過微小的習慣改變，逐步打造理想的個人生活與社交常態。",
+        concepts: [
+          "<strong>一句話心法</strong>：不要以「目標」為導向，而要以「身份認同」為導向，每天進步 1% 的複利效應將會改變人生。",
+          "<strong>習慣改變的四大定律</strong>：讓提示顯而易見（設計環境以觸發行為）；讓習慣有吸引力（習慣與喜好綁定）；讓行動輕而易舉（兩分鐘法則，降低起步阻力）；讓獎賞令人滿足（完成後給予正向反饋）。",
+          "<strong>習慣堆疊</strong>：利用已有習慣作為引子（在 [舊習慣] 之後，我會執行 [新習慣]）。"
+        ],
+        guides: [
+          "<strong>建立每日社交/自我提升習慣</strong>：將情感關係書籍放在手機首頁（提示）；閱讀 15 分鐘後獎賞自己喝杯咖啡（吸引力）；每天只寫一行社交日記（易行，小於兩分鐘）；在行事曆打勾（滿足）。"
+        ]
+      },
+      {
+        id: 4,
+        title: "深夜加油站遇見蘇格拉底",
+        author: "Dan Millman",
+        workshop: "adventure",
+        workshopName: "冒險工作坊",
+        type: "narrative",
+        typeName: "故事與對話型",
+        typeColor: "var(--color-narrative)",
+        typeRgb: "211, 187, 210",
+        value: "轉移對外在成就的過度關注，學會「專注於當下」的心靈修煉。",
+        concepts: [
+          "<strong>角色投影</strong>：主角丹代表了那些擁有優秀世俗條件，內心卻充滿焦慮、空虛與控制欲的學員。",
+          "<strong>關鍵金句</strong>：「此時、此刻、這裡、當下」——所有的痛苦都來自對過去的糾結或對未來的焦慮，唯有當下是真實的。",
+          "<strong>戰士的三大守則</strong>：矛盾（人生是個謎，去體驗它）、幽默（保持幽默感，尤其是對自己）、改變（沒有事物能保持不變，接受變化是解脫的關鍵）。"
+        ],
+        guides: [
+          "<strong>當下覺察減壓（五感專注法）</strong>：在約會感到緊張時，專注於呼吸，並在腦海中默默指出當下看到的 3 個物品、聽到的 2 種聲音、以及 1 個身體觸覺，立刻切斷腦中雜音。"
+        ]
+      },
+      {
+        id: 5,
+        title: "被討厭的勇氣",
+        author: "岸見一郎, 古賀史健",
+        workshop: "possession",
+        workshopName: "擁有工作坊",
+        type: "mindset",
+        typeName: "心智與成長型",
+        typeColor: "var(--color-mindset)",
+        typeRgb: "167, 197, 235",
+        value: "理解阿德勒心理學，學會「課題分離」，解脫他人評價對自我的束縛。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「別人怎麼看我（他人的課題）」轉變為「我如何選擇面對（我的課題）」。自由就是被討厭的勇氣。",
+          "<strong>心理學核心機制</strong>：目的論（情緒是為了解決當下需求而創造的工具）；課題分離（分清後果由誰承擔，互不干涉）；社群感覺（擺脫我執，將他人視為夥伴而非對手）；甘於平凡的勇氣。"
+        ],
+        guides: [
+          "<strong>課題分離對話練習</strong>：當你害怕傳訊息被對方已讀不回時，對自己說：「傳訊息表達心意是我的課題；回不回、怎麼看我是對方的課題。我無須為對方的課題感到焦慮。」"
+        ]
+      },
+      {
+        id: 6,
+        title: "了不起的我",
+        author: "陳海賢",
+        workshop: "possession",
+        workshopName: "擁有工作坊",
+        type: "mindset",
+        typeName: "心智與成長型",
+        typeColor: "var(--color-mindset)",
+        typeRgb: "167, 197, 235",
+        value: "系統性地了解個人成長的心理動力、關係發展與人生轉變的策略。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「被動受限於環境的受害者」轉變為「主動建構生活與關係的系統設計師」。",
+          "<strong>心智模型解析</strong>：關係的循環系統（雙方都在用自己的防衛激發對方的反應）；防禦性安全邊界（害怕受傷而限制了行為，反而促成被冷落的結果）；改變的三階段模型（結束 ➡️ 迷茫 ➡️ 重生）。"
+        ],
+        guides: [
+          "<strong>打破關係惡性循環</strong>：識別你與伴侶的「舞步」。如果每次都是「你追問，他逃避」，試著停下追問，改為溫和表達你的脆弱：「當你不說話時，我很慌張，希望我們能找個時間好好聊。」"
+        ]
+      },
+      {
+        id: 7,
+        title: "也許你該找人聊聊",
+        author: "Lori Gottlieb",
+        workshop: "possession",
+        workshopName: "擁有工作坊",
+        type: "narrative",
+        typeName: "故事與對話型",
+        typeColor: "var(--color-narrative)",
+        typeRgb: "211, 187, 210",
+        value: "透過諮商師與個案的故事，看見人性的脆弱、防衛機制與療癒的可能性。",
+        concepts: [
+          "<strong>角色投影</strong>：個案們代表了在情感中受過傷、用堅硬外殼保護自己，卻渴望被溫柔看見的靈魂。",
+          "<strong>關鍵金句</strong>：「痛是不可避免的，但苦是可選擇的。」——我們無法阻止生命中的遺憾發生，但可以選擇如何詮釋並與之共處。",
+          "<strong>諮商核心機制</strong>：防衛防衛（Defense of defenses，用憤怒或挑剔防禦內心深處『我不值得被愛』的脆弱感）與敘事重建（修改對創傷的定義，從受害者走向掌握主導權者）。"
+        ],
+        guides: [
+          "<strong>「痛與苦」覺察日記</strong>：當關係結束或遭遇挫折時，寫下痛苦的客觀事實（痛），以及你為這個事實添加的負面詮釋（苦，例如：我這輩子再也找不到愛我的人了），並手動將後者劃掉，重新理智改寫。"
+        ]
+      },
+      {
+        id: 8,
+        title: "男人來自火星，女人來自金星",
+        author: "John Gray, Ph. D.",
+        workshop: "possession",
+        workshopName: "擁有工作坊",
+        type: "mindset",
+        typeName: "心智與成長型",
+        typeColor: "var(--color-mindset)",
+        typeRgb: "167, 197, 235",
+        value: "理解男女在思考邏輯、溝通方式與情感需求上的根本差異，減少摩擦。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「他為什麼不照我的方式做，是不是不愛我？」轉變為「他的大腦處理機制與我不同，我們需要互譯語言」。",
+          "<strong>兩性心智差異</strong>：男人的洞穴時間與橡皮筋理論（拉到極限會自動彈回，需要短暫疏離）；女人的波浪情緒與深井期（低潮時需要情感共鳴與傾聽，而非理性解法）；六種核心情感需求對稱（信任/關懷、接受/理解等）。"
+        ],
+        guides: [
+          "<strong>洞穴互譯對話（男方用）</strong>：「我現在需要一些時間靜一靜思考這件事，給我 20 分鐘，我待會一定出來找你，這不是你的錯。」",
+          "<strong>共鳴式傾聽（女方用）</strong>：當伴侶抱怨時，不提供建議，而是說：「聽起來你今天真的受了很大的委屈，難怪你會這麼生氣。」"
+        ]
+      },
+      {
+        id: 9,
+        title: "象與騎象人",
+        author: "Jonathan Haidt",
+        workshop: "possession",
+        workshopName: "擁有工作坊",
+        type: "mindset",
+        typeName: "心智與成長型",
+        typeColor: "var(--color-mindset)",
+        typeRgb: "167, 197, 235",
+        value: "探討理性（騎象人）與感性（大象）的衝突與協調，尋找幸福的配方。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「試圖用理智死命壓制情緒與欲望」轉變為「安撫並引導大象，讓理性與感性合作前行」。",
+          "<strong>大象與騎象人</strong>：理性是騎象人（控制系統），感性是大象（力量極大的自動化路徑）。大象若受驚或受誘惑，騎象人很難拉住。",
+          "<strong>幸福公式</strong>：H = S + C + V。H (幸福感) = S (基因起點) + C (生活條件如關係、噪音) + V (自發性活動如冥想、經營關係)。"
+        ],
+        guides: [
+          "<strong>安撫大象的每日三件事</strong>：在社交焦慮時，不要一味指責自己（這會激怒大象）。改為在物理環境中做深呼吸、喝溫水、或輕輕拍打胸口，先讓大象（自律神經）平靜，理智才能重新奪回主導權。"
+        ]
+      },
+      {
+        id: 10,
+        title: "蛤蟆先生去看心理師",
+        author: "Robert de Board",
+        workshop: "possession",
+        workshopName: "擁有工作坊",
+        type: "narrative",
+        typeName: "故事與對話型",
+        typeColor: "var(--color-narrative)",
+        typeRgb: "211, 187, 210",
+        value: "透過寓言故事理解交流分析（TA）療法，探索童年對成年的情緒影響，學會接納真實的自己。",
+        concepts: [
+          "<strong>角色投影</strong>：蛤蟆先生展現了在威嚴父母下，壓抑自我以求生存的「適應型兒童」狀態。",
+          "<strong>交流分析（TA）三大自我狀態</strong>：兒童自我狀態（自然型快樂本能 / 適應型壓抑討好）；父母自我狀態（挑剔型指責說教 / 養育型照顧同理）；成人自我狀態（理智、客觀、基於事實處理問題）。",
+          "<strong>關鍵金句</strong>：「如果你不為自己的情緒負責，你就是把控制權交給了別人。」"
+        ],
+        guides: [
+          "<strong>自我狀態檢測</strong>：在每次約會或起爭執時，檢視自己的語氣：是像挑剔型父母在指責，還是像順從型兒童在忍耐？練習用平穩、客觀的成人狀態陳述事實：「我注意到我們已經半小時沒說話了，我想知道發生了什麼事。」"
+        ]
+      },
+      {
+        id: 11,
+        title: "愛之語",
+        author: "Gary Chapman",
+        workshop: "ideal",
+        workshopName: "理想工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "掌握五種愛之語，提升溝通與相處溫度。",
+        concepts: [
+          "<strong>一句話心法</strong>：每個人都有不同的「情感語言」，用對方聽得懂的語言表達愛，才能將愛精準送達他的心靈油箱。",
+          "<strong>五種愛之語解析</strong>：<br>1. <strong>肯定的言詞</strong>：口頭讚美、鼓勵與感謝，填滿對方安全感。<br>2. <strong>精心的時刻</strong>：放下手機、四目相對的專注陪伴或深度對話。<br>3. <strong>接受禮物</strong>：愛與關懷的視覺象徵，代表『我正在想著你』的心意。<br>4. <strong>服務的行動</strong>：實際行動幫忙分擔生活壓力（做家務、準備餐點）。<br>5. <strong>身體的接觸</strong>：牽手、擁抱、撫摸與性生活，最直接的物理連結方式。"
+        ],
+        guides: [
+          "<strong>伴侶愛之語對齊實踐</strong>：與伴侶一起完成愛之語測驗，並在日曆上設立每週提醒。例如，若伴侶的愛之語是「服務的行動」，本週五下班前主動幫他把包裹拿回家或洗好碗盤，填滿情感油箱。"
+        ]
+      },
+      {
+        id: 12,
+        title: "哈佛 ✕ Google行為科學家的脫單指南",
+        author: "Logan Ury",
+        workshop: "ideal",
+        workshopName: "理想工作坊",
+        type: "scientific",
+        typeName: "學術與科普型",
+        typeColor: "var(--color-scientific)",
+        typeRgb: "196, 227, 203",
+        value: "運用行為科學打破尋找伴侶的心理盲點，制定科學且實用的脫單計畫。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「消極等待緣分降臨」轉變為「像科學家一樣，用數據和行為設計優化自己的社交圈與決策」。",
+          "<strong>三種單身者類型</strong>：浪漫主義者（期待完美靈魂伴侶與一見鍾情）、最大化者（追求下一個更好的，容易決策後悔）、猶豫者（總覺得自己還沒準備好而遲遲不行動）。",
+          "<strong>三種依附風格</strong>：安全型、焦慮型（渴望親密但怕被拋棄）、逃避型（害怕過度親密而退縮）。"
+        ],
+        guides: [
+          "<strong>打破猶豫者盲點</strong>：不要等『變好看/有錢』再約會，強迫自己這週末就去參加社交活動或在交友軟體滑 5 個人開聊。「完成勝過完美」。",
+          "<strong>約會設計（去面試化）</strong>：不要約在生硬的咖啡廳對坐。改為一起去逛市集、玩桌遊或做手工蠟燭。透過共同體驗，觀察對方的真實行為模式。"
+        ]
+      },
+      {
+        id: 13,
+        title: "愛情社會學",
+        author: "孫中興",
+        workshop: "ideal",
+        workshopName: "理想工作坊",
+        type: "scientific",
+        typeName: "學術與科普型",
+        typeColor: "var(--color-scientific)",
+        typeRgb: "196, 227, 203",
+        value: "從社會學視角理性解構愛情的本質、社會期待、平等與親密關係的流變。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「愛情完全是個人的命運與緣分」轉變為「愛情深受社會文化、性別分工與階級意識的形塑，我們需要有意識地建立平等關係」。",
+          "<strong>心智模型解析</strong>：「平等對待，共同奮鬥」的核心精神。關係是雙方作為獨立個體在社會大環境下的合作；同時要警惕將伴侶視為『條件清單商品』的愛情商品化趨勢。"
+        ],
+        guides: [
+          "<strong>關係期待檢視清單</strong>：與伴侶討論：我們目前的日常分工（如約會付帳、家務、情感支持）有多少是出於「男生/女生應該」的社會制約？我們能否根據兩人的個性和時間，重新設計更舒服的合作分工？"
+        ]
+      },
+      {
+        id: 14,
+        title: "讓愛情長久的八堂約會",
+        author: "John Gottman",
+        workshop: "ideal",
+        workshopName: "理想工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "藉由八個核心主題（信任、衝突、性、資金等）的深層溝通，建立強韌的情感連結。",
+        concepts: [
+          "<strong>一句話心法</strong>：長久關係不是沒有衝突，而是透過有意識地安排深層對話，將潛在的「關係地雷」轉化為「加深信任的契機」。",
+          "<strong>關係崩潰的四騎士模型</strong>：批評（指責人格而非行為）、鄙視（帶優越感的嘲諷、辱罵，分手最強預測指標）、防衛（找藉口、反咬對方）、冷戰（切斷溝通、擺臭臉逃避）。"
+        ],
+        guides: [
+          "<strong>每週「深度約會」實踐</strong>：每個月安排兩次無手機打擾的約會，每次挑選一個主題（如信任、金錢）深入探討。提問：「你對金錢最深刻的童年記憶是什麼？這如何影響你現在的消費習慣？」"
+        ]
+      },
+      {
+        id: 15,
+        title: "愛的藝術",
+        author: "Erich Fromm",
+        workshop: "ideal",
+        workshopName: "理想工作坊",
+        type: "mindset",
+        typeName: "心智與成長型",
+        typeColor: "var(--color-mindset)",
+        typeRgb: "167, 197, 235",
+        value: "將「愛」視為一種需要學習與實踐的藝術與主動能力，而非被動等待降臨的運氣。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「尋求被愛（被動、依賴）」轉變為「學習主動愛人的能力（主動、給予）」。",
+          "<strong>愛的四大要素</strong>：關懷（主動關注成長）、責任（對情感需求自願回應）、尊重（看其本然面貌，不剝削）、了解（深入看透內心本質）。自愛是愛人的基礎，不愛自己的人無法真正愛他人。"
+        ],
+        guides: [
+          "<strong>「愛人能力」自我檢核</strong>：在日常互動中實踐尊重：當伴侶做了一個你不理解的決定時，不要急著否定。先問自己：「我足夠了解他做這個決定的背景嗎？我是否能尊重他作為一個獨立個體，擁有與我不一樣的選擇？」"
+        ]
+      },
+      {
+        id: 16,
+        title: "為什麼要戀愛",
+        author: "Stephanie Cacioppo",
+        workshop: "ideal",
+        workshopName: "理想工作坊",
+        type: "scientific",
+        typeName: "學術與科普型",
+        typeColor: "var(--color-scientific)",
+        typeRgb: "196, 227, 203",
+        value: "從神經科學與大腦科學的角度，理解愛如何修復心靈並讓我們保持健康。",
+        concepts: [
+          "<strong>核心認知轉變</strong>：從「戀愛只是感性的多巴胺衝動」轉變為「愛是人類不可或缺的生物本能，是大腦健康的防禦系統與認知加速器」。",
+          "<strong>大腦社交機制</strong>：愛能活化大腦的鏡像神經元，提升同理心與認知靈活性。長期的社交孤立在生理上會被大腦判定為物理痛覺（活化前扣帶皮層），健康的愛是最好的抗壓修復劑。"
+        ],
+        guides: [
+          "<strong>大腦健康充電練習</strong>：當你感到工作疲憊或社交焦慮時，主動與心儀對象或伴侶來一個 20 秒以上的擁抱，這能釋放催產素，迅速降低體內的壓力荷爾蒙（皮質醇），恢復情緒的理性控制。"
+        ]
+      },
+      {
+        id: 17,
+        title: "魅力學",
+        author: "Olivia Fox Cabane",
+        workshop: "freedom",
+        workshopName: "自由工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "破除「魅力天生」的迷思，學習臨在感、影響力與親和力的實踐技巧。",
+        concepts: [
+          "<strong>一句話心法</strong>：魅力是一套非語言的行為組合，透過控制內在心理狀態（減少內耗）並在當下展現高度專注與溫暖。",
+          "<strong>魅力的三大核心元素</strong>：臨在感（Presence - 專注當下）、影響力（Power - 展現價值與自信）、親和力（Warmth - 溫暖與包容）。",
+          "<strong>四種魅力風格</strong>：專注型魅力（專心傾聽）、遠見型魅力（激發信念）、親切型魅力（被接納感）、權威型魅力（實力展現）。"
+        ],
+        guides: [
+          "<strong>約會中的「臨在感」技巧</strong>：在對方說話時，刻意將大腳趾按壓在鞋底，這能強迫你的感官回到物理身體，阻止大腦飄走或思考下一句要說什麼。",
+          "<strong>內在狀態調整</strong>：在進入重要約會或演講前，花 2 分鐘進行「感恩冥想」，這能改變你的面部微表情，讓你的眼神流露出最自然的親和力。"
+        ]
+      },
+      {
+        id: 18,
+        title: "調情學",
+        author: "Jean Smith",
+        workshop: "freedom",
+        workshopName: "自由工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "透過科學調查與社交實驗，解析調情的六大核心訊號，讓調情變得輕鬆自然。",
+        concepts: [
+          "<strong>一句話心法</strong>：調情不是為了向對方證明你的價值，而是透過一系列好感訊號，向對方傳遞「我對你有興趣，並且我很安全」。",
+          "<strong>H.O.T. A.P.E. 訊號系統</strong>：Humor（幽默玩笑）、Open Body Language（開放肢體）、Touch（短暫無壓力身體接觸）、Attention（高度傾聽專注）、Proximity（拉近物理空間）、Eye Contact（3秒以上眼神交流）。"
+        ],
+        guides: [
+          "<strong>漸進式好感測試</strong>：第一步眼神交會並微笑（Eye Contact）；第二步在對話中身體微微前傾（Open Body Language）；第三步在好笑的地方順手輕觸對方手臂 0.5 秒並迅速抽回（Touch）。若對方沒退後，代表測試通過。"
+        ]
+      },
+      {
+        id: 19,
+        title: "社會性動物",
+        author: "David Brooks",
+        workshop: "freedom",
+        workshopName: "自由工作坊",
+        type: "narrative",
+        typeName: "故事與對話型",
+        typeColor: "var(--color-narrative)",
+        typeRgb: "211, 187, 210",
+        value: "透過虛構人物的一生，剖析潛意識如何形塑我們的性格、決策與社會連結。",
+        concepts: [
+          "<strong>角色投影</strong>：兩位主角代表了在現代社會中，努力在理性成就（履歷美德）與內心情感連結（追思美德）之間尋求平衡的普通人。",
+          "<strong>心智模型解析</strong>：潛意識的強大主導權，大腦的決策 90% 以上由潛意識決定；履歷美德 vs. 追思美德（葬禮上被讚美的德行）；人生雙峰理論（自我實現 vs. 放下自我、奉獻與臣服）。"
+        ],
+        guides: [
+          "<strong>履歷美德 vs. 追思美德</strong>：寫下你每週花多少小時提升履歷美德（工作、賺錢），多少小時經營追思美德（同理心、深度的傾聽、自我反省）？試著每週挪出 2 小時做一件只與『加深與人情感連結』有關的事。"
+        ]
+      },
+      {
+        id: 20,
+        title: "親密按摩聖經",
+        author: "Gordon Inkeles",
+        workshop: "freedom",
+        workshopName: "自由工作坊",
+        type: "action",
+        typeName: "實操工具型",
+        typeColor: "var(--color-action)",
+        typeRgb: "232, 168, 152",
+        value: "透過觸覺建立高質量的親密連結與身體溝通，增進伴侶間的親密度與信任感。",
+        concepts: [
+          "<strong>一句話心法</strong>：觸覺是比語言更古老、更直接的愛之表達。透過沒有性暗示、全然利他的親密按摩，能建立最深層的身體信任。",
+          "<strong>核心工具箱</strong>：觸覺心理效應（釋放內啡肽與催產素）；兩大核心按摩手法：推撫法（Effleurage - 長距離輕撫）、揉捏法（Petrissage - 擠壓肌肉）；雙手不離身原則。"
+        ],
+        guides: [
+          "<strong>伴侶放鬆儀式</strong>：在週末睡前，為伴侶做 10 分鐘簡單的肩頸與手部按摩。按摩過程中，不討論生活瑣事，專注於手掌的溫度與對方的呼吸，將這段時間作為專屬的「感官交流時刻」。"
+        ]
+      }
+    ];
+
+    // Dom Elements
+    const booksList = document.getElementById('booksList');
+    const searchInput = document.getElementById('searchInput');
+    const resultsCount = document.getElementById('resultsCount');
+    const copyToast = document.getElementById('copyToast');
+
+    let currentWorkshop = 'all';
+    let currentType = 'all';
+
+    // Render Function
+    function renderBooks() {
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      
+      const filtered = booksData.filter(book => {
+        // Workshop Filter
+        if (currentWorkshop !== 'all' && book.workshop !== currentWorkshop) return false;
+        
+        // Model Type Filter
+        if (currentType !== 'all' && book.type !== currentType) return false;
+
+        // Search Filter
+        if (searchTerm !== '') {
+          const matchTitle = book.title.toLowerCase().includes(searchTerm);
+          const matchAuthor = book.author.toLowerCase().includes(searchTerm);
+          const matchValue = book.value.toLowerCase().includes(searchTerm);
+          const matchConcepts = book.concepts.some(c => c.toLowerCase().includes(searchTerm));
+          const matchGuides = book.guides.some(g => g.toLowerCase().includes(searchTerm));
+          
+          return matchTitle || matchAuthor || matchValue || matchConcepts || matchGuides;
+        }
+
+        return true;
+      });
+
+      // Update count display
+      resultsCount.textContent = `找到 ${filtered.length} 本書籍精華`;
+
+      // Render cards
+      if (filtered.length === 0) {
+        booksList.innerHTML = `
+          <div class="no-results">
+            🔍 沒有找到符合篩選條件的書籍精華，請嘗試其他關鍵字。
+          </div>
+        `;
+        return;
+      }
+
+      booksList.innerHTML = filtered.map(book => {
+        const conceptsLi = book.concepts.map(c => `<li>${c}</li>`).join('');
+        const guidesLi = book.guides.map((g, idx) => `<li data-step="${idx + 1}">${g}</li>`).join('');
+        
+        return `
+          <div class="book-card" id="book-${book.id}">
+            <div class="corner-bracket bracket-tl"></div>
+            <div class="corner-bracket bracket-tr"></div>
+            <div class="corner-bracket bracket-bl"></div>
+            <div class="corner-bracket bracket-br"></div>
+            
+            <div class="book-header" onclick="toggleBook(${book.id})">
+              <div class="book-title-row">
+                <div class="book-meta">
+                  <h3 class="book-title">《${book.title}》</h3>
+                  <span class="book-author">${book.author} 著</span>
+                </div>
+                <div class="toggle-icon">▼</div>
+              </div>
+              <div class="book-badges">
+                <span class="badge badge-workshop">${book.workshopName}</span>
+                <span class="badge badge-model" style="--badge-color: ${book.typeColor}; --badge-rgb: ${book.typeRgb};">${book.typeName}</span>
+              </div>
+              <p class="book-value">${book.value}</p>
+            </div>
+            
+            <div class="book-content" id="content-${book.id}">
+              <div class="book-inner-content">
+                <div class="content-block">
+                  <h4 class="section-title">🔑 核心觀點摘要</h4>
+                  <ul class="concepts-list">${conceptsLi}</ul>
+                </div>
+                <div class="content-block">
+                  <h4 class="section-title">🛠️ 學員實踐指南</h4>
+                  <ol class="guides-list">${guidesLi}</ol>
+                </div>
+                <div class="action-row">
+                  <button class="btn-copy" onclick="copyActionSteps(${book.id}, event)">
+                    📋 一鍵複製實踐指南
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Toggle Accordion Function
+    function toggleBook(id) {
+      const card = document.getElementById(`book-${id}`);
+      const content = document.getElementById(`content-${id}`);
+      const isExpanded = card.classList.contains('expanded');
+
+      // Close all other expanded books for clean UI (Optional but recommended for single accordion style)
+      document.querySelectorAll('.book-card.expanded').forEach(otherCard => {
+        if (otherCard !== card) {
+          otherCard.classList.remove('expanded');
+          const otherContent = otherCard.querySelector('.book-content');
+          otherContent.style.maxHeight = '0px';
+        }
+      });
+
+      if (isExpanded) {
+        card.classList.remove('expanded');
+        content.style.maxHeight = '0px';
+      } else {
+        card.classList.add('expanded');
+        // Setting height dynamically for smooth transition
+        content.style.maxHeight = content.scrollHeight + 'px';
+        // Auto scroll to card top after expansion
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 150);
+      }
+    }
+
+    // Toggle Theory Function
+    function toggleTheory(num) {
+      const content = document.getElementById(`theory-content-${num}`);
+      const arrow = document.getElementById(`theory-arrow-${num}`);
+      const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
+
+      // Close all other theories
+      for (let i = 1; i <= 5; i++) {
+        if (i !== num) {
+          const otherContent = document.getElementById(`theory-content-${i}`);
+          const otherArrow = document.getElementById(`theory-arrow-${i}`);
+          if (otherContent) {
+            otherContent.style.maxHeight = '0px';
+            otherContent.style.borderTopColor = 'transparent';
+          }
+          if (otherArrow) {
+            otherArrow.style.transform = 'rotate(0deg)';
+          }
+        }
+      }
+
+      if (isOpen) {
+        content.style.maxHeight = '0px';
+        content.style.borderTopColor = 'transparent';
+        arrow.style.transform = 'rotate(0deg)';
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.borderTopColor = 'var(--card-border)';
+        arrow.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Copy to Clipboard
+    function copyActionSteps(id, event) {
+      event.stopPropagation(); // Avoid triggering accordion toggle
+      const book = booksData.find(b => b.id === id);
+      if (!book) return;
+
+      // Extract plain text for clipboard
+      const plainText = book.guides.map((g, idx) => {
+        // remove html tags
+        const cleanText = g.replace(/<[^>]*>/g, '');
+        return `${idx + 1}. ${cleanText}`;
+      }).join('\n');
+
+      const shareText = `【UC Training 關係智慧學習系統】\n《${book.title}》學員實踐指南：\n\n${plainText}\n\n👉 更多核心內容，請前往 UC Training 知識庫查閱！`;
+
+      navigator.clipboard.writeText(shareText).then(() => {
+        showToast();
+      }).catch(err => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = shareText;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          showToast();
+        } catch (e) {
+          console.error('Copy failed', e);
+        }
+        document.body.removeChild(textarea);
+      });
+    }
+
+    function showToast() {
+      copyToast.classList.add('show');
+      setTimeout(() => {
+        copyToast.classList.remove('show');
+      }, 2500);
+    }
+
+    // Filters Event Listeners
+    document.querySelectorAll('[data-workshop]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-workshop]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentWorkshop = btn.getAttribute('data-workshop');
+        renderBooks();
+      });
+    });
+
+    document.querySelectorAll('[data-type]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-type]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentType = btn.getAttribute('data-type');
+        renderBooks();
+      });
+    });
+
+    searchInput.addEventListener('input', renderBooks);
+
+    // Initial Render
+    window.addEventListener('DOMContentLoaded', () => {
+      renderBooks();
+    });
+  </script>
+</body>
+</html>
