@@ -302,161 +302,74 @@
       margin-bottom: 24px;
     }
 
-    /* EXPECTED EFFECTS SECTION */
-    .effects-section {
-      margin-bottom: 28px;
-    }
-
-    .section-title {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--accent-color);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .section-title::after {
-      content: "";
-      flex-grow: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(232, 168, 152, 0.2), transparent);
-    }
-
-    .effects-grid {
+    /* THREE-COLUMN INFO GRID */
+    .info-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 16px;
+      margin-bottom: 30px;
     }
 
-    @media (min-width: 600px) {
-      .effects-grid {
+    @media (min-width: 700px) {
+      .info-grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
 
-    .effect-item {
+    .info-box {
       background: rgba(232, 228, 220, 0.015);
       border: 1px solid rgba(232, 228, 220, 0.06);
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 24px 20px;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .effect-item:hover {
+    .info-box:hover {
       background: rgba(232, 168, 152, 0.03);
       border-color: rgba(232, 168, 152, 0.15);
       transform: translateY(-2px);
     }
 
-    .effect-num-badge {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--accent-color);
-      background: rgba(232, 168, 152, 0.08);
-      padding: 2px 8px;
+    /* Info Box Labels */
+    .info-box-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
       border-radius: 8px;
       display: inline-block;
-      margin-bottom: 8px;
+      align-self: flex-start;
+      font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif;
     }
 
-    .effect-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--beige);
-      margin-bottom: 6px;
+    /* Use situation badge: soft red/orange */
+    .info-box.situation .info-box-label {
+      background: rgba(232, 168, 152, 0.08);
+      color: #E8A898;
+      border: 1px solid rgba(232, 168, 152, 0.2);
     }
 
-    .effect-detail {
-      font-size: 11.5px;
+    /* Use tool badge: soft purple/blue */
+    .info-box.tool .info-box-label {
+      background: rgba(142, 200, 232, 0.08);
+      color: #8EC8E8;
+      border: 1px solid rgba(142, 200, 232, 0.2);
+    }
+
+    /* Use effect badge: soft green */
+    .info-box.effect .info-box-label {
+      background: rgba(184, 232, 200, 0.08);
+      color: #B8E8C8;
+      border: 1px solid rgba(184, 232, 200, 0.2);
+    }
+
+    .info-box-content {
+      font-size: 13px;
+      line-height: 1.75;
       color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* STEP BY STEP TIMELINE */
-    .steps-section {
-      margin-bottom: 32px;
-    }
-
-    .steps-timeline {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      position: relative;
-    }
-
-    @media (min-width: 650px) {
-      .steps-timeline {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-      }
-      
-      .steps-timeline::before {
-        content: "";
-        position: absolute;
-        top: 24px;
-        left: 20%;
-        width: 60%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(232, 168, 152, 0.15) 20%, rgba(232, 168, 152, 0.15) 80%, transparent);
-        z-index: 0;
-      }
-    }
-
-    .step-card {
-      background: rgba(232, 228, 220, 0.01);
-      border: 1px solid rgba(232, 228, 220, 0.04);
-      border-radius: 12px;
-      padding: 20px 16px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      transition: all 0.3s ease;
-    }
-
-    .step-card:hover {
-      background: rgba(232, 228, 220, 0.03);
-      border-color: rgba(232, 228, 220, 0.1);
-    }
-
-    .step-circle {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--navy);
-      border: 1.5px solid var(--card-border);
-      color: var(--text-muted);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 12px;
-      transition: all 0.3s ease;
-    }
-
-    .step-card:hover .step-circle {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-      box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    .step-name {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--beige);
-      margin-bottom: 6px;
-    }
-
-    .step-desc {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      line-height: 1.6;
     }
 
     /* ACTION BUTTON */
@@ -555,51 +468,19 @@
         </div>
       </div>
 
-      <div class="tool-desc">
-        在社交與情感互動中，<strong>個人故事</strong>是展現個人魅力最強大的載體。比起條列式的硬實力炫耀，透過故事，你的獨特優勢、生活態度與逆境商數，才能自然且深刻地植入對方的腦海中。
-      </div>
-
-      <!-- EFFECTS -->
-      <div class="effects-section">
-        <h3 class="section-title">✨ 使用效果</h3>
-        <div class="effects-grid">
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 01</span>
-            <h4 class="effect-title">經歷高價值美化</h4>
-            <p class="effect-detail">將枯燥的工作與日常片段，整理成展現細心、熱情或高逆境商數的吸引力畫面。</p>
-          </div>
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 02</span>
-            <h4 class="effect-title">對話完美銜接</h4>
-            <p class="effect-detail">透過內建的「引導問句」與「延伸問句」，在聊天時流暢切入話題並自然把球拋給對方。</p>
-          </div>
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 03</span>
-            <h4 class="effect-title">建立數位故事庫</h4>
-            <p class="effect-detail">將故事卡數位化儲存，隨時在手機上查閱與複習，並支持導出精美卡片圖片與 Markdown。</p>
-          </div>
+      <!-- INFO GRID -->
+      <div class="info-grid">
+        <div class="info-box situation">
+          <span class="info-box-label">使用情境</span>
+          <p class="info-box-content">在社交或約會場合想介紹自己，卻不知從何聊起，或擔心條列式的經歷背景流於嚴肅面試感與自吹自擂。</p>
         </div>
-      </div>
-
-      <!-- TIMELINE STEPS -->
-      <div class="steps-section">
-        <h3 class="section-title">🧭 快速上手三步驟</h3>
-        <div class="steps-timeline">
-          <div class="step-card">
-            <div class="step-circle">1</div>
-            <h4 class="step-name">挑選話題脈絡</h4>
-            <p class="step-desc">從進度板中選擇「職業美化」、「生活經驗」或「人生重大事件」中想要整理的子話題。</p>
-          </div>
-          <div class="step-card">
-            <div class="step-circle">2</div>
-            <h4 class="step-name">感性自我挖掘</h4>
-            <p class="step-desc">閱讀系統精選的引導問題與對比範例，在編輯區中一邊思索一邊寫下真實的體驗與目的。</p>
-          </div>
-          <div class="step-card">
-            <div class="step-circle">3</div>
-            <h4 class="step-name">即時預覽與儲存</h4>
-            <p class="step-desc">在右側即時檢視生成的豪華故事卡片預覽。完成後點擊儲存，永久保存至你的故事進度版。</p>
-          </div>
+        <div class="info-box tool">
+          <span class="info-box-label">使用工具</span>
+          <p class="info-box-content">挑選「職業、生活、人生事件」三大脈絡話題，跟隨引導問題填寫核心大綱，並客製化設計自然引導與延伸的對話問句。</p>
+        </div>
+        <div class="info-box effect">
+          <span class="info-box-label">使用效果</span>
+          <p class="info-box-content">建立個人專屬的數位「故事打磨卡」，在對話現場流暢且自然地展示高價值魅力特質，不著痕跡地植入吸引力訊號。</p>
         </div>
       </div>
 
@@ -621,51 +502,19 @@
         </div>
       </div>
 
-      <div class="tool-desc">
-        拒絕沒有溫度的「在幹嘛」或身家調查式的提問。這套系統精選了 <strong>211 道深度話題</strong>，以趣味的拉霸模式包裝，讓約會氣氛輕鬆愉快，同時能在對談中循序漸進地了解對方的底層想法。
-      </div>
-
-      <!-- EFFECTS -->
-      <div class="effects-section">
-        <h3 class="section-title">✨ 使用效果</h3>
-        <div class="effects-grid">
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 01</span>
-            <h4 class="effect-title">終結尷尬句點</h4>
-            <p class="effect-detail">再也不怕聊天沒話題。拉霸機隨機抽題，讓提問變得像玩遊戲一樣自然，完全沒有刻意感。</p>
-          </div>
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 02</span>
-            <h4 class="effect-title">三階關係遞進</h4>
-            <p class="effect-detail">從「邂逅吸引（品味/狂想）」到「走入心房（回憶/脆弱）」，再到「親密關係」，逐層深入。</p>
-          </div>
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 03</span>
-            <h4 class="effect-title">建立約會存檔記錄</h4>
-            <p class="effect-detail">記錄你們探討過的所有話題與答案。每次約會都更進一步，不用擔心問題重複。</p>
-          </div>
+      <!-- INFO GRID -->
+      <div class="info-grid">
+        <div class="info-box situation">
+          <span class="info-box-label">使用情境</span>
+          <p class="info-box-content">約會聊天氣氛陷入尷尬、雙方話題停留在表面閒聊，或想更進一步了解對方，卻不知如何切入更具深度的交流。</p>
         </div>
-      </div>
-
-      <!-- TIMELINE STEPS -->
-      <div class="steps-section">
-        <h3 class="section-title">🧭 快速上手三步驟</h3>
-        <div class="steps-timeline">
-          <div class="step-card">
-            <div class="step-circle">1</div>
-            <h4 class="step-name">挑選親密階段</h4>
-            <p class="step-desc">依據目前與對方的熟悉程度，在上方點選合適的對話深度（邂逅吸引、走入心房或親密關係）。</p>
-          </div>
-          <div class="step-card">
-            <div class="step-circle">2</div>
-            <h4 class="step-name">點擊拉霸抽取</h4>
-            <p class="step-desc">點擊「拉霸抽題」按鈕，齒輪轉動後會為你們隨機抽選該階段的主題問答。</p>
-          </div>
-          <div class="step-card">
-            <div class="step-circle">3</div>
-            <h4 class="step-name">分享並標記進度</h4>
-            <p class="step-desc">雙方輪流真誠回答。完成後點選「已探討」，記錄當前進度並將話題歸檔，積累共同回憶。</p>
-          </div>
+        <div class="info-box tool">
+          <span class="info-box-label">使用工具</span>
+          <p class="info-box-content">依熟稔度點選「邂逅吸引、走入心房、親密關係」階段，利用隨機拉霸功能抽出 211 道精選問題，並可勾選歸檔探索過的進度。</p>
+        </div>
+        <div class="info-box effect">
+          <span class="info-box-label">使用效果</span>
+          <p class="info-box-content">利用隨機抽題的趣味遊戲感消除刻意提問的壓力，在輕鬆愉快的氛圍下循序漸進地交換脆弱與三觀，快速拉近彼此距離。</p>
         </div>
       </div>
 
@@ -687,51 +536,19 @@
         </div>
       </div>
 
-      <div class="tool-desc">
-        這不是一場死板的是非測驗，而是幫助兩人在進入親密關係之前，建立<strong>深度溝通與互信</strong>的指南。坦誠地核對感情中的敏感議題，能讓雙方在未來的磨合之路上走得更加平穩踏實。
-      </div>
-
-      <!-- EFFECTS -->
-      <div class="effects-section">
-        <h3 class="section-title">✨ 使用效果</h3>
-        <div class="effects-grid">
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 01</span>
-            <h4 class="effect-title">透視雙方觀念落差</h4>
-            <p class="effect-detail">透過雙人同機作答，系統能以雙色指示標（伴侶 A/B）直接比對兩人的選項相同點與歧異點。</p>
-          </div>
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 02</span>
-            <h4 class="effect-title">覆蓋敏感防雷區</h4>
-            <p class="effect-detail">深入金錢開銷、異性社交界線、未來藍圖及底線退場機制等平時難以主動啟齒的嚴肅話題。</p>
-          </div>
-          <div class="effect-item">
-            <span class="effect-num-badge">EFFECT 03</span>
-            <h4 class="effect-title">專屬愛情契約列印</h4>
-            <p class="effect-detail">在溫馨告白後，可一鍵將填寫結果列印或儲存為 PDF。這是一份屬於你們愛情的「保固證書」。</p>
-          </div>
+      <!-- INFO GRID -->
+      <div class="info-grid">
+        <div class="info-box situation">
+          <span class="info-box-label">使用情境</span>
+          <p class="info-box-content">雙方曖昧已久準備正式交往，或在考慮同居、結婚前，希望能開誠布公地核對彼此的生活作息、價值觀與退場機制。</p>
         </div>
-      </div>
-
-      <!-- TIMELINE STEPS -->
-      <div class="steps-section">
-        <h3 class="section-title">🧭 快速上手三步驟</h3>
-        <div class="steps-timeline">
-          <div class="step-card">
-            <div class="step-circle">1</div>
-            <h4 class="step-name">輸入雙方姓名</h4>
-            <p class="step-desc">在頂部輸入「伴侶 A」與「伴侶 B」的暱稱，選定代表的按鍵顏色，以開啟記錄。</p>
-          </div>
-          <div class="step-card">
-            <div class="step-circle">2</div>
-            <h4 class="step-name">攜手作答共識</h4>
-            <p class="step-desc">依序點擊作答 7 大主題。在填答過程中分享理由，亦可於開放題寫下更細緻的生活描述。</p>
-          </div>
-          <div class="step-card">
-            <div class="step-circle">3</div>
-            <h4 class="step-name">真心話彩蛋與導出</h4>
-            <p class="step-desc">在最後的彩蛋中寫下對彼此最欣賞的心意。完成後，一鍵列印或存為 PDF，留存浪漫紀念。</p>
-          </div>
+        <div class="info-box tool">
+          <span class="info-box-label">使用工具</span>
+          <p class="info-box-content">雙人同機輸入暱稱，依序填答感情期待、金錢開銷等 7 大三觀主題，即時顯示雙方的選擇，並可一鍵匯出/列印。</p>
+        </div>
+        <div class="info-box effect">
+          <span class="info-box-label">使用效果</span>
+          <p class="info-box-content">讓敏感且嚴肅的感情議題得以前置對話，清晰透視彼此的觀念重合與分歧，共同繪製雙方專屬的「關係設計圖」。</p>
         </div>
       </div>
 
