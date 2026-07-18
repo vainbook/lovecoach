@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Training 雲端情感教練系統 - 情感成就地圖</title>
+  <!-- Google Fonts: Noto Serif TC, Noto Sans TC, Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans TC', 'Heiti TC', 'sans-serif'],
+            serif: ['Noto Serif TC', 'serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              accent: '#E8A898',
+              beige: '#E8E4DC',
+              navy: '#131B2E',
+            },
+            darkBg: '#0b1120',
+            cardBg: 'rgba(255, 255, 255, 0.04)',
+            cardBorder: 'rgba(255, 255, 255, 0.14)',
+            cardHover: 'rgba(255, 255, 255, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="font-sans min-h-screen selection:bg-brand-accent/30 selection:text-brand-beige">
+
+  <!-- 🌌 Scene Layer 1: Twinkling Stars (upper sky) -->
+  <div class="scene-stars" id="sceneStars" aria-hidden="true"></div>
+
+  <!-- 🌅 Scene Layer 2: Sunset Horizon Glow -->
+  <div class="scene-horizon-glow" aria-hidden="true"></div>
+
+  <!-- ☁️ Scene Layer 3: Drifting Clouds -->
+  <div class="scene-clouds" aria-hidden="true" id="sceneClouds"></div>
+
+  <!-- 🏖️ Scene Layer 4: 高質感熱帶金沙灘與少量薄浪花 (Artisan Sandy Coastline) -->
+  <div class="scene-waves" aria-hidden="true">
+    <!-- 三階層次金色熱帶沙灘與細節插圖 -->
+    <svg class="beach-shore-svg" viewBox="0 0 1200 160" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="sandGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ddb069"/>
+          <stop offset="100%" stop-color="#c69850"/>
+        </linearGradient>
+        <linearGradient id="sandGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ebd292"/>
+          <stop offset="100%" stop-color="#d4b46c"/>
+        </linearGradient>
+        <linearGradient id="sandGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f7ebc6"/>
+          <stop offset="100%" stop-color="#e8ce8a"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 1. 深金沙底層 -->
+      <path d="M0 35 C300 5, 600 55, 900 20 C1050 5, 1150 25, 1200 15 V160 H0 Z" fill="url(#sandGrad1)"/>
+      <!-- 2. 中金沙層 -->
+      <path d="M0 55 C250 25, 550 70, 850 35 C1000 20, 1120 40, 1200 30 V160 H0 Z" fill="url(#sandGrad2)"/>
+      <!-- 3. 陽光白金沙前緣 -->
+      <path d="M0 78 C200 50, 500 90, 800 55 C980 40, 1100 60, 1200 50 V160 H0 Z" fill="url(#sandGrad3)"/>
+
+      <!-- 🐚 沙灘上的小貝殼與 ⭐ 海星點綴 -->
+      <g opacity="0.85">
+        <!-- 海星 1 -->
+        <polygon points="280,105 283,113 291,113 285,118 287,126 280,121 273,126 275,118 269,113 277,113" fill="#fb923c"/>
+        <!-- 貝殼 1 -->
+        <path d="M640 115 C640 108 652 108 652 115 Z" fill="#fed7aa" stroke="#fdba74" stroke-width="1"/>
+        <!-- 海星 2 -->
+        <polygon points="920,95 922,101 928,101 923,105 925,111 920,107 915,111 917,105 912,101 918,101" fill="#f472b6"/>
+      </g>
+    </svg>
+
+    <!-- 🌊 由下往上拍上沙灘的層次亮麗白浪邊線 (Continuous Swash Foam Fringe) -->
+    <svg class="beach-foam-fringe fringe-1" viewBox="0 0 1200 50" preserveAspectRatio="none">
+      <path d="M0 20 C200 40, 500 10, 800 30 C980 40, 1100 20, 1200 25" stroke="#ffffff" stroke-width="10" fill="none" stroke-dasharray="16 8" stroke-linecap="round"/>
+      <path d="M0 20 C200 40, 500 10, 800 30 C980 40, 1100 20, 1200 25" stroke="rgba(186, 230, 253, 0.75)" stroke-width="18" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <svg class="beach-foam-fringe fringe-2" viewBox="0 0 1200 50" preserveAspectRatio="none">
+      <path d="M0 28 C250 10, 550 48, 850 20 C1000 10, 1120 30, 1200 20" stroke="rgba(255, 255, 255, 0.9)" stroke-width="7" fill="none" stroke-dasharray="10 5" stroke-linecap="round"/>
+    </svg>
+
+    <svg class="beach-foam-fringe fringe-3" viewBox="0 0 1200 50" preserveAspectRatio="none">
+      <path d="M0 35 C180 18, 480 52, 780 28 C950 18, 1080 38, 1200 28" stroke="rgba(147, 197, 253, 0.65)" stroke-width="12" fill="none" stroke-dasharray="24 12" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="border-b border-cardBorder bg-brand-navy/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-full border border-brand-accent flex items-center justify-center text-brand-accent font-display font-semibold text-xs lowercase shadow-inner">
+          uc
+        </div>
+        <div>
+          <h1 class="font-serif font-bold text-sm md:text-base leading-tight text-brand-beige flex items-center space-x-2">
+            <span>UC 情感成就探索地圖</span>
+          </h1>
+          <p class="text-[8px] text-brand-accent font-display tracking-[0.2em] uppercase leading-none mt-0.5">Make You Complete</p>
+        </div>
+
+        <!-- 🔥 連續學習 n 天 Badge (修改文字) -->
+        <div class="streak-flame-badge ml-2" title="保持每日完成任務，累積連續學習天數！">
+          <span class="flame-icon">🔥</span>
+          <span>連續學習 <strong class="text-amber-400" id="headerStreakCount">3</strong> 天</span>
+        </div>
+      </div>
+      
+      <!-- API Connection Config -->
+      <div class="flex items-center space-x-2">
+        <input type="text" id="apiUrlInput" placeholder="貼上學員專屬作業本網址..." 
+          class="bg-brand-navy/60 border border-cardBorder text-brand-beige text-xs rounded-lg focus:ring-brand-accent focus:border-brand-accent p-2 w-44 transition-all outline-none hidden md:block">
+        <button id="connectApiBtn" onclick="connectApi()"
+          class="bg-gradient-to-r from-brand-accent to-[#f7cac1] text-brand-navy hover:shadow-lg hover:shadow-brand-accent/25 font-bold text-xs px-3 py-1.5 rounded-lg transition-all hover:scale-[1.03] active:scale-95">
+          連線試算表
+        </button>
+        <span id="connectionBadge" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-brand-accent/10 text-brand-accent border border-brand-accent/20">
+          <span class="w-1.5 h-1.5 mr-1.5 bg-brand-accent rounded-full animate-pulse"></span>演示模式
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Isometric Map Canvas -->
+  <main class="max-w-5xl mx-auto px-4 py-6 relative">
+    <div class="text-center mb-2">
+      <h2 class="text-lg font-bold font-serif text-brand-beige">⛵ 情感航海探索地圖</h2>
+      <p class="text-xs text-brand-beige/50 mt-1">揚帆啟航・征服每座島嶼任務・乘風破浪抵達幸福燈塔 🏰</p>
+    </div>
+
+    <!-- Ocean Voyage Map Container -->
+    <div class="iso-world-container" id="isoWorldContainer">
+      <!-- Sea route trail and island nodes generated by app.js -->
+    </div>
+  </main>
+
+  <!-- 📌 Fixed Bottom Navigation (Nautical Dock) -->
+  <nav class="fixed-bottom-dock py-3">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+      
+      <!-- 1. 📦 收藏 (累積小知識與實戰輕挑戰) -->
+      <button id="dockCollectionBtn" onclick="openCollectionModal()" 
+        class="bg-white/5 border border-amber-500/30 hover:border-amber-400 text-amber-300 hover:text-amber-200 font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-sm flex items-center space-x-1">
+        <span>📦 收藏</span>
+      </button>
+
+      <!-- 2. 🎓 必修 -->
+      <button id="dockRequiredBtn" onclick="openSkillTreeCategory(1)" 
+        class="bg-gradient-to-r from-brand-accent/20 to-brand-accent/10 border border-brand-accent/40 hover:border-brand-accent text-brand-accent font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-sm flex items-center space-x-1">
+        <span>🎓 必修</span>
+      </button>
+
+      <!-- 3. 🎒 準備 -->
+      <button id="dockPrepBtn" onclick="openSkillTreeCategory(2)" 
+        class="bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500 text-emerald-400 font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-sm flex items-center space-x-1">
+        <span>🎒 準備</span>
+      </button>
+
+      <!-- 4. 👤 個人資料 -->
+      <button id="dockProfileBtn" onclick="openProfileModal()" 
+        class="bg-white/5 border border-white/10 hover:border-brand-accent text-brand-beige font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-sm flex items-center space-x-1">
+        <span>👤 個人資料</span>
+      </button>
+
+      <!-- 5. 🧪 資訊欄位內置測試按鈕組 -->
+      <div class="flex items-center space-x-1.5 pl-2 border-l border-white/15">
+        <button onclick="triggerTestStep(true)" title="測試：將下一步標記為紅色叉叉 ❌ 並起航"
+          class="bg-red-500/15 border border-red-500/40 hover:border-red-400 text-red-300 font-bold text-[11px] px-2.5 py-2 rounded-xl transition-all flex items-center space-x-1 hover:scale-[1.03] active:scale-95 shadow-sm">
+          <span>❌ 測試</span>
+        </button>
+        <button onclick="triggerTestStep(false)" title="測試：將下一步標記為通關並起航"
+          class="bg-emerald-500/15 border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 font-bold text-[11px] px-2.5 py-2 rounded-xl transition-all flex items-center space-x-1 hover:scale-[1.03] active:scale-95 shadow-sm">
+          <span>🏝️ 通關</span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ⚔️ BOSS 考驗 Modal -->
+  <div id="bossQuizModal" class="fixed inset-0 bg-brand-navy/90 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-purple-500/40 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl shadow-purple-500/20 transform scale-95 transition-transform duration-300 m-4 flex flex-col">
+      <div class="p-6 border-b border-cardBorder bg-purple-950/40 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center font-bold text-lg">
+            ⚔️
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-brand-beige font-serif">突發 BOSS 考驗：社交情境三連答</h3>
+            <p class="text-xs text-purple-300/70 mt-0.5" id="bossQuizStepProgress">題目 1 / 3：考驗高情商應答反應</p>
+          </div>
+        </div>
+        <button onclick="closeBossQuizModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <div class="bg-cardBg border border-cardBorder rounded-xl p-4">
+          <span class="text-[10px] text-purple-400 font-bold uppercase tracking-wider">情境模擬 (Scenario)</span>
+          <h4 id="bossQuestionScenario" class="text-sm font-bold text-brand-beige mt-1 leading-relaxed">
+            女方：「你好像對每個女生都這樣幽默喔？」此時你該如何優雅回覆展現自信與安全感？
+          </h4>
+        </div>
+
+        <div class="space-y-2.5" id="bossQuizOptionsContainer">
+        </div>
+      </div>
+      
+      <div class="p-4 border-t border-cardBorder bg-brand-navy/30 flex justify-between items-center" id="bossQuizFooter">
+        <span class="text-xs text-brand-beige/40">連續答對 3 題即可成功擊退 BOSS 考驗！</span>
+        <button onclick="closeBossQuizModal()" class="text-brand-beige/60 hover:text-brand-beige text-xs font-semibold px-4 py-2">
+          暫時關閉
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 💡 Reward Modal (獎勵小知識動畫視窗) -->
+  <div id="rewardModal" class="fixed inset-0 bg-brand-navy/85 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-amber-500/40 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl shadow-amber-500/20 transform scale-95 transition-transform duration-300 m-4 flex flex-col">
+      <div class="p-6 border-b border-cardBorder bg-gradient-to-r from-amber-950/40 to-brand-navy flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center font-bold text-xl animate-bounce">
+            💡
+          </div>
+          <div>
+            <h3 id="rewardModalTitle" class="text-base font-bold text-amber-200 font-serif">💡 獎勵小知識解鎖</h3>
+            <p class="text-xs text-amber-200/60 mt-0.5">大航海意外收穫・心態覺察卡片</p>
+          </div>
+        </div>
+        <button onclick="closeRewardModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4 text-sm">
+        <div class="p-5 bg-gradient-to-br from-amber-500/10 via-brand-navy to-amber-900/10 border border-amber-500/30 rounded-xl space-y-2">
+          <span class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">金句覺察卡片</span>
+          <h4 id="rewardModalContentTitle" class="text-sm font-bold text-amber-100 font-serif leading-relaxed">
+            情感第一法則：自信源於了解自我
+          </h4>
+          <p id="rewardModalContentDesc" class="text-xs text-brand-beige/70 leading-relaxed mt-1">
+            獲得心態覺察卡片，已自動典藏於冒險冊！
+          </p>
+        </div>
+
+        <div class="p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl flex items-center justify-between text-xs text-amber-200/80">
+          <span>📦 狀態：已自動歸檔至【冒險典藏冊】</span>
+          <span class="text-emerald-400 font-bold">已同步 ✓</span>
+        </div>
+      </div>
+      
+      <div class="p-4 border-t border-cardBorder bg-brand-navy/30 flex justify-end">
+        <button onclick="closeRewardModal()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-brand-navy font-bold text-xs px-6 py-2.5 rounded-xl transition-all shadow-md shadow-amber-500/25 hover:scale-[1.03] active:scale-95">
+          收下獎勵 📦
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📦 Collection Modal (冒險典藏冊) -->
+  <div id="collectionModal" class="fixed inset-0 bg-brand-navy/85 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-amber-500/40 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl shadow-amber-500/10 transform scale-95 transition-transform duration-300 m-4 flex flex-col max-h-[85vh]">
+      <div class="p-6 border-b border-cardBorder bg-amber-950/20 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center font-bold text-lg">
+            📦
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-brand-beige font-serif">冒險典藏冊</h3>
+            <p class="text-xs text-amber-200/60 mt-0.5">匯集航海冒險中搜集到的💡獎勵小知識與🎯實戰輕挑戰！</p>
+          </div>
+        </div>
+        <button onclick="closeCollectionModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- 分頁 Tab -->
+      <div class="flex border-b border-cardBorder bg-brand-navy/40 px-6 pt-3 space-x-4">
+        <button id="collectionTabRewards" onclick="switchCollectionTab('rewards')" 
+          class="pb-2.5 text-xs font-bold text-amber-300 border-b-2 border-amber-400 transition-colors flex items-center space-x-1.5">
+          <span>💡 獎勵小知識 (<span id="rewardCollectedCount">0</span>)</span>
+        </button>
+        <button id="collectionTabChallenges" onclick="switchCollectionTab('challenges')" 
+          class="pb-2.5 text-xs font-bold text-brand-beige/50 hover:text-brand-beige border-b-2 border-transparent transition-colors flex items-center space-x-1.5">
+          <span>🎯 實戰輕挑戰 (<span id="challengeCollectedCount">0</span>)</span>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-3 flex-1 text-sm" id="collectionItemsContainer">
+      </div>
+      
+      <div class="p-4 border-t border-cardBorder bg-brand-navy/30 flex justify-end">
+        <button onclick="closeCollectionModal()" class="bg-cardBg border border-cardBorder text-brand-beige font-semibold text-xs px-5 py-2 rounded-xl transition-colors">
+          關閉典藏冊
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 📋 Draggable Completed Tasks Overview Modal -->
+  <div id="overviewModal" class="fixed inset-0 bg-brand-navy/85 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-cardBorder rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 m-4 flex flex-col max-h-[85vh]">
+      <div class="p-6 border-b border-cardBorder flex items-center justify-between bg-brand-navy/30">
+        <div>
+          <h3 class="text-base font-bold text-brand-beige font-serif">📋 已完成任務檢視與拖曳排序</h3>
+          <p class="text-xs text-brand-beige/50 mt-0.5">可以按住抓取手把 ☰ 拖曳上下調整完成任務順序，同步更新地圖步數！</p>
+        </div>
+        <button onclick="closeOverviewModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-3 flex-1 text-sm" id="draggableCompletedListContainer">
+      </div>
+      
+      <div class="p-4 border-t border-cardBorder bg-brand-navy/30 flex justify-end">
+        <button onclick="closeOverviewModal()" class="bg-cardBg border border-cardBorder text-brand-beige font-semibold text-xs px-5 py-2 rounded-xl transition-colors">
+          關閉檢視圖
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 👤 Profile & 9-Grid Dating Settings Modal View -->
+  <div id="profileModal" class="fixed inset-0 bg-brand-navy/85 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-cardBorder rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 m-4 flex flex-col max-h-[88vh]">
+      <div class="p-6 border-b border-cardBorder flex items-center justify-between bg-brand-navy/30">
+        <div>
+          <h3 class="text-base font-bold text-brand-beige font-serif">👤 個人資料與交友軟體設定</h3>
+          <p class="text-xs text-brand-beige/50 mt-0.5">設計吸引人的個人自我介紹與交友軟體 9 張精選照片排版。</p>
+        </div>
+        <button onclick="closeProfileModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-sm">
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-brand-beige">📝 個人簡介與自我介紹文案</label>
+          <textarea id="profileBioInput" rows="3" placeholder="請在此輸入你的個人簡介、興趣與吸引人的自我介紹細節..."
+            class="w-full bg-cardBg border border-cardBorder text-brand-beige text-xs rounded-xl p-3 focus:border-brand-accent outline-none transition-all"></textarea>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-brand-beige">📸 交友軟體 9 張照片展示排版</label>
+            <span class="text-[10px] text-brand-beige/50">點擊網格即可獨立上傳或替換照片</span>
+          </div>
+
+          <div class="profile-photo-grid" id="profile9GridContainer">
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-4 border-t border-cardBorder bg-brand-navy/30 flex justify-end space-x-3">
+        <button onclick="closeProfileModal()" class="text-brand-beige/60 hover:text-brand-beige font-semibold text-xs px-4 py-2">
+          取消
+        </button>
+        <button onclick="saveProfileModal()" class="bg-gradient-to-r from-brand-accent to-[#f7cac1] text-brand-navy font-bold text-xs px-6 py-2 rounded-xl transition-all shadow-md shadow-brand-accent/25 hover:scale-[1.03] active:scale-95">
+          儲存設定
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🎮 Game Skill-Tree Modal View -->
+  <div id="skillTreeModal" class="fixed inset-0 bg-brand-navy/85 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-cardBorder rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 m-4 flex flex-col max-h-[85vh]">
+      <div class="p-6 border-b border-cardBorder flex items-center justify-between bg-brand-navy/30">
+        <div>
+          <h3 id="skillTreeCategoryTitle" class="text-base font-bold text-brand-beige font-serif">🎓 必修課程</h3>
+          <p class="text-xs text-brand-beige/50 mt-0.5">點擊任務填寫作業，完成後將自動推進冒險地圖！</p>
+        </div>
+        <button onclick="closeSkillTreeModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 flex-1 text-sm" id="skillTreeNodesContainer">
+      </div>
+      
+      <div class="p-4 border-t border-cardBorder bg-brand-navy/30 flex justify-end">
+        <button onclick="closeSkillTreeModal()" class="bg-cardBg border border-cardBorder text-brand-beige font-semibold text-xs px-5 py-2 rounded-xl transition-colors">
+          關閉
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Homework Guided Input Modal -->
+  <div id="guidedModal" class="fixed inset-0 bg-brand-navy/85 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-brand-navy border border-cardBorder rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 m-4 flex flex-col max-h-[90vh]">
+      <div class="p-6 border-b border-cardBorder flex items-center justify-between bg-brand-navy/20">
+        <h3 id="modalTitle" class="text-base font-bold text-brand-beige font-serif">🎯 設定你的課程情感目標</h3>
+        <button onclick="closeModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-sm">
+        <div class="bg-brand-accent/10 border border-brand-accent/25 rounded-xl p-4 text-brand-accent">
+          <div class="flex items-start space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-brand-accent shrink-0 mt-0.5">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.25v2.75a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 10.25 9H9Z" clip-rule="evenodd" />
+            </svg>
+            <div class="space-y-1" id="modalTips">
+            </div>
+          </div>
+        </div>
+
+        <div id="modalInputsContainer" class="space-y-4">
+        </div>
+      </div>
+      
+      <div class="p-6 border-t border-cardBorder bg-brand-navy/20 flex items-center justify-between">
+        <button id="modalStuckAlertBtn" onclick="modalSubmitHelp()"
+          class="text-brand-accent bg-brand-accent/10 hover:bg-brand-accent/15 border border-brand-accent/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all duration-300">
+          ❓ 我還是不知道怎麼寫，需要教練點評
+        </button>
+        <div class="flex space-x-3">
+          <button onclick="closeModal()" class="text-brand-beige/60 hover:text-brand-beige transition-colors font-semibold text-xs px-4 py-2.5">
+            取消
+          </button>
+          <button onclick="saveModalContent()"
+            class="bg-gradient-to-r from-brand-accent to-[#f7cac1] text-brand-navy font-bold text-xs px-6 py-2.5 rounded-xl transition-all duration-300 shadow-md shadow-brand-accent/25 hover:scale-[1.03] active:scale-95">
+            完成儲存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="homework_scaffolding.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

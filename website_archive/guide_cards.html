@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Training LINE 群組經營指南重點小卡</title>
+  <!-- Google Fonts 引入 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --navy: #131B2E;
+      --beige: #E8E4DC;
+      --salmon: #E8A898;
+      --white: #FFFFFF;
+      --navy-60: rgba(19, 27, 46, 0.6);
+      --beige-40: rgba(232, 228, 220, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0f1422;
+      font-family: 'Noto Sans TC', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    /* 卡片容器：符合手機比例 (1:1.8 左右，寬 360px，高 640px) */
+    .card {
+      width: 360px;
+      height: 640px;
+      position: relative;
+      border-radius: 12px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(232, 228, 220, 0.1);
+    }
+
+    /* 1. 深色卡片樣式 */
+    .card-dark {
+      background-color: var(--navy);
+      color: var(--beige);
+      /* 格線紋路背景 */
+      background-image: repeating-linear-gradient(
+        0deg, rgba(232, 228, 220, 0.03) 0px, rgba(232, 228, 220, 0.03) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(232, 228, 220, 0.03) 0px, rgba(232, 228, 220, 0.03) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+
+    /* 2. 淺色卡片樣式 */
+    .card-light {
+      background-color: var(--beige);
+      color: var(--navy);
+      /* 格線紋路背景 */
+      background-image: repeating-linear-gradient(
+        0deg, rgba(19, 27, 46, 0.03) 0px, rgba(19, 27, 46, 0.03) 1px,
+        transparent 1px, transparent 48px
+      ),
+      repeating-linear-gradient(
+        90deg, rgba(19, 27, 46, 0.03) 0px, rgba(19, 27, 46, 0.03) 1px,
+        transparent 1px, transparent 48px
+      );
+    }
+
+    /* UC 標誌性四角括號 */
+    .corner-bracket {
+      position: absolute;
+      width: 24px;
+      height: 36px;
+    }
+    .card-dark .corner-bracket {
+      border-color: var(--beige);
+      opacity: 0.3;
+    }
+    .card-light .corner-bracket {
+      border-color: var(--navy);
+      opacity: 0.2;
+    }
+
+    .bracket-tl {
+      top: 20px; left: 20px;
+      border-top: 1.5px solid currentColor;
+      border-left: 1.5px solid currentColor;
+    }
+    .bracket-tr {
+      top: 20px; right: 20px;
+      border-top: 1.5px solid currentColor;
+      border-right: 1.5px solid currentColor;
+    }
+    .bracket-bl {
+      bottom: 20px; left: 20px;
+      border-bottom: 1.5px solid currentColor;
+      border-left: 1.5px solid currentColor;
+    }
+    .bracket-br {
+      bottom: 20px; right: 20px;
+      border-bottom: 1.5px solid currentColor;
+      border-right: 1.5px solid currentColor;
+    }
+
+    /* Logo 圓形版 */
+    .uc-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      border: 1.5px solid currentColor;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+    }
+
+    /* 右側直書標籤 */
+    .side-label {
+      position: absolute;
+      writing-mode: vertical-rl;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      font-family: 'Space Grotesk', sans-serif;
+      opacity: 0.15;
+    }
+
+    /* 頂部區域 */
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .card-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .card-dark .card-num { color: var(--salmon); }
+    .card-light .card-num { color: var(--navy); opacity: 0.4; }
+
+    .card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    /* 雙色橫線分隔符 */
+    .divider-h {
+      display: flex;
+      align-items: center;
+      margin: 12px 0 16px 0;
+    }
+    .divider-h .thick {
+      width: 40px;
+      height: 3px;
+      background: currentColor;
+    }
+    .divider-h .thin {
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.2;
+    }
+
+    /* 中間主要內容 */
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* 重點項目 */
+    .point-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .point-title {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.4;
+    }
+    .card-dark .point-title { color: var(--salmon); }
+    .card-light .point-title { color: var(--navy); }
+
+    .point-desc {
+      font-size: 12px;
+      line-height: 1.5;
+      opacity: 0.9;
+      font-weight: 300;
+      padding-left: 14px;
+    }
+    .card-light .point-desc {
+      font-weight: 400;
+      color: rgba(19, 27, 46, 0.85);
+    }
+
+    /* 裝飾大底字 */
+    .bg-text {
+      position: absolute;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 120px;
+      font-weight: 600;
+      bottom: 20px;
+      left: -20px;
+      line-height: 1;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 底部區域 */
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.05em;
+      opacity: 0.5;
+      border-top: 1px solid rgba(232, 228, 220, 0.1);
+      padding-top: 12px;
+      margin-bottom: 5px;
+    }
+    .card-light .card-footer {
+      border-top-color: rgba(19, 27, 46, 0.1);
+    }
+
+    .footer-slogan {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CARD 1: 核心心法 (深色) -->
+  <div class="card card-dark" id="card1">
+    <div class="corner-bracket bracket-tl"></div>
+    <div class="corner-bracket bracket-tr"></div>
+    <div class="corner-bracket bracket-bl"></div>
+    <div class="corner-bracket bracket-br"></div>
+    <div class="uc-logo">uc</div>
+    <div class="side-label">MAKE YOU COMPLETE</div>
+    <div class="bg-text">HOST</div>
+
+    <div class="card-header">
+      <div class="card-num">01</div>
+      <div class="card-title">群組定位與核心心法</div>
+      <div class="divider-h">
+        <div class="thick"></div>
+        <div class="thin"></div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="point-item">
+        <div class="point-title">➔ 轉化為「場域提供者」</div>
+        <div class="point-desc">告別被動等待邀約的消費者思維，主動建立安全社交圈，建立最高社交價值錨定。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 提供「社交安全感」</div>
+        <div class="point-desc">建立不被批判、不被推銷、互動舒適的淨土，讓人們願意放心分享日常。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 輸出「情緒價值」</div>
+        <div class="point-desc">透過高溫度的聊天與高品質活動，為成員帶來收穫與陪伴，成為生活圈領袖。</div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <span>UC TRAINING</span>
+      <span class="footer-slogan">Make You Complete</span>
+    </div>
+  </div>
+
+  <!-- CARD 2: 齒輪一 新人 (淺色) -->
+  <div class="card card-light" id="card2">
+    <div class="corner-bracket bracket-tl"></div>
+    <div class="corner-bracket bracket-tr"></div>
+    <div class="corner-bracket bracket-bl"></div>
+    <div class="corner-bracket bracket-br"></div>
+    <div class="uc-logo">uc</div>
+    <div class="side-label">MAKE YOU COMPLETE</div>
+    <div class="bg-text">ONBOARD</div>
+
+    <div class="card-header">
+      <div class="card-num">02</div>
+      <div class="card-title">齒輪一：新人與邊界</div>
+      <div class="divider-h">
+        <div class="thick"></div>
+        <div class="thin"></div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="point-item">
+        <div class="point-title">➔ 寧缺勿濫與倍增法則</div>
+        <div class="point-desc">目標維持約百人且男女均衡。保持高門檻審核，嚴防怪人、負能量與商業推銷入群。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 黃金五分鐘與即時接待</div>
+        <div class="point-desc">新人入群的五分鐘內，經營者或核心成員必須出迎，防止新人冷卻成為幽靈人口。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 背景引路快速融冰</div>
+        <div class="point-desc">歡迎時主動介紹新人的背景與興趣特長（如：羽球高手），為群友創造對話切入點。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 版規宣導與隱私防線</div>
+        <div class="point-desc">要求 72 小時內完成自介與簽到。嚴禁私下騷擾，建立群組信賴感。</div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <span>UC TRAINING</span>
+      <span class="footer-slogan">Make You Complete</span>
+    </div>
+  </div>
+
+  <!-- CARD 3: 齒輪二 聊天 (深色) -->
+  <div class="card card-dark" id="card3">
+    <div class="corner-bracket bracket-tl"></div>
+    <div class="corner-bracket bracket-tr"></div>
+    <div class="corner-bracket bracket-bl"></div>
+    <div class="corner-bracket bracket-br"></div>
+    <div class="uc-logo">uc</div>
+    <div class="side-label">MAKE YOU COMPLETE</div>
+    <div class="bg-text">CHAT</div>
+
+    <div class="card-header">
+      <div class="card-num">03</div>
+      <div class="card-title">齒輪二：高價值互動</div>
+      <div class="divider-h">
+        <div class="thick"></div>
+        <div class="thin"></div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="point-item">
+        <div class="point-title">➔ 綠燈日常分享與提問</div>
+        <div class="point-desc">分享美食、美景或寵物時，務必附照片或店家連結，並在句尾留下問句降低接話門檻。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 第一人稱轉化法</div>
+        <div class="point-desc">拒絕無言轉發影片或連結。一定要先打出你對該資訊的個人真實感受與心得。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 橋接拋接術防句點</div>
+        <div class="point-desc">關注無人回應的尷尬，由 Host 給予正面反饋後，主動 @Tag 相關興趣的群友接力。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 合理使用 @All 標記</div>
+        <div class="point-desc">非重要全群公告或變更，切勿隨意使用 @All。日常揪團請善用投票與精準 @Tag。</div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <span>UC TRAINING</span>
+      <span class="footer-slogan">Make You Complete</span>
+    </div>
+  </div>
+
+  <!-- CARD 4: 齒輪三 活動 (淺色) -->
+  <div class="card card-light" id="card4">
+    <div class="corner-bracket bracket-tl"></div>
+    <div class="corner-bracket bracket-tr"></div>
+    <div class="corner-bracket bracket-bl"></div>
+    <div class="corner-bracket bracket-br"></div>
+    <div class="uc-logo">uc</div>
+    <div class="side-label">MAKE YOU COMPLETE</div>
+    <div class="bg-text">EVENT</div>
+
+    <div class="card-header">
+      <div class="card-num">04</div>
+      <div class="card-title">齒輪三：線下信任錨點</div>
+      <div class="divider-h">
+        <div class="thick"></div>
+        <div class="thin"></div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="point-item">
+        <div class="point-title">➔ 活動頻率與規模雙軌制</div>
+        <div class="point-desc">每週/雙週舉辦輕量「高頻小活動」（約飯、球局），每季舉辦「大型凝聚活動」（露營、派對）。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 暗樁機制與意願先行</div>
+        <div class="point-desc">活動發布前先用 Line 投票試水溫，並私下預約 1~2 位核心成員，在公告發出時秒接龍帶動跟風。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 活動後的二次發酵</div>
+        <div class="point-desc">活動當晚共享精緻照片或花絮影片，Host 主動標記致謝，營造歡樂氣氛以吸引觀望成員。</div>
+      </div>
+      <div class="point-item">
+        <div class="point-title">➔ 好感訊號深度觀察</div>
+        <div class="point-desc">主動在對話中觀察「偏心回應」、「主動好奇」與「社交護航」，並在線下創造自然的交集點。</div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <span>UC TRAINING</span>
+      <span class="footer-slogan">Make You Complete</span>
+    </div>
+  </div>
+
+</body>
+</html>
