@@ -777,6 +777,22 @@ function initSceneStars() {
       cloudContainer.appendChild(cloud);
     }
   }
+
+  // ponytail: Deep sea bubble particles (Phase 1 atmosphere)
+  const bubbleContainer = document.getElementById("bubbleLayer");
+  if (bubbleContainer && bubbleContainer.children.length === 0) {
+    for (let i = 0; i < 12; i++) {
+      const b = document.createElement("div");
+      b.className = "bubble";
+      const size = (4 + Math.random() * 10).toFixed(0);
+      b.style.width = size + "px";
+      b.style.height = size + "px";
+      b.style.left = (5 + Math.random() * 90) + "%";
+      b.style.animationDuration = (8 + Math.random() * 14).toFixed(1) + "s";
+      b.style.animationDelay = (-Math.random() * 12).toFixed(1) + "s";
+      bubbleContainer.appendChild(b);
+    }
+  }
 }
 
 // 🌊 在每一行左右兩側交替呈現豐富海洋生態

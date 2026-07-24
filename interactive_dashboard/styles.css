@@ -1295,3 +1295,219 @@ body.modal-open .sparkle-star {
   opacity: 1;
   transform: translateX(calc(-50% + var(--bubble-shift, 0px))) translateY(0) scale(1);
 }
+
+/* ============================================
+   🌊 PHASE 1: DEEP SEA UNDERWATER ATMOSPHERE
+   (Dave the Diver Inspired)
+   ============================================ */
+
+/* 1A. 水面焦散光紋 Caustics Light Effect */
+.caustics-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.08;
+  background:
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(56, 189, 248, 0.4) 0deg,
+      transparent 30deg,
+      rgba(14, 165, 233, 0.3) 60deg,
+      transparent 90deg
+    );
+  background-size: 180px 180px;
+  animation: causticsShift 8s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes causticsShift {
+  0%   { transform: translate(0, 0) scale(1.2) rotate(0deg); }
+  50%  { transform: translate(-30px, 20px) scale(1.3) rotate(5deg); }
+  100% { transform: translate(0, 0) scale(1.2) rotate(0deg); }
+}
+
+/* 1B. 深海氣泡上浮 Bubbles */
+.bubble-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%,
+    rgba(255, 255, 255, 0.7),
+    rgba(147, 197, 253, 0.25) 50%,
+    transparent 70%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: bubbleRise linear infinite;
+  opacity: 0;
+}
+
+@keyframes bubbleRise {
+  0%   { transform: translateX(0) scale(0.6); opacity: 0; }
+  10%  { opacity: 0.6; }
+  50%  { transform: translateX(15px) scale(1); opacity: 0.5; }
+  90%  { opacity: 0.2; }
+  100% { transform: translateX(-10px) translateY(-100vh) scale(0.8); opacity: 0; }
+}
+
+/* 1C. 水下光柱 God Rays */
+.god-rays-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0.12;
+}
+
+.god-ray {
+  position: absolute;
+  top: -20%;
+  width: 120px;
+  height: 140%;
+  background: linear-gradient(180deg,
+    rgba(251, 191, 36, 0.5) 0%,
+    rgba(56, 189, 248, 0.15) 40%,
+    transparent 85%
+  );
+  transform-origin: top center;
+  animation: godRaySway 10s ease-in-out infinite alternate;
+  filter: blur(25px);
+}
+
+.god-ray:nth-child(1) { left: 15%; transform: rotate(-8deg); animation-duration: 12s; }
+.god-ray:nth-child(2) { left: 55%; transform: rotate(5deg); animation-duration: 9s; animation-delay: -3s; width: 90px; }
+.god-ray:nth-child(3) { left: 80%; transform: rotate(-3deg); animation-duration: 14s; animation-delay: -6s; width: 70px; opacity: 0.7; }
+
+@keyframes godRaySway {
+  0%   { transform: rotate(var(--ray-start, -8deg)) scaleX(1); opacity: 1; }
+  50%  { transform: rotate(var(--ray-mid, 3deg)) scaleX(1.15); opacity: 0.7; }
+  100% { transform: rotate(var(--ray-end, -5deg)) scaleX(0.9); opacity: 1; }
+}
+
+/* ============================================
+   🏝️ PHASE 2: ISLAND TILES 3D DEPTH UPGRADE
+   ============================================ */
+
+/* 2A. Island 加厚立體底部 */
+.node-circle {
+  transform: translateY(-8px) perspective(400px) rotateX(5deg);
+}
+
+/* 2B. Hover 水波擴散 Ripple */
+.adventure-node::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 60px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid rgba(56, 189, 248, 0);
+  transform: translateX(-50%) scale(0.5);
+  transition: all 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.adventure-node:hover::after {
+  border-color: rgba(56, 189, 248, 0.35);
+  transform: translateX(-50%) scale(1.8);
+  opacity: 0;
+  animation: nodeRipple 0.8s ease-out;
+}
+
+@keyframes nodeRipple {
+  0%   { transform: translateX(-50%) scale(0.8); border-color: rgba(56, 189, 248, 0.5); opacity: 1; }
+  100% { transform: translateX(-50%) scale(2.2); border-color: rgba(56, 189, 248, 0); opacity: 0; }
+}
+
+/* 2C. 強化當前站立島嶼金色燈塔光環 */
+.adventure-node.status-current::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.5);
+  animation: beaconRing 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes beaconRing {
+  0%, 100% { transform: scale(1); border-color: rgba(251, 191, 36, 0.5); box-shadow: 0 0 0 rgba(251, 191, 36, 0); }
+  50% { transform: scale(1.15); border-color: rgba(251, 191, 36, 0.2); box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+}
+
+/* ============================================
+   💎 PHASE 4: MODAL DEEP SEA GLASSMORPHISM
+   ============================================ */
+
+/* 4A. Modal 深海毛玻璃邊框微光 */
+#taskChallengeModal > div,
+#shopModal > div,
+#collectionModal > div,
+#bossQuizModal > div,
+#rewardModal > div,
+#skillTreeModal > div,
+#guidedModal > div {
+  box-shadow:
+    0 0 1px rgba(251, 191, 36, 0.4),
+    0 0 30px rgba(14, 165, 233, 0.08),
+    0 25px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px) saturate(1.4);
+}
+
+/* 4B. Modal 內容區域微光散射 */
+#taskChallengeModal > div::before,
+#shopModal > div::before,
+#collectionModal > div::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  background: linear-gradient(135deg,
+    rgba(56, 189, 248, 0.03) 0%,
+    transparent 50%,
+    rgba(251, 191, 36, 0.02) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 4C. 按鈕 hover 水泡微彈跳 */
+button:active {
+  transform: scale(0.97);
+}
+
+/* ============================================
+   ✨ PHASE 5: HUD BREATHING GLOW
+   ============================================ */
+
+/* 5A. 懸浮冒險按鈕呼吸光環 */
+#taskChallengeFloatBtn > span:first-child,
+#shopFloatBtn > span:first-child {
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+  animation: hudIconBreath 3s ease-in-out infinite;
+}
+
+@keyframes hudIconBreath {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.7)); transform: scale(1.06); }
+}
+
+/* 5B. 底部導覽列按鈕 hover 浮起 */
+nav button:hover > div:first-child {
+  transform: translateY(-3px) scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(251, 191, 36, 0.4));
+}
+
