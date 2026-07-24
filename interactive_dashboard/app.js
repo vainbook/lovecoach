@@ -777,22 +777,6 @@ function initSceneStars() {
       cloudContainer.appendChild(cloud);
     }
   }
-
-  // ponytail: Deep sea bubble particles (Phase 1 atmosphere)
-  const bubbleContainer = document.getElementById("bubbleLayer");
-  if (bubbleContainer && bubbleContainer.children.length === 0) {
-    for (let i = 0; i < 12; i++) {
-      const b = document.createElement("div");
-      b.className = "bubble";
-      const size = (4 + Math.random() * 10).toFixed(0);
-      b.style.width = size + "px";
-      b.style.height = size + "px";
-      b.style.left = (5 + Math.random() * 90) + "%";
-      b.style.animationDuration = (8 + Math.random() * 14).toFixed(1) + "s";
-      b.style.animationDelay = (-Math.random() * 12).toFixed(1) + "s";
-      bubbleContainer.appendChild(b);
-    }
-  }
 }
 
 // 🌊 在每一行左右兩側交替呈現豐富海洋生態
@@ -1857,15 +1841,112 @@ function selectDiverSkin(skinId) {
 
 // 🤿 SVG/Emoji 產生器 (依據裝備及隨行夥伴動態繪製)
 function getCharacterSVG() {
-  const bodyColor = equippedBody === "body_tech" ? "#0284c7" : (equippedBody === "body_royal" ? "#b45309" : (equippedBody === "body_duck" ? "#facc15" : "#1e293b"));
-  const helmetColor = equippedBody === "body_royal" ? "#fbbf24" : (equippedBody === "body_duck" ? "#fef08a" : "#38bdf8");
+  // 🎨 主體皮膚色彩對應 (無面部眼睛，採用精緻專業/復古面罩風格)
+  const isTech = equippedBody === "body_tech";
+  const isRoyal = equippedBody === "body_royal";
+  const isDuck = equippedBody === "body_duck";
 
-  const handSVG = equippedHand === "hand_flashlight" ? `<path d="M 34 22 L 44 20 L 44 26 L 34 24 Z" fill="#fbbf24"/><circle cx="44" cy="23" r="3" fill="#fff" filter="drop-shadow(0 0 4px #fbbf24)"/>` :
-                  (equippedHand === "hand_camera" ? `<rect x="32" y="20" width="10" height="8" rx="2" fill="#e2e8f0" stroke="#0f172a"/><circle cx="37" cy="24" r="2.5" fill="#38bdf8"/>` :
-                  (equippedHand === "hand_trident" ? `<path d="M 34 28 L 34 8 M 31 12 L 31 8 M 37 12 L 37 8 M 30 8 L 38 8" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>` :
-                  (equippedHand === "hand_net" ? `<path d="M 33 22 L 41 18 L 41 28 Z" fill="rgba(255,255,255,0.3)" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="2,2"/>` : "")));
+  // 1. 潛水服與頭套配色
+  const bodyColor = isTech ? "#0f172a" : (isRoyal ? "#78350f" : (isDuck ? "#eab308" : "#1e293b"));
+  const suitAccent = isTech ? "#0284c7" : (isRoyal ? "#d97706" : (isDuck ? "#facc15" : "#0284c7"));
+  const helmetColor = isRoyal ? "#d97706" : (isDuck ? "#eab308" : "#0f172a");
 
-  const finsColor = equippedFins === "fins_whale" ? "#0ea5e9" : (equippedFins === "fins_neon" ? "#a855f7" : (equippedFins === "fins_gold" ? "#fbbf24" : "#f59e0b"));
+  // 2. 蛙鞋色彩
+  const finsColor = equippedFins === "fins_whale" ? "#0ea5e9" : 
+                   (equippedFins === "fins_neon" ? "#a855f7" : 
+                   (equippedFins === "fins_gold" ? "#fbbf24" : "#d97706"));
+
+  const finsStroke = equippedFins === "fins_gold" ? "#f59e0b" : "#0f172a";
+
+  // 3. 手持裝備 SVG
+  let handSVG = "";
+  if (equippedHand === "hand_flashlight") {
+    handSVG = `
+      <g class="hand-item">
+        <!-- 探照燈光束 -->
+        <polygon points="38,28 58,16 58,40" fill="url(#flashlightBeamGrad)" opacity="0.65"/>
+        <!-- 手電筒主體 -->
+        <rect x="34" y="24" width="10" height="8" rx="2" fill="#fbbf24" stroke="#0f172a" stroke-width="1.5"/>
+        <rect x="42" y="22" width="3" height="12" rx="1.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
+        <circle cx="44" cy="28" r="2" fill="#fff"/>
+      </g>`;
+  } else if (equippedHand === "hand_camera") {
+    handSVG = `
+      <g class="hand-item">
+        <!-- 防水相機 -->
+        <rect x="34" y="23" width="14" height="11" rx="3" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+        <circle cx="41" cy="28.5" r="3.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+        <circle cx="42" cy="27.5" r="1.2" fill="#fff"/>
+        <rect x="43" y="21" width="3" height="2" rx="0.5" fill="#ef4444"/>
+      </g>`;
+  } else if (equippedHand === "hand_trident") {
+    handSVG = `
+      <g class="hand-item">
+        <!-- 三叉戟 -->
+        <path d="M 38 38 L 38 10 M 34 16 L 34 10 L 38 14 M 42 16 L 42 10 L 38 14" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="38" cy="10" r="1.5" fill="#fff"/>
+      </g>`;
+  } else if (equippedHand === "hand_net") {
+    handSVG = `
+      <g class="hand-item">
+        <!-- 無慾望漁網 -->
+        <path d="M 36 28 L 48 20 L 50 36 Z" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="2,2"/>
+        <line x1="36" y1="28" x2="48" y2="20" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+      </g>`;
+  }
+
+  // 4. 頭盔面罩特殊渲染 (無表情，高科技反光或黃銅圓罩)
+  let maskHeadSVG = "";
+  if (isRoyal) {
+    // 👑 皇家復古黃銅重型潛水頭盔
+    maskHeadSVG = `
+      <!-- 黃銅頭盔主體 -->
+      <circle cx="28" cy="18" r="13" fill="#d97706" stroke="#451a03" stroke-width="2"/>
+      <!-- 頂部防護環與黃銅鉚釘 -->
+      <path d="M 20 10 Q 28 6 36 10" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="17" cy="18" r="1" fill="#fbbf24"/>
+      <circle cx="39" cy="18" r="1" fill="#fbbf24"/>
+      <circle cx="28" cy="7" r="1" fill="#fbbf24"/>
+      <!-- 中央圓形觀察舷窗 -->
+      <circle cx="28" cy="18" r="7" fill="url(#visorGlassGrad)" stroke="#fbbf24" stroke-width="2"/>
+      <path d="M 24 14 Q 28 12 30 16" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+    `;
+  } else if (isDuck) {
+    // 🐥 歡樂黃色小鴨面罩
+    maskHeadSVG = `
+      <!-- 小鴨頭套 -->
+      <circle cx="28" cy="18" r="13" fill="#facc15" stroke="#713f12" stroke-width="2"/>
+      <!-- 鴨嘴造型面罩前緣 -->
+      <path d="M 20 20 Q 28 26 36 20" fill="#f97316" stroke="#713f12" stroke-width="1.5"/>
+      <!-- 圓形潛水鏡 -->
+      <rect x="19" y="12" width="18" height="9" rx="4.5" fill="url(#visorGlassGrad)" stroke="#713f12" stroke-width="1.5"/>
+      <path d="M 21 14 Q 25 13 28 15" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+    `;
+  } else if (isTech) {
+    // ⚡ 科技極速深藍 LED 面罩
+    maskHeadSVG = `
+      <!-- 科技頭套 -->
+      <circle cx="28" cy="18" r="12.5" fill="#0f172a" stroke="#0284c7" stroke-width="2"/>
+      <!-- 全曲面黑晶鍍膜面罩 -->
+      <path d="M 17 14 C 17 10, 39 10, 39 14 C 39 24, 17 24, 17 14 Z" fill="#0284c7" opacity="0.9" stroke="#38bdf8" stroke-width="1.5"/>
+      <!-- LED 光藍雙條紋 (高科技發光) -->
+      <path d="M 20 16 L 36 16" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" filter="drop-shadow(0 0 3px #38bdf8)"/>
+      <path d="M 23 19 L 33 19" stroke="#7dd3fc" stroke-width="1.5" stroke-linecap="round"/>
+    `;
+  } else {
+    // 🤿 新手經典潛水面罩 (黑底金邊 + 極致玻璃斜面高光)
+    maskHeadSVG = `
+      <!-- 經典深藍頭套 -->
+      <circle cx="28" cy="18" r="12.5" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+      <!-- 大型雙鏡片潛水面罩框 -->
+      <rect x="18" y="12" width="20" height="11" rx="5" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
+      <!-- 面罩鏡片本體 -->
+      <rect x="19.5" y="13.5" width="17" height="8" rx="4" fill="url(#visorGlassGrad)"/>
+      <!-- 鏡片弧形斜面反光 -->
+      <path d="M 21 15 Q 26 14 30 17" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M 31 18 L 34 16" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linecap="round"/>
+    `;
+  }
 
   const petHtml = (equippedPet !== "none" && PET_SVGS[equippedPet]) ? `<div class="companion-pet">${PET_SVGS[equippedPet]}</div>` : "";
 
@@ -1874,20 +1955,73 @@ function getCharacterSVG() {
       <div id="diverSpeechBubble" class="speech-bubble"></div>
       ${petHtml}
       <div class="character-body">
-        <svg viewBox="0 0 54 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="32" y="14" width="8" height="24" rx="4" fill="#64748b" stroke="#334155" stroke-width="2"/>
-          <path d="M40 18 Q 46 12, 34 8 Q 22 4, 18 16" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
-          <rect x="18" y="16" width="16" height="22" rx="6" fill="${bodyColor}" stroke="#0f172a" stroke-width="2"/>
-          <g class="flipper flipper-left"><path d="M 18 38 L 10 48 L 16 48 L 22 40 Z" fill="${finsColor}" stroke="#b45309" stroke-width="1.5"/></g>
-          <g class="flipper flipper-right"><path d="M 34 38 L 42 48 L 36 48 L 30 40 Z" fill="${finsColor}" stroke="#b45309" stroke-width="1.5"/></g>
-          <circle cx="26" cy="16" r="11" fill="${bodyColor}"/>
-          <rect x="18" y="12" width="14" height="8" rx="4" fill="${helmetColor}" stroke="#0f172a" stroke-width="1.5"/>
-          <path d="M 20 14 L 28 14" stroke="#e0f2fe" stroke-width="1.5" stroke-linecap="round"/>
+        <svg viewBox="0 0 60 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- 漸層：手電筒光束 -->
+            <linearGradient id="flashlightBeamGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#fef08a" stop-opacity="0"/>
+            </linearGradient>
+            <!-- 漸層：面罩防護玻璃反光 -->
+            <linearGradient id="visorGlassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="50%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#0f172a"/>
+            </linearGradient>
+            <!-- 漸層：氧氣瓶金屬質感 -->
+            <linearGradient id="tankMetalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#64748b"/>
+              <stop offset="40%" stop-color="#94a3b8"/>
+              <stop offset="70%" stop-color="#cbd5e1"/>
+              <stop offset="100%" stop-color="#475569"/>
+            </linearGradient>
+          </defs>
+
+          <!-- 1. 🤿 背部雙氣瓶 (戴夫風格經典金屬氣瓶) -->
+          <g class="oxygen-tank">
+            <!-- 氣瓶主體 -->
+            <rect x="37" y="16" width="10" height="26" rx="5" fill="url(#tankMetalGrad)" stroke="#0f172a" stroke-width="1.5"/>
+            <!-- 氣瓶固定束帶 -->
+            <rect x="36.5" y="22" width="11" height="3" fill="#fbbf24"/>
+            <rect x="36.5" y="32" width="11" height="3" fill="#fbbf24"/>
+            <!-- 氣閥蓋與黑膠軟管 -->
+            <circle cx="42" cy="14" r="2.5" fill="#0f172a"/>
+            <path d="M 42 14 Q 48 8, 36 6 Q 28 4, 28 12" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+          <!-- 2. 🦶 蛙鞋 (雙腳動態槳狀蛙鞋) -->
+          <g class="flipper flipper-left">
+            <path d="M 21 44 L 11 58 L 20 58 L 26 47 Z" fill="${finsColor}" stroke="${finsStroke}" stroke-width="1.5" stroke-linejoin="round"/>
+          </g>
+          <g class="flipper flipper-right">
+            <path d="M 33 44 L 43 58 L 34 58 L 28 47 Z" fill="${finsColor}" stroke="${finsStroke}" stroke-width="1.5" stroke-linejoin="round"/>
+          </g>
+
+          <!-- 3. 👕 Q版圓滾滾軀幹 (Dave Chubby Body) -->
+          <!-- 潛水服主體 -->
+          <path d="M 16 22 C 16 16, 40 16, 40 22 C 43 32, 41 42, 38 45 C 32 48, 22 48, 18 45 C 15 42, 13 32, 16 22 Z" fill="${bodyColor}" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- 胸前彩色肩帶與滾邊 -->
+          <path d="M 19 22 L 23 42 M 37 22 L 33 42" stroke="${suitAccent}" stroke-width="2.5" stroke-linecap="round"/>
+          
+          <!-- 4. 🧭 配重腰帶與壓力錶 -->
+          <rect x="17" y="39" width="22" height="4" fill="#0f172a" rx="1"/>
+          <!-- 金屬腰帶扣 -->
+          <rect x="26" y="38" width="4" height="6" fill="#fbbf24" stroke="#0f172a" stroke-width="1"/>
+          <!-- 胸前圓形氣壓錶 -->
+          <circle cx="28" cy="30" r="3.5" fill="#f8fafc" stroke="#0f172a" stroke-width="1.5"/>
+          <line x1="28" y1="30" x2="30" y2="28" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- 5. 🥽 頭部與精緻面罩 (無面部眼睛) -->
+          ${maskHeadSVG}
+
+          <!-- 6. 🔦 手持道具 -->
           ${handSVG}
+
+          <!-- 7. 🫧 擬真上升水泡 -->
           <g class="bubbles">
-             <circle cx="14" cy="18" r="1.5" fill="rgba(255,255,255,0.7)" class="bubble bubble-delay-1"/>
-             <circle cx="10" cy="12" r="1" fill="rgba(255,255,255,0.5)" class="bubble"/>
-             <circle cx="16" cy="6" r="2" fill="rgba(255,255,255,0.6)" class="bubble bubble-delay-2"/>
+             <circle cx="15" cy="18" r="1.8" fill="rgba(255,255,255,0.75)" class="bubble bubble-delay-1"/>
+             <circle cx="10" cy="12" r="1.2" fill="rgba(255,255,255,0.55)" class="bubble"/>
+             <circle cx="17" cy="6" r="2.4" fill="rgba(255,255,255,0.65)" class="bubble bubble-delay-2"/>
           </g>
         </svg>
       </div>
