@@ -105,7 +105,12 @@ body {
 .cloud {
   position: absolute;
   opacity: 0.15;
-  animation: none;
+  animation: cloudDrift linear infinite;
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(-150px); }
+  100% { transform: translateX(110vw); }
 }
 
 /* 🏖️ Layer 4: 高質感熱帶金沙灘與極細微透明水浪邊線 (z-index 20 置頂) */
@@ -213,12 +218,28 @@ body {
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: 2rem 1rem 4rem 1rem;
+  padding: 4rem 0.5rem 8rem 0.5rem;
   position: relative;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
   z-index: 30;
+  
+  /* 🗺️ Responsive zoom map to prevent horizontal overflow */
+  transform: scale(1.15);
+  transform-origin: center top;
+}
+
+@media (min-width: 480px) {
+  .iso-world-container {
+    transform: scale(1.35);
+  }
+}
+
+@media (min-width: 768px) {
+  .iso-world-container {
+    transform: scale(1.5);
+  }
 }
 
 /* 🗺️ Voyage Trail SVG Canvas */
@@ -312,13 +333,13 @@ body {
 
 /* Dramatic 100-step Ocean Voyage S-Curve Wave Offset Pattern (±120px amplitude) */
 .iso-row:nth-child(8n+1) { transform: translateX(0px); }
-.iso-row:nth-child(8n+2) { transform: translateX(70px); }
-.iso-row:nth-child(8n+3) { transform: translateX(120px); }
-.iso-row:nth-child(8n+4) { transform: translateX(70px); }
+.iso-row:nth-child(8n+2) { transform: translateX(45px); }
+.iso-row:nth-child(8n+3) { transform: translateX(80px); }
+.iso-row:nth-child(8n+4) { transform: translateX(45px); }
 .iso-row:nth-child(8n+5) { transform: translateX(0px); }
-.iso-row:nth-child(8n+6) { transform: translateX(-70px); }
-.iso-row:nth-child(8n+7) { transform: translateX(-120px); }
-.iso-row:nth-child(8n+0) { transform: translateX(-70px); }
+.iso-row:nth-child(8n+6) { transform: translateX(-45px); }
+.iso-row:nth-child(8n+7) { transform: translateX(-80px); }
+.iso-row:nth-child(8n+0) { transform: translateX(-45px); }
 
 /* Base Node */
 .adventure-node {
@@ -334,8 +355,8 @@ body {
 }
 
 .adventure-node:hover {
-  transform: none;
-  filter: brightness(1.2);
+  transform: translateY(2px);
+  filter: brightness(1.1);
 }
 
 /* Island Circle */
@@ -347,12 +368,21 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 3px solid rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   background: radial-gradient(circle at 35% 35%, #334155, #0f172a);
   box-shadow:
-    0 6px 20px rgba(0, 0, 0, 0.6),
+    0 8px 0 #020617,
+    0 14px 20px rgba(0, 0, 0, 0.6),
     inset 0 2px 6px rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
+  transform: translateY(-8px);
+}
+
+.adventure-node:hover .node-circle {
+  box-shadow:
+    0 4px 0 #020617,
+    0 8px 12px rgba(0, 0, 0, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
 }
 
 /* Node badges */
@@ -400,8 +430,15 @@ body {
   background: radial-gradient(circle at 35% 35%, #34d399, #047857);
   border-color: #a7f3d0;
   box-shadow:
-    0 6px 20px rgba(16, 185, 129, 0.6),
-    0 0 24px rgba(16, 185, 129, 0.3),
+    0 8px 0 #064e3b,
+    0 14px 20px rgba(16, 185, 129, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+
+.adventure-node.status-done:hover .node-circle {
+  box-shadow:
+    0 4px 0 #064e3b,
+    0 8px 12px rgba(16, 185, 129, 0.6),
     inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 
@@ -420,8 +457,15 @@ body {
   background: radial-gradient(circle at 35% 35%, #ef4444, #991b1b) !important;
   border-color: #fca5a5 !important;
   box-shadow:
-    0 6px 20px rgba(239, 68, 68, 0.6),
-    0 0 24px rgba(239, 68, 68, 0.4),
+    0 8px 0 #450a0a,
+    0 14px 20px rgba(239, 68, 68, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25) !important;
+}
+
+.adventure-node.status-failed:hover .node-circle {
+  box-shadow:
+    0 4px 0 #450a0a,
+    0 8px 12px rgba(239, 68, 68, 0.6),
     inset 0 2px 6px rgba(255, 255, 255, 0.25) !important;
 }
 
@@ -436,15 +480,22 @@ body {
   background: radial-gradient(circle at 35% 35%, #fde047, #ca8a04);
   border-color: #fef08a;
   box-shadow:
-    0 6px 24px rgba(245, 158, 11, 0.75),
-    0 0 40px rgba(245, 158, 11, 0.4),
+    0 8px 0 #713f12,
+    0 14px 24px rgba(245, 158, 11, 0.75),
     inset 0 2px 6px rgba(255, 255, 255, 0.3);
   animation: beaconPulse 2s ease-in-out infinite;
 }
 
+.adventure-node.status-current:hover .node-circle {
+  box-shadow:
+    0 4px 0 #713f12,
+    0 8px 12px rgba(245, 158, 11, 0.75),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3) !important;
+}
+
 @keyframes beaconPulse {
-  0%, 100% { box-shadow: 0 6px 24px rgba(245, 158, 11, 0.75), 0 0 40px rgba(245, 158, 11, 0.4); }
-  50% { box-shadow: 0 6px 32px rgba(245, 158, 11, 0.95), 0 0 56px rgba(245, 158, 11, 0.6); }
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 0 rgba(245, 158, 11, 0)); }
+  50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(245, 158, 11, 0.6)); }
 }
 
 /* ─── 🔒 Locked ─── */
@@ -452,6 +503,17 @@ body {
   background: radial-gradient(circle at 35% 35%, #475569, #1e293b);
   border-color: rgba(255, 255, 255, 0.2);
   opacity: 0.88;
+  box-shadow:
+    0 8px 0 #020617,
+    0 14px 15px rgba(0, 0, 0, 0.8),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.status-locked:hover .node-circle {
+  box-shadow:
+    0 4px 0 #020617,
+    0 8px 12px rgba(0, 0, 0, 0.8),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
 }
 
 /* ─── 🧭 Reward: Bottle / Compass ─── */
@@ -459,7 +521,15 @@ body {
   background: radial-gradient(circle at 35% 35%, #fde047, #b45309);
   border-color: #fef08a;
   box-shadow:
-    0 6px 20px rgba(245, 158, 11, 0.6),
+    0 8px 0 #713f12,
+    0 14px 20px rgba(245, 158, 11, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+
+.adventure-node.type-reward:hover .node-circle {
+  box-shadow:
+    0 4px 0 #713f12,
+    0 8px 12px rgba(245, 158, 11, 0.6),
     inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 .adventure-node.type-reward { width: 62px; height: 62px; min-width: 62px; min-height: 62px; }
@@ -469,7 +539,15 @@ body {
   background: radial-gradient(circle at 35% 35%, #a5b4fc, #4338ca);
   border-color: #e0e7ff;
   box-shadow:
-    0 6px 20px rgba(99, 102, 241, 0.6),
+    0 8px 0 #312e81,
+    0 14px 20px rgba(99, 102, 241, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+
+.adventure-node.type-challenge:hover .node-circle {
+  box-shadow:
+    0 4px 0 #312e81,
+    0 8px 12px rgba(99, 102, 241, 0.6),
     inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 .adventure-node.type-challenge { width: 62px; height: 62px; min-width: 62px; min-height: 62px; }
@@ -479,8 +557,15 @@ body {
   background: radial-gradient(circle at 35% 35%, #fb923c, #c2410c);
   border-color: #fed7aa;
   box-shadow:
-    0 4px 24px rgba(251, 146, 60, 0.6),
-    0 0 36px rgba(251, 146, 60, 0.3),
+    0 8px 0 #7c2d12,
+    0 14px 24px rgba(251, 146, 60, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.type-destination:hover .node-circle {
+  box-shadow:
+    0 4px 0 #7c2d12,
+    0 8px 12px rgba(251, 146, 60, 0.6),
     inset 0 2px 6px rgba(255, 255, 255, 0.2);
 }
 
@@ -488,6 +573,17 @@ body {
 .adventure-node.type-start .node-circle {
   background: radial-gradient(circle at 35% 35%, #67e8f9, #0891b2);
   border-color: #a5f3fc;
+  box-shadow:
+    0 8px 0 #164e63,
+    0 14px 20px rgba(8, 145, 178, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.type-start:hover .node-circle {
+  box-shadow:
+    0 4px 0 #164e63,
+    0 8px 12px rgba(8, 145, 178, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
 }
 
 /* ─── 🎖️ Achievement ─── */
@@ -495,8 +591,16 @@ body {
   background: radial-gradient(circle at 35% 35%, #fbbf24, #dc2626);
   border-color: #fde68a;
   box-shadow:
-    0 4px 20px rgba(234, 88, 12, 0.5),
-    0 0 32px rgba(234, 88, 12, 0.25);
+    0 8px 0 #7f1d1d,
+    0 14px 20px rgba(234, 88, 12, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.type-achievement:hover .node-circle {
+  box-shadow:
+    0 4px 0 #7f1d1d,
+    0 8px 12px rgba(234, 88, 12, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
 }
 
 /* Locked override for special types */
@@ -516,7 +620,7 @@ body {
    ⛵ GLOBAL NAVIGATING SAILBOAT TOKEN
    ============================================ */
 
-#globalSailingBoat {
+#globalDiver {
   position: absolute;
   z-index: 60;
   pointer-events: none;
@@ -529,12 +633,12 @@ body {
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45));
 }
 
-#globalSailingBoat.anchored-at-harbor {
+#globalDiver.anchored-at-harbor {
   z-index: 60;
   animation: harborSway 3.5s ease-in-out infinite alternate;
 }
 
-#globalSailingBoat.docked-at-node {
+#globalDiver.docked-at-node {
   animation: nodeRock 3s ease-in-out infinite alternate;
 }
 
@@ -553,6 +657,45 @@ body {
   width: 48px;
   height: 52px;
   position: relative;
+  animation: diverFloat 3s ease-in-out infinite;
+}
+
+@keyframes diverFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* 🐟 隨行小魚夥伴動畫 */
+.companion-pet {
+  position: absolute;
+  right: -28px;
+  top: 6px;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  z-index: 25;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  animation: petSwim 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes petSwim {
+  0% { transform: translateY(0) rotate(-6deg) scale(1); }
+  50% { transform: translateY(-9px) rotate(6deg) scale(1.08); }
+  100% { transform: translateY(3px) rotate(-3deg) scale(0.96); }
+}
+
+.bubble {
+  animation: bubbleRise 2s ease-in infinite;
+  transform-origin: center;
+}
+
+.bubble-delay-1 { animation-delay: 0.6s; }
+.bubble-delay-2 { animation-delay: 1.2s; }
+
+@keyframes bubbleRise {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(-24px) scale(1.5); }
 }
 
 .character-shadow {
@@ -562,10 +705,40 @@ body {
   background: rgba(0, 0, 0, 0.3);
   filter: blur(3px);
   margin-top: -3px;
+  animation: shadowPulse 3s ease-in-out infinite;
 }
 
-@keyframes boatRock {
-  0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+@keyframes shadowPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.8); opacity: 0.6; }
+}
+
+/* ============================================
+   🏊‍♂️ SWIMMING ANIMATION (when moving)
+   ============================================ */
+
+.is-swimming .character-body {
+  animation: swimBob 0.6s ease-in-out infinite alternate !important;
+}
+
+.is-swimming .flipper-left {
+  animation: flipperKick 0.5s ease-in-out infinite alternate;
+  transform-origin: 18px 38px;
+}
+
+.is-swimming .flipper-right {
+  animation: flipperKick 0.5s ease-in-out infinite alternate-reverse;
+  transform-origin: 34px 38px;
+}
+
+@keyframes swimBob {
+  0% { transform: translateY(0) rotate(5deg); }
+  100% { transform: translateY(-4px) rotate(-3deg); }
+}
+
+@keyframes flipperKick {
+  0% { transform: rotate(-25deg); }
+  100% { transform: rotate(25deg); }
 }
 
 /* ============================================
@@ -1003,3 +1176,122 @@ body.modal-open .sparkle-star {
   animation: fogRevealNode 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* ============================================
+   📜 QUEST BOARD & 🪙 SHOP (NEW)
+   ============================================ */
+
+.glassmorphism-board {
+  background: rgba(19, 27, 46, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(232, 168, 152, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.coin-popup {
+  position: fixed;
+  color: #fbbf24;
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 10px rgba(245, 158, 11, 0.6);
+  z-index: 9999;
+  pointer-events: none;
+  animation: coinFloatUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes coinFloatUp {
+  0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; }
+  20% { transform: translate(-50%, -30px) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -80px) scale(1); opacity: 0; }
+}
+
+.wallet-bounce {
+  animation: walletBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes walletBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); color: #fbbf24; }
+  100% { transform: scale(1); }
+}
+
+.coin-icon {
+  display: inline-block;
+  animation: coinShine 3s infinite ease-in-out;
+}
+
+@keyframes coinShine {
+  0%, 100% { filter: brightness(1); transform: rotateY(0deg); }
+  50% { filter: brightness(1.3); transform: rotateY(15deg); }
+}
+
+/* 💬 潛水員對話泡泡特效 */
+.speech-bubble {
+  position: absolute;
+  bottom: calc(100% + 5px); /* Positioned right above the diver */
+  left: 50%;
+  transform: translateX(calc(-50% + var(--bubble-shift, 0px))) translateY(10px) scale(0.8);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(251, 191, 36, 0.4); /* amber-400 tint */
+  color: #1e293b; /* slate-800 */
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: normal;
+  width: 110px; /* Force a fixed width so it wraps nicely */
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 50;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes diverAction1 {
+  0% { transform: scale(1.5) translateY(-5px); }
+  25% { transform: scale(1.5) translateY(-40px) rotate(-10deg); }
+  50% { transform: scale(1.5) translateY(-10px) rotate(5deg); }
+  75% { transform: scale(1.5) translateY(-30px) rotate(-5deg); }
+  100% { transform: scale(1.5) translateY(-5px); }
+}
+
+@keyframes diverAction2 {
+  0% { transform: scale(1.5) translateY(-5px) rotate(0deg); }
+  50% { transform: scale(1.5) translateY(-50px) rotate(180deg); }
+  100% { transform: scale(1.5) translateY(-5px) rotate(360deg); }
+}
+
+@keyframes diverAction3 {
+  0% { transform: scale(1.5) translateY(-5px) translateX(0); }
+  25% { transform: scale(1.5) translateY(-20px) translateX(-30px) rotate(-20deg); }
+  50% { transform: scale(1.5) translateY(-5px) translateX(0) rotate(0deg); }
+  75% { transform: scale(1.5) translateY(-20px) translateX(30px) rotate(20deg); }
+  100% { transform: scale(1.5) translateY(-5px) translateX(0); }
+}
+
+.diver-action-1 { animation: diverAction1 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.diver-action-2 { animation: diverAction2 1.2s ease-in-out; }
+.diver-action-3 { animation: diverAction3 1.2s ease-in-out; }
+
+/* 泡泡的小尾巴 */
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: calc(50% - var(--bubble-shift, 0px));
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border-right: 1px solid rgba(251, 191, 36, 0.4);
+  border-bottom: 1px solid rgba(251, 191, 36, 0.4);
+}
+
+.speech-bubble.show-bubble {
+  opacity: 1;
+  transform: translateX(calc(-50% + var(--bubble-shift, 0px))) translateY(0) scale(1);
+}

@@ -309,124 +309,90 @@ const BOSS_QUIZ_QUESTIONS = [
 const REWARD_KNOWLEDGE_POOL = [
   {
     title: "🎬 愛在黎明破曉時 (Before Sunrise)",
-    creatureName: "橘光小丑魚 🐟",
     desc: "「我相信如果世上真的有神，神不會在你我身上，而是在我們之間的這點空間裡。」<br><br>【啟發】：展現脆弱性、深度對話的藝術、專注當下的互動。"
   },
   {
     title: "🎬 真愛每一天 (About Time)",
-    creatureName: "藍倒吊極速魚 🐠",
     desc: "「生活是一連串的選擇，而最重要的是你選擇了誰陪你一起度過。」<br><br>【啟發】：接受約會中的不完美、專注當下的心態、長期關係的平淡與幸福。"
   },
   {
     title: "🎬 我的失憶女友 (50 First Dates)",
-    creatureName: "粉紅萌萌章魚 🐙",
     desc: "「沒關係，我明天會再讓你愛上我一次。」<br><br>【啟發】：長期關係的經營（愛是每天的選擇與行動，不是一次性的追求）。"
   },
   {
     title: "🎬 全民情聖 (Hitch)",
-    creatureName: "綠海龜守護者 🐢",
     desc: "「人生的意義不在於你呼吸了多少次，而在於那些讓你無法呼吸的瞬間。」<br><br>【啟發】：打破招式迷思（真誠勝過套路）、創造張力與情緒波動、約會的基本自信心態。"
   },
   {
     title: "🎬 我們的愛情一言難盡 (Newness)",
-    creatureName: "溫柔斑點鯨鯊 🦈",
     desc: "「我們都有缺陷，但最難的是找到一個願意看著你的缺陷不逃跑的人。」<br><br>【啟發】：現代交友軟體的焦慮、親密關係中的陰暗面與接納、進入長期穩定關係的真實代價。"
   },
   {
     title: "🎬 戀夏500日 (500 Days of Summer)",
-    creatureName: "夢幻閃耀水母 🪼",
     desc: "「不要因為某個女孩喜歡和你一樣奇怪的東西，就認定她是你的靈魂伴侶。」<br><br>【啟發】：破除真命天女症、區分「想像」與「真實」、失戀後的重建與成長。"
   },
   {
     title: "🎬 派特的幸福劇本 (Silver Linings Playbook)",
-    creatureName: "氣鼓鼓刺河豚 🐡",
     desc: "「愛就是找到那個即使看穿了你的破碎，依然覺得你美麗的人。」<br><br>【啟發】：展現真實自我、接納脆弱、共同成長與互相治癒。"
   },
   {
     title: "🎬 雲端情人 (Her)",
-    creatureName: "發光深海烏賊 🦑",
     desc: "「謝謝你教會我如何去愛，因為你，我才成為現在的我。」<br><br>【啟發】：情緒價值與共鳴、處理孤獨感、理解親密關係的本質。"
   },
   {
     title: "🎬 真愛挑日子 (One Day)",
-    creatureName: "躍空歡樂海豚 🐬",
     desc: "「只要你還願意對我笑，我就覺得這世界還不算太糟。」<br><br>【啟發】：時機（Timing）的重要性、從朋友到戀人的界線、把握當下不留遺憾。"
   },
   {
     title: "🎬 樂來越愛你 (La La Land)",
-    creatureName: "呆萌圓圓海豹 🦭",
     desc: "「有些人走進你的生命，是為了幫助你成為更好的自己，而不是為了永遠留下。」<br><br>【啟發】：自我價值與關係的平衡、成熟地看待分手、感謝過去的戀情。"
   },
   {
     title: "🎬 王牌冤家 (Eternal Sunshine of the Spotless Mind)",
-    creatureName: "璀璨珍珠海貝 🦪",
     desc: "「如果你可以把某個人從記憶中抹去，這是否意味著你從未愛過他？」<br><br>【啟發】：面對失戀的痛苦、成長需要接納受傷、勇敢去愛的本質。"
   },
   {
     title: "🎬 手札情緣 (The Notebook)",
-    creatureName: "粉紫彩虹海螺 🐚",
     desc: "「我不是什麼大人物，只是個凡人。但我全心全意地愛過另一個人，對我而言，這就足夠了。」<br><br>【啟發】：長期關係的承諾、克服現實阻礙、純粹的激情與付出。"
   },
   {
     title: "🎬 熟男型不型 (Crazy, Stupid, Love)",
-    creatureName: "櫻花水晶甜蝦 🦐",
     desc: "「女人是會被傾聽者吸引的。」<br><br>【啟發】：建立高價值展示與自信、招式與真誠的平衡、破除「靈魂伴侶」的浪漫迷思。"
   },
   {
     title: "🎬 曼哈頓戀習曲 (Begin Again)",
-    creatureName: "霸氣波士頓龍蝦 🦞",
     desc: "「我們都是迷失的星星，試圖點亮黑暗。」<br><br>【啟發】：失戀的修復、尋找個人熱情（高價值展示）、不強求結果的關係。"
   },
   {
     title: "🎬 新娘百分百 (Notting Hill)",
-    creatureName: "橫行霸道小螃蟹 🦀",
     desc: "「你不可能永遠躲在電影的幻想裡，有時候你必須勇敢面對現實的愛情。」<br><br>【啟發】：剝除對方的身分光環、真誠展現脆弱、勇敢爭取所愛。"
   },
   {
     title: "🎬 鐵達尼號 (Titanic)",
-    creatureName: "彩虹七彩珊瑚 🪸",
     desc: "「贏得這張船票，是我一生中最美好的事，因為它讓我遇見了妳。」<br><br>【啟發】：突破世俗眼光、愛情帶來的自我覺醒、讓每一天都過得有意義。"
   },
   {
     title: "🎬 傲慢與偏見 (Pride & Prejudice)",
-    creatureName: "疾速飛天飛魚 🌊",
     desc: "「我們的傲慢與偏見，差點讓我們錯過了彼此。」<br><br>【啟發】：放下防備機制、不以第一印象評斷人、在關係中承認自己的錯誤。"
   },
   {
     title: "🎬 愛在日落巴黎時 (Before Sunset)",
-    creatureName: "金黃五角海星 🌟",
     desc: "「即使只是和你坐在一起聊天，也比世界上任何事情都來得有意義。」<br><br>【啟發】：成熟的情感交流、面對遺憾與現實、高質量的思想碰撞與吸引。"
   },
   {
     title: "🎬 愛情藥不藥 (Love & Other Drugs)",
-    creatureName: "翻車悠閒曼波魚 🐡",
     desc: "「我愛你，不是因為你完美，而是儘管你不完美，我依然選擇你。」<br><br>【啟發】：從外在吸引過渡到深層羈絆、接納伴侶的缺陷與脆弱、親密關係中的責任感。"
-  },
-  {
-    title: "🎬 P.S. 我愛你 (P.S. I Love You)",
-    creatureName: "優雅黃金海馬 🐲",
-    desc: "「留住愛最美的方式，是讓自己勇敢迎向沒有我的明天。」<br><br>【啟發】：告別過往悲傷、勇敢重拾愛人的能力、學會放手與祝福。"
   }
 ];
 
 // 🎯 15 個實戰輕挑戰庫
-const CHALLENGE_BOSS_POOL = [
-  { title: "🎯 交友軟體開場白實戰", desc: "對方自介特別說「不要只回安安你好」，你能展現觀察力並用一句話讓她願意回覆嗎？" },
-  { title: "🎯 玩咖框架破解術", desc: "對方半開玩笑說你看起來像玩咖，你能用幽默化解並維持高價值框架嗎？" },
-  { title: "🎯 邀約被婉拒應對", desc: "提出邀約被說「還不熟」，你能撤回壓力、展現無需求感並保持關係繼續嗎？" },
-  { title: "🎯 冷場短句處理術", desc: "對方連續三次回覆「哈哈」「是喔」「對啊」，你能識別信號並做出正確回應嗎？" },
-  { title: "🎯 回覆節奏校準挑戰", desc: "對方半天回一次，你的回覆節奏怎麼抓才不扣分、展現豐富生活感？" },
-  { title: "🎯 傾聽前任抱怨框架", desc: "對方開始大肆抱怨前任，你能當有界線的傾聽者並提供情緒價值嗎？" },
-  { title: "🎯 臨時爽約應對術", desc: "約好週末見面，對方在前一天說要加班取消，你能展現同理心並維持好感嗎？" },
-  { title: "🎯 消失後突然復出處理", desc: "曖昧期對方突然不回訊息，幾天後又自然打招呼，你能情緒穩定地應對嗎？" },
-  { title: "🎯 吸引力底層邏輯測驗", desc: "女生最終選擇跟你在一起，最關鍵的核心原因是什麼？測試你的兩性觀念。" },
-  { title: "🎯 開場白目的釐清測驗", desc: "搭訕或配對的第一句話，其最主要的目的究竟是什麼？打破過高的心理負擔。" },
-  { title: "🎯 真誠三在乎原則測驗", desc: "高情商溝通的「真誠三在乎」原則，你能正確辨別哪一個不屬於其中嗎？" },
-  { title: "🎯 模糊邀約話術識別", desc: "為了降低對方防備心的「模糊邀約」話術，你能從四個選項中選出最正確的用法嗎？" },
-  { title: "🎯 初期聊天核心目的", desc: "初期跟女生聊天最核心的目的是什麼？釐清心態，才能聊得自然無壓力。" },
-  { title: "🎯 冷讀術技巧識別", desc: "你能從對話範例中辨認出哪一句運用了「冷讀術」的技巧嗎？" },
-  { title: "🎯 正妹保護色理解測驗", desc: "剛認識條件好的女生時對方表現冷淡，你知道最主要的原因是什麼嗎？" }
-];
+const CHALLENGE_BOSS_POOL = Array.from({ length: 15 }, (_, i) => {
+  const pad = String(i + 1).padStart(2, '0');
+  return {
+    title: `🎯 實戰輕挑戰 ${pad}`,
+    desc: `(待填寫免寫字行動指令 ${pad})`
+  };
+});
 
 // ⛵ 動態生成 100 格地圖 (起點 + 66 作業 + 19 小知識 + 15 輕挑戰 = 100 格)
 function generate100NodesRoadmap() {
@@ -530,8 +496,7 @@ function generate100NodesRoadmap() {
 let customRoadmapNodes = generate100NodesRoadmap();
 
 // ====== Google Sheets GAS 串接設定 ======
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxX_RlKz1e3k4U-u4q4rx8ipXDHSbPn_35KyXGh1NSYz1rr2OPdX92Y6r-nuNa04r3NQg/exec";
-const SHEET_TAB_NAME = "網站學習歷程"; // 固定分頁名稱，GAS 會自動在試算表中尋找此分頁
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxX_RlKz1e3k4U-u4q4rx8ipXDHSbPn_35KyXGh1NSYz1rr2OPdX92Y6r-nuNa04r3NQg/exec"; // 請在此填入中央 Router API 網址
 
 function getOrInitializeSheetId() {
   return localStorage.getItem("helpMe_sheetId") || "";
@@ -557,13 +522,13 @@ let silverCoins = parseInt(localStorage.getItem("silverCoins") || "0");
 let unlockedSkins = JSON.parse(localStorage.getItem("unlockedSkins") || '["raft"]');
 let equippedSkin = localStorage.getItem("equippedSkin") || "raft";
 
-const DIVER_PRICES = {
+const BOAT_PRICES = {
   rookie: 0,
   tech: 100,
   royal: 300,
   camo: 500
 };
-const DIVER_NAMES = {
+const BOAT_NAMES = {
   rookie: "新手潛水員",
   tech: "科技潛水員",
   royal: "皇家潛水員",
@@ -823,7 +788,7 @@ function spawnCelebrationParticles(nodeElement) {
   }
 }
 
-// ponytail: 根據完成的 OKR 數量，精確計算潛水員在地圖 100 格中對應的實際節點索引
+// ponytail: 根據完成的 OKR 數量，精確計算小船在地圖 100 格中對應的實際節點索引
 function getStandingIndexFromData() {
   const okrs = currentData.okr || [];
   let completedCount = 0;
@@ -977,9 +942,9 @@ function render2DIsometricMap() {
   setTimeout(() => {
     drawGlobalContinuousTrail();
     if (hasSailedToProgress && currentCharacterTileId) {
-      repositionDiverToNode(currentCharacterTileId);
+      repositionBoatToNode(currentCharacterTileId);
     } else {
-      repositionDiverToNode(currentCharacterTileId);
+      repositionBoatToNode(currentCharacterTileId);
     }
   }, 100);
 }
@@ -1031,7 +996,7 @@ function createSingleNodeRowElement(container, node, idx, currentStandingIndex) 
   return rowWrap;
 }
 
-// ☁️ 方案 A 核心：動態揭露迷霧（當潛水員前進時，永遠保持前面 4 格視野，迷霧向上消散推開）
+// ☁️ 方案 A 核心：動態揭露迷霧（當小船前進時，永遠保持前面 4 格視野，迷霧向上消散推開）
 function updateMapFogVisibility(currentStandingIndex) {
   const container = document.getElementById("isoWorldContainer");
   if (!container) return;
@@ -1082,15 +1047,15 @@ function updateMapFogVisibility(currentStandingIndex) {
 
 let hasSailedToProgress = false;
 
-// 🤿 初始化全域潛水員 Token (預設錨定在最底部的港口沙灘處)
-function initGlobalDiver() {
+// ⛵ 初始化全域帆船小船 Token (預設錨定在最底部的港口沙灘處)
+function initGlobalSailingBoat() {
   const container = document.getElementById("isoWorldContainer");
   if (!container) return null;
 
-  let boat = document.getElementById("globalDiver");
+  let boat = document.getElementById("globalSailingBoat");
   if (!boat) {
     boat = document.createElement("div");
-    boat.id = "globalDiver";
+    boat.id = "globalSailingBoat";
     boat.className = "anchored-at-harbor";
     boat.innerHTML = getCharacterSVG();
     container.appendChild(boat);
@@ -1104,25 +1069,23 @@ function initGlobalDiver() {
   return boat;
 }
 
-// 🤿 重繪地圖時鎖定潛水員位置（靜態靠岸，不觸發重新起航或跑回沙灘）
-function repositionDiverToNode(nodeId) {
+// ⛵ 重繪地圖時鎖定小船位置（靜態靠岸，不觸發重新起航或跑回沙灘）
+function repositionBoatToNode(nodeId) {
   const container = document.getElementById("isoWorldContainer");
   const targetCube = document.getElementById(`iso-cube-${nodeId}`);
-  let boat = document.getElementById("globalDiver");
+  let boat = document.getElementById("globalSailingBoat");
 
   if (!container || !targetCube) return;
-  if (!boat) boat = initGlobalDiver();
+  if (!boat) boat = initGlobalSailingBoat();
   
   const bubble = document.getElementById("diverSpeechBubble");
   if (bubble) bubble.classList.remove("show-bubble");
 
-  // 使用 getBoundingClientRect 拿到真實螢幕座標，再換算回容器的未縮放座標系
-  const containerRect = container.getBoundingClientRect();
-  const cubeRect = targetCube.getBoundingClientRect();
-  const scale = containerRect.width / container.offsetWidth || 1;
+  const rowWrap = targetCube.parentElement;
+  const sOffset = parseFloat(rowWrap.style.getPropertyValue('--s-offset-x')) || 0;
 
-  const targetX = (cubeRect.left - containerRect.left + cubeRect.width / 2) / scale;
-  const targetY = (cubeRect.top - containerRect.top + cubeRect.height / 2) / scale;
+  const targetX = rowWrap.offsetLeft + targetCube.offsetLeft + (targetCube.offsetWidth / 2) + sOffset - 45;
+  const targetY = rowWrap.offsetTop + targetCube.offsetTop + 20;
 
   boat.style.transition = "none";
   boat.classList.remove("anchored-at-harbor");
@@ -1131,29 +1094,28 @@ function repositionDiverToNode(nodeId) {
   boat.style.top = `${targetY}px`;
 }
 
-// 🤿 潛水員動態移動：依距離動態計算滑行時間（越遠跑越久），展現極致濕滑推進
-function swimDiverToProgressNode(nodeId, onArrivalCallback) {
+// ⛵ 小船動態起航：依距離動態計算滑行時間（越遠跑越久），展現極致濕滑推進
+function sailBoatToProgressNode(nodeId, onArrivalCallback) {
   const container = document.getElementById("isoWorldContainer");
   const targetCube = document.getElementById(`iso-cube-${nodeId}`);
-  let boat = document.getElementById("globalDiver");
+  let boat = document.getElementById("globalSailingBoat");
 
   if (!container || !targetCube) {
     if (typeof onArrivalCallback === "function") onArrivalCallback();
     return;
   }
-  if (!boat) boat = initGlobalDiver();
+  if (!boat) boat = initGlobalSailingBoat();
   
   const bubble = document.getElementById("diverSpeechBubble");
   if (bubble) bubble.classList.remove("show-bubble");
 
   hasSailedToProgress = true;
 
-  const containerRect = container.getBoundingClientRect();
-  const cubeRect = targetCube.getBoundingClientRect();
-  const scale = containerRect.width / container.offsetWidth || 1;
+  const rowWrap = targetCube.parentElement;
+  const sOffset = parseFloat(rowWrap.style.getPropertyValue('--s-offset-x')) || 0;
 
-  const targetX = (cubeRect.left - containerRect.left + cubeRect.width / 2) / scale;
-  const targetY = (cubeRect.top - containerRect.top + cubeRect.height / 2) / scale;
+  const targetX = rowWrap.offsetLeft + targetCube.offsetLeft + (targetCube.offsetWidth / 2) + sOffset - 45;
+  const targetY = rowWrap.offsetTop + targetCube.offsetTop + 20;
 
   const currentX = parseFloat(boat.style.left) || (container.offsetWidth / 2);
   const currentY = parseFloat(boat.style.top) || (container.offsetHeight - 80);
@@ -1173,7 +1135,7 @@ function swimDiverToProgressNode(nodeId, onArrivalCallback) {
     boat.style.top = `${targetY}px`;
   });
 
-  // 當潛水員平安靠岸目的地後執行 Callback
+  // 當小船平安靠岸目的地後執行 Callback
   setTimeout(() => {
     boat.classList.remove("is-swimming");
     if (typeof onArrivalCallback === "function") onArrivalCallback();
@@ -1307,42 +1269,18 @@ window.onload = function() {
 async function fetchDataFromGoogleSheet() {
   if (!GAS_WEB_APP_URL || !currentSheetId) return;
 
-  const text = document.getElementById("connectionBadgeText");
-  const dot  = document.getElementById("connectionBadgeDot");
-  const btn  = document.getElementById("connectionBadgeBtn");
-
-  const setConnected = () => {
-    if (text) text.innerText = "已連線專屬作業本";
-    if (dot)  dot.className  = "w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full";
-    if (btn)  btn.className  = "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all active:scale-95 shrink-0 shadow-sm";
-  };
-
-  const setFailed = () => {
-    if (text) text.innerText = "連線失敗，使用本地資料";
-    if (dot)  dot.className  = "w-1.5 h-1.5 mr-1.5 bg-red-400 rounded-full";
-    if (btn)  btn.className  = "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-all active:scale-95 shrink-0 shadow-sm";
-  };
-
   try {
-    const url = `${GAS_WEB_APP_URL}?action=getTasks&sheetId=${currentSheetId}&sheetName=${encodeURIComponent(SHEET_TAB_NAME)}`;
+    const url = `${GAS_WEB_APP_URL}?action=getTasks&sheetId=${currentSheetId}`;
     const response = await fetch(url);
     const json = await response.json();
 
     if (json.status === "success" && json.data) {
-      setConnected();
       const okrs = currentData.okr || [];
       let hasChanges = false;
 
       // 遍歷雲端回傳的最新狀態，覆蓋本地狀態
-      // GAS 儲存的 taskName 帶有編號前綴（如 "01. 理想感情目標"），需要做對應比對
       json.data.forEach(cloudTask => {
-        // 先嘗試完整比對，再嘗試去掉前綴比對
-        let localTask = okrs.find(item => item.keyResult === cloudTask.taskName);
-        if (!localTask) {
-          // 去掉 "01. " 這種前綴後再比對
-          const nameWithoutNum = cloudTask.taskName.replace(/^\d+\.\s*/, "");
-          localTask = okrs.find(item => item.keyResult === nameWithoutNum);
-        }
+        const localTask = okrs.find(item => item.keyResult === cloudTask.taskName);
         if (localTask) {
           if (localTask.progress !== cloudTask.progressStatus || localTask.userContent !== cloudTask.content) {
              localTask.progress = cloudTask.progressStatus;
@@ -1352,42 +1290,16 @@ async function fetchDataFromGoogleSheet() {
         }
       });
 
-      // 檢查本機是否有「已完成/有寫內容」但雲端尚未擁有的作業，有的話自動整批同步上傳補齊
-      const tasksToUpload = [];
-      okrs.forEach(localTask => {
-        if (localTask.userContent || (localTask.progress && localTask.progress !== "未完成")) {
-          const cloudHasIt = json.data.some(ct => {
-            const nameWithoutNum = ct.taskName.replace(/^\d+\.\s*/, "");
-            return ct.taskName === localTask.keyResult || nameWithoutNum === localTask.keyResult;
-          });
-          if (!cloudHasIt) {
-            const numberedTaskName = `${String(localTask.rowNum || 1).padStart(2, '0')}. ${localTask.keyResult}`;
-            tasksToUpload.push({
-              taskName: numberedTaskName,
-              progressStatus: localTask.progress || "✔️",
-              content: localTask.userContent || ""
-            });
-          }
-        }
-      });
-
-      if (tasksToUpload.length > 0) {
-        console.log(`發現 ${tasksToUpload.length} 筆本機暫存作業未上傳雲端，正在自動整批同步...`);
-        batchSyncDataToGoogleSheet(tasksToUpload);
-      }
-
       if (hasChanges) {
         saveDataToStorage();
         console.log("已從 Google Sheets 成功還原進度！");
+        // 如果有變化，強制小船重置動畫起點，並重新渲染整個畫面
         hasSailedToProgress = false;
         renderUI();
       }
-    } else {
-      setFailed();
     }
   } catch (err) {
     console.error("Fetch from GAS error", err);
-    setFailed();
   }
 }
 
@@ -1396,29 +1308,6 @@ function saveDataToStorage() {
   localStorage.setItem("helpMeDashboardData", JSON.stringify(currentData));
   localStorage.setItem("goldCoins", goldCoins);
   localStorage.setItem("silverCoins", silverCoins);
-}
-
-async function batchSyncDataToGoogleSheet(tasks) {
-  if (!GAS_WEB_APP_URL || !currentSheetId || !tasks || tasks.length === 0) return;
-
-  try {
-    const payload = {
-      action: "batchSaveTasks",
-      sheetId: currentSheetId,
-      sheetName: SHEET_TAB_NAME,
-      tasks: tasks
-    };
-
-    fetch(GAS_WEB_APP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    }).then(r => r.json()).then(res => {
-      console.log(`整批作業 (${tasks.length} 筆) 已成功同步至 Google Sheets:`, res);
-    }).catch(err => console.error("整批背景上傳失敗:", err));
-  } catch (err) {
-    console.error("GAS Batch Sync error", err);
-  }
 }
 
 async function syncDataToGoogleSheet(taskName, progressStatus, content) {
@@ -1431,7 +1320,6 @@ async function syncDataToGoogleSheet(taskName, progressStatus, content) {
     const payload = {
       action: "saveTask",
       sheetId: currentSheetId,
-      sheetName: SHEET_TAB_NAME,
       taskName: taskName,
       progressStatus: progressStatus,
       content: content
@@ -1575,7 +1463,7 @@ function showBossQuizSuccess() {
     <div class="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-center space-y-2">
       <div class="text-3xl flex items-center justify-center gap-2"><span class="w-8 h-8 inline-block" data-icon="swords"></span>➔<span class="w-8 h-8 inline-block" data-icon="trophy"></span></div>
       <h4 class="font-bold text-sm text-emerald-300">成就解鎖！高情商應對已歸檔</h4>
-      <p class="text-xs text-brand-beige/70">潛水員將佇立於當前關卡，等待你完成下一個作業！</p>
+      <p class="text-xs text-brand-beige/70">小船將佇立於當前關卡，等待你完成下一個作業！</p>
     </div>
   `;
 
@@ -1832,48 +1720,21 @@ function selectDiverSkin(skinId) {
     saveDataToStorage();
     
     // 即時更新地圖上的潛水員模型
-    const boat = document.getElementById("globalDiver");
+    const boat = document.getElementById("globalSailingBoat");
     if (boat) {
       boat.innerHTML = getCharacterSVG();
     }
   }
 }
 
-// 🤿 SVG/Emoji 產生器 (依據裝備及隨行夥伴動態繪製)
+// 🤿 SVG/Emoji 產生器
 function getCharacterSVG() {
-  const bodyColor = equippedBody === "body_tech" ? "#0284c7" : (equippedBody === "body_royal" ? "#b45309" : (equippedBody === "body_duck" ? "#facc15" : "#1e293b"));
-  const helmetColor = equippedBody === "body_royal" ? "#fbbf24" : (equippedBody === "body_duck" ? "#fef08a" : "#38bdf8");
-
-  const handSVG = equippedHand === "hand_flashlight" ? `<path d="M 34 22 L 44 20 L 44 26 L 34 24 Z" fill="#fbbf24"/><circle cx="44" cy="23" r="3" fill="#fff" filter="drop-shadow(0 0 4px #fbbf24)"/>` :
-                  (equippedHand === "hand_camera" ? `<rect x="32" y="20" width="10" height="8" rx="2" fill="#e2e8f0" stroke="#0f172a"/><circle cx="37" cy="24" r="2.5" fill="#38bdf8"/>` :
-                  (equippedHand === "hand_trident" ? `<path d="M 34 28 L 34 8 M 31 12 L 31 8 M 37 12 L 37 8 M 30 8 L 38 8" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>` :
-                  (equippedHand === "hand_net" ? `<path d="M 33 22 L 41 18 L 41 28 Z" fill="rgba(255,255,255,0.3)" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="2,2"/>` : "")));
-
-  const finsColor = equippedFins === "fins_whale" ? "#0ea5e9" : (equippedFins === "fins_neon" ? "#a855f7" : (equippedFins === "fins_gold" ? "#fbbf24" : "#f59e0b"));
-
-  const petHtml = (equippedPet !== "none" && PET_SVGS[equippedPet]) ? `<div class="companion-pet">${PET_SVGS[equippedPet]}</div>` : "";
-
+  const skin = equippedSkin || 'rookie';
   return `
     <div class="character-token relative cursor-pointer pointer-events-auto" onclick="talkAndSwim()" style="transform: scale(1.5) translateY(-5px); transform-origin: bottom center; z-index: 20;">
       <div id="diverSpeechBubble" class="speech-bubble"></div>
-      ${petHtml}
       <div class="character-body">
-        <svg viewBox="0 0 54 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="32" y="14" width="8" height="24" rx="4" fill="#64748b" stroke="#334155" stroke-width="2"/>
-          <path d="M40 18 Q 46 12, 34 8 Q 22 4, 18 16" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
-          <rect x="18" y="16" width="16" height="22" rx="6" fill="${bodyColor}" stroke="#0f172a" stroke-width="2"/>
-          <g class="flipper flipper-left"><path d="M 18 38 L 10 48 L 16 48 L 22 40 Z" fill="${finsColor}" stroke="#b45309" stroke-width="1.5"/></g>
-          <g class="flipper flipper-right"><path d="M 34 38 L 42 48 L 36 48 L 30 40 Z" fill="${finsColor}" stroke="#b45309" stroke-width="1.5"/></g>
-          <circle cx="26" cy="16" r="11" fill="${bodyColor}"/>
-          <rect x="18" y="12" width="14" height="8" rx="4" fill="${helmetColor}" stroke="#0f172a" stroke-width="1.5"/>
-          <path d="M 20 14 L 28 14" stroke="#e0f2fe" stroke-width="1.5" stroke-linecap="round"/>
-          ${handSVG}
-          <g class="bubbles">
-             <circle cx="14" cy="18" r="1.5" fill="rgba(255,255,255,0.7)" class="bubble bubble-delay-1"/>
-             <circle cx="10" cy="12" r="1" fill="rgba(255,255,255,0.5)" class="bubble"/>
-             <circle cx="16" cy="6" r="2" fill="rgba(255,255,255,0.6)" class="bubble bubble-delay-2"/>
-          </g>
-        </svg>
+        ${DIVER_SKINS[skin] || DIVER_SKINS['rookie']}
       </div>
       <div class="character-shadow"></div>
     </div>
@@ -2078,231 +1939,91 @@ function closeSkillTreeModal() {
   setModalState(false);
 }
 
-// 🪙 商店分頁與裝備選單狀態
-let activeShopTab = "skins"; // "skins" | "pets"
-
-let equippedBody = localStorage.getItem("equippedBody") || "body_rookie";
-let equippedHand = localStorage.getItem("equippedHand") || "none";
-let equippedFins = localStorage.getItem("equippedFins") || "fins_classic";
-let equippedPet = localStorage.getItem("equippedPet") || "none";
-
-let unlockedItems = JSON.parse(localStorage.getItem("unlockedItems") || '["body_rookie", "fins_classic"]');
-
-const SHOP_SKINS_DATA = [
-  // 🤿 身體服飾 (4款)
-  { id: "body_rookie", cat: "body", catName: "🤿 身體裝備", name: "新手經典潛水服", price: 0, icon: "🤿", desc: "經典藍黑配色的入門潛水服" },
-  { id: "body_tech", cat: "body", catName: "🤿 身體裝備", name: "科技極速深藍服", price: 5, icon: "⚡", desc: "流線型高科技深海戰服" },
-  { id: "body_royal", cat: "body", catName: "🤿 身體裝備", name: "皇家復古黃銅服", price: 5, icon: "👑", desc: "重型黃銅尊爵頭盔防壓服" },
-  { id: "body_duck", cat: "body", catName: "🤿 身體裝備", name: "歡樂黃色小鴨服", price: 5, icon: "🐥", desc: "親和力極高的小鴨造型潛水服" },
-
-  // 🔦 手持裝備 (4款)
-  { id: "hand_flashlight", cat: "hand", catName: "🔦 手持裝備", name: "探險防水手電筒", price: 5, icon: "🔦", desc: "照亮深海與對話邊界的防照手電筒" },
-  { id: "hand_camera", cat: "hand", catName: "🔦 手持裝備", name: "深海防水相機", price: 5, icon: "📷", desc: "記錄心動瞬間與約會回憶的相機" },
-  { id: "hand_trident", cat: "hand", catName: "🔦 手持裝備", name: "海神威嚴三叉戟", price: 5, icon: "🔱", desc: "象徵自信引導力與主導框架的三叉戟" },
-  { id: "hand_net", cat: "hand", catName: "🔦 手持裝備", name: "無慾望漁網", price: 5, icon: "🕸️", desc: "網羅豐盛心態、無慾無求的無敵漁網" },
-
-  // 🦶 腳部蛙鞋 (4款)
-  { id: "fins_classic", cat: "fins", catName: "🦶 腳部蛙鞋", name: "經典黑色蛙鞋", price: 0, icon: "🦶", desc: "穩健推進的基礎黑色雙蹼蛙鞋" },
-  { id: "fins_whale", cat: "fins", catName: "🦶 腳部蛙鞋", name: "雙尾鯨魚造型蛙鞋", price: 5, icon: "🐋", desc: "優雅划水的雙尾鯨魚特色蛙鞋" },
-  { id: "fins_neon", cat: "fins", catName: "🦶 腳部蛙鞋", name: "發光霓虹夜光蛙鞋", price: 5, icon: "✨", desc: "暗處發出夢幻光芒的夜光蛙鞋" },
-  { id: "fins_gold", cat: "fins", catName: "🦶 腳部蛙鞋", name: "尊爵黃金特爵蛙鞋", price: 5, icon: "🌟", desc: "耀眼無比的純金特爵尊榮蛙鞋" }
-];
-
-const SHOP_PETS_DATA = [
-  { id: "pet_clownfish", name: "橘光小丑魚", price: 100, icon: "🐠", desc: "活潑圍繞的小丑魚隨行夥伴" },
-  { id: "pet_bluetang", name: "藍倒吊隨行魚", price: 100, icon: "🐟", desc: "好奇心十足的藍倒吊魚夥伴" },
-  { id: "pet_jellyfish", name: "閃耀小水母", price: 100, icon: "🪼", desc: "散發粉紫微光的小水母夥伴" },
-  { id: "pet_octopus", name: "粉紅小章魚", price: 100, icon: "🐙", desc: "萌萌的小章魚隨行夥伴" },
-  { id: "pet_puffer", name: "氣鼓鼓小河豚", price: 100, icon: "🐡", desc: "偶爾膨脹賣萌的萌系河豚" },
-  { id: "pet_turtle", name: "綠色小海龜", price: 100, icon: "🐢", desc: "悠閒划水陪伴的小海龜" }
-];
-
-const PET_SVGS = {
-  pet_clownfish: `<svg viewBox="0 0 32 32"><path d="M 4 16 Q 16 4, 28 16 Q 16 28, 4 16 Z" fill="#f97316"/><path d="M 12 8 Q 14 16, 12 24 L 16 24 Q 18 16, 16 8 Z" fill="#fff"/><circle cx="24" cy="14" r="2" fill="#000"/></svg>`,
-  pet_bluetang: `<svg viewBox="0 0 32 32"><path d="M 4 16 Q 16 4, 28 16 Q 16 28, 4 16 Z" fill="#0284c7"/><path d="M 10 10 Q 18 16, 10 22 Z" fill="#facc15"/><circle cx="24" cy="14" r="2" fill="#fff"/></svg>`,
-  pet_jellyfish: `<svg viewBox="0 0 32 32"><path d="M 8 16 Q 16 4, 24 16 Z" fill="#c084fc"/><path d="M 10 16 L 10 26 M 16 16 L 16 28 M 22 16 L 22 26" stroke="#e9d5ff" stroke-width="2" stroke-linecap="round"/></svg>`,
-  pet_octopus: `<svg viewBox="0 0 32 32"><circle cx="16" cy="12" r="10" fill="#f472b6"/><circle cx="12" cy="10" r="2" fill="#fff"/><circle cx="20" cy="10" r="2" fill="#fff"/><path d="M 8 20 Q 8 28, 10 28 M 12 20 Q 13 28, 14 28 M 18 20 Q 19 28, 20 28 M 22 20 Q 24 28, 24 28" stroke="#f472b6" stroke-width="2" stroke-linecap="round"/></svg>`,
-  pet_puffer: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="#facc15"/><circle cx="22" cy="12" r="2.5" fill="#000"/><path d="M 6 10 L 8 14 M 6 22 L 8 18 M 16 5 L 16 8 M 26 16 L 29 16" stroke="#eab308" stroke-width="2" stroke-linecap="round"/></svg>`,
-  pet_turtle: `<svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="9" ry="8" fill="#15803d"/><circle cx="26" cy="16" r="4" fill="#22c55e"/><ellipse cx="10" cy="8" rx="3" ry="2" fill="#22c55e"/><ellipse cx="10" cy="24" rx="3" ry="2" fill="#22c55e"/></svg>`
-};
-
-function switchShopTab(tabId) {
-  activeShopTab = tabId;
-  const btnSkins = document.getElementById("shopTabSkins");
-  const btnPets = document.getElementById("shopTabPets");
-
-  if (tabId === "skins") {
-    btnSkins.className = "pb-2.5 text-xs font-bold text-amber-300 border-b-2 border-amber-400 transition-colors flex items-center space-x-1.5";
-    btnPets.className = "pb-2.5 text-xs font-bold text-brand-beige/50 hover:text-brand-beige border-b-2 border-transparent transition-colors flex items-center space-x-1.5";
-  } else {
-    btnSkins.className = "pb-2.5 text-xs font-bold text-brand-beige/50 hover:text-brand-beige border-b-2 border-transparent transition-colors flex items-center space-x-1.5";
-    btnPets.className = "pb-2.5 text-xs font-bold text-amber-300 border-b-2 border-amber-400 transition-colors flex items-center space-x-1.5";
-  }
-  renderShopItems();
-}
-
+// ⚓ 船塢商店 Modal
 function openShopModal() {
   const modal = document.getElementById("shopModal");
-  if (!modal) return;
-
+  const container = document.getElementById("shopItemsContainer");
   const shopGold = document.getElementById("shopModalGoldAmount");
   const shopSilver = document.getElementById("shopModalSilverAmount");
   if (shopGold) shopGold.innerText = goldCoins;
   if (shopSilver) shopSilver.innerText = silverCoins;
+  
+  container.innerHTML = "";
+  
+  Object.keys(BOAT_PRICES).forEach(skinId => {
+    const price = BOAT_PRICES[skinId];
+    const isUnlocked = unlockedSkins.includes(skinId);
+    const isEquipped = equippedSkin === skinId;
+    const canAfford = goldCoins >= price;
+    
+    const card = document.createElement("div");
+    card.className = `border rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all ${isEquipped ? 'border-amber-400 bg-amber-500/10 scale-105 shadow-lg shadow-amber-500/20' : 'border-cardBorder bg-black/40 hover:bg-cardHover hover:border-amber-500/30'} relative`;
+    
+    let btnHtml = "";
+    if (isEquipped) {
+      btnHtml = `<span class="mt-2 text-[10px] font-bold text-amber-300 px-3 py-1 rounded bg-amber-500/20">裝備中</span>`;
+    } else if (isUnlocked) {
+      btnHtml = `<button onclick="equipSkin('${skinId}')" class="mt-2 text-[10px] font-bold text-brand-beige px-3 py-1 rounded bg-brand-navy border border-cardBorder hover:border-amber-400 transition-colors">點擊裝備</button>`;
+    } else {
+      btnHtml = `<button onclick="buySkin('${skinId}')" class="mt-2 text-[10px] font-bold px-3 py-1 rounded border transition-colors flex items-center justify-center w-full ${canAfford ? 'text-amber-900 bg-amber-400 hover:bg-amber-300 border-amber-500' : 'text-gray-500 bg-black/30 border-gray-600 cursor-not-allowed'}"><span class="w-3 h-3 inline-block mr-1" data-icon="goldCoin"></span>${price}</button>`;
+    }
 
-  renderShopItems();
+    card.innerHTML = `
+      <div class="mb-2 w-16 h-16 rounded-full bg-brand-navy border border-cardBorder flex items-center justify-center scale-90 overflow-hidden relative">
+        <div style="transform: scale(0.6) translateY(10px);">${DIVER_SKINS[skinId]}</div>
+      </div>
+      <div class="text-xs font-bold text-brand-beige mb-1">${BOAT_NAMES[skinId]}</div>
+      ${btnHtml}
+    `;
+    container.appendChild(card);
+  });
 
   setModalState(true);
   modal.classList.remove("opacity-0", "pointer-events-none");
   const modalBox = modal.querySelector(".transform");
-  if (modalBox) {
-    modalBox.classList.remove("scale-95");
-    modalBox.classList.add("scale-100");
-  }
+  modalBox.classList.remove("scale-95");
+  modalBox.classList.add("scale-100");
 }
 
 function closeShopModal() {
   const modal = document.getElementById("shopModal");
   if (!modal) return;
   const modalBox = modal.querySelector(".transform");
-  if (modalBox) {
-    modalBox.classList.remove("scale-100");
-    modalBox.classList.add("scale-95");
-  }
+  modalBox.classList.remove("scale-100");
+  modalBox.classList.add("scale-95");
   modal.classList.add("opacity-0", "pointer-events-none");
   setModalState(false);
 }
 
-function renderShopItems() {
-  const container = document.getElementById("shopItemsContainer");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  if (activeShopTab === "skins") {
-    // 🤿 金幣商品 (12款外觀部件)
-    SHOP_SKINS_DATA.forEach(item => {
-      const isUnlocked = unlockedItems.includes(item.id);
-      const isEquipped = (equippedBody === item.id || equippedHand === item.id || equippedFins === item.id);
-      const canAfford = goldCoins >= item.price;
-
-      const card = document.createElement("div");
-      card.className = `border rounded-xl p-3 flex flex-col items-center justify-between text-center transition-all ${isEquipped ? 'border-amber-400 bg-amber-500/10 scale-105 shadow-lg shadow-amber-500/20' : 'border-cardBorder bg-black/40 hover:bg-cardHover hover:border-amber-500/30'} relative`;
-
-      let btnHtml = "";
-      if (isEquipped) {
-        btnHtml = `<button onclick="unequipShopItem('${item.cat}')" class="mt-2 text-[10px] font-bold text-amber-300 px-3 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 transition-colors">裝備中 (解除)</button>`;
-      } else if (isUnlocked) {
-        btnHtml = `<button onclick="equipShopItem('${item.id}', '${item.cat}')" class="mt-2 text-[10px] font-bold text-brand-beige px-3 py-1 rounded bg-brand-navy border border-cardBorder hover:border-amber-400 transition-colors">點擊裝備</button>`;
-      } else {
-        btnHtml = `<button onclick="buyShopItem('${item.id}', 'gold', ${item.price})" class="mt-2 text-[10px] font-bold px-3 py-1 rounded border transition-colors flex items-center justify-center w-full ${canAfford ? 'text-amber-900 bg-amber-400 hover:bg-amber-300 border-amber-500' : 'text-gray-500 bg-black/30 border-gray-600 cursor-not-allowed'}"><span class="w-3 h-3 inline-block mr-1" data-icon="goldCoin"></span>${item.price}</button>`;
-      }
-
-      card.innerHTML = `
-        <div class="text-[10px] font-bold text-amber-300/70 mb-1">${item.catName}</div>
-        <div class="text-2xl mb-1">${item.icon}</div>
-        <div class="text-xs font-bold text-brand-beige mb-0.5">${item.name}</div>
-        <div class="text-[10px] text-brand-beige/50 leading-tight mb-1">${item.desc}</div>
-        ${btnHtml}
-      `;
-      container.appendChild(card);
-    });
-  } else {
-    // 🐟 銀幣商品 (6款隨行夥伴小魚)
-    SHOP_PETS_DATA.forEach(item => {
-      const isUnlocked = unlockedItems.includes(item.id);
-      const isEquipped = (equippedPet === item.id);
-      const canAfford = silverCoins >= item.price;
-
-      const card = document.createElement("div");
-      card.className = `border rounded-xl p-3 flex flex-col items-center justify-between text-center transition-all ${isEquipped ? 'border-amber-400 bg-amber-500/10 scale-105 shadow-lg shadow-amber-500/20' : 'border-cardBorder bg-black/40 hover:bg-cardHover hover:border-amber-500/30'} relative`;
-
-      let btnHtml = "";
-      if (isEquipped) {
-        btnHtml = `<button onclick="unequipShopItem('pet')" class="mt-2 text-[10px] font-bold text-amber-300 px-3 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 transition-colors">隨行中 (休假)</button>`;
-      } else if (isUnlocked) {
-        btnHtml = `<button onclick="equipShopItem('${item.id}', 'pet')" class="mt-2 text-[10px] font-bold text-brand-beige px-3 py-1 rounded bg-brand-navy border border-cardBorder hover:border-amber-400 transition-colors">召喚隨行</button>`;
-      } else {
-        btnHtml = `<button onclick="buyShopItem('${item.id}', 'silver', ${item.price})" class="mt-2 text-[10px] font-bold px-3 py-1 rounded border transition-colors flex items-center justify-center w-full ${canAfford ? 'text-gray-900 bg-gray-200 hover:bg-white border-gray-300' : 'text-gray-500 bg-black/30 border-gray-600 cursor-not-allowed'}"><span class="w-3 h-3 inline-block mr-1" data-icon="silverCoin"></span>${item.price}</button>`;
-      }
-
-      card.innerHTML = `
-        <div class="text-[10px] font-bold text-cyan-300/70 mb-1">🐟 隨行夥伴</div>
-        <div class="text-3xl mb-1">${item.icon}</div>
-        <div class="text-xs font-bold text-brand-beige mb-0.5">${item.name}</div>
-        <div class="text-[10px] text-brand-beige/50 leading-tight mb-1">${item.desc}</div>
-        ${btnHtml}
-      `;
-      container.appendChild(card);
-    });
-  }
-}
-
-function buyShopItem(itemId, currencyType, price) {
-  if (unlockedItems.includes(itemId)) return;
-
-  if (currencyType === "gold") {
-    if (goldCoins < price) {
-      showSystemAlert("金幣不足！完成主線 OKR 作業即可賺取金幣！");
-      return;
-    }
+function buySkin(skinId) {
+  const price = BOAT_PRICES[skinId];
+  if (goldCoins >= price && !unlockedSkins.includes(skinId)) {
     goldCoins -= price;
+    unlockedSkins.push(skinId);
+    equippedSkin = skinId;
     localStorage.setItem("goldCoins", goldCoins);
-  } else {
-    if (silverCoins < price) {
-      showSystemAlert("銀幣不足！完成社交情境考驗即可賺取銀幣！");
-      return;
-    }
-    silverCoins -= price;
-    localStorage.setItem("silverCoins", silverCoins);
+    localStorage.setItem("unlockedSkins", JSON.stringify(unlockedSkins));
+    localStorage.setItem("equippedSkin", equippedSkin);
+    
+    updateGoldUI();
+    openShopModal(); // Refresh shop UI
+    
+    const boat = document.getElementById("globalSailingBoat");
+    if (boat) boat.innerHTML = getCharacterSVG();
+  } else if (!unlockedSkins.includes(skinId)) {
+    showSystemAlert("金幣不足！快去解任務賺金幣吧！");
   }
-
-  unlockedItems.push(itemId);
-  localStorage.setItem("unlockedItems", JSON.stringify(unlockedItems));
-
-  // 自動裝備剛買的物品
-  const skinItem = SHOP_SKINS_DATA.find(i => i.id === itemId);
-  if (skinItem) {
-    if (skinItem.cat === "body") equippedBody = itemId;
-    if (skinItem.cat === "hand") equippedHand = itemId;
-    if (skinItem.cat === "fins") equippedFins = itemId;
-    localStorage.setItem("equippedBody", equippedBody);
-    localStorage.setItem("equippedHand", equippedHand);
-    localStorage.setItem("equippedFins", equippedFins);
-  } else {
-    equippedPet = itemId;
-    localStorage.setItem("equippedPet", equippedPet);
-  }
-
-  updateGoldUI();
-  openShopModal();
-
-  const boat = document.getElementById("globalDiver");
-  if (boat) boat.innerHTML = getCharacterSVG();
 }
 
-function equipShopItem(itemId, cat) {
-  if (!unlockedItems.includes(itemId)) return;
-
-  if (cat === "body") { equippedBody = itemId; localStorage.setItem("equippedBody", equippedBody); }
-  if (cat === "hand") { equippedHand = itemId; localStorage.setItem("equippedHand", equippedHand); }
-  if (cat === "fins") { equippedFins = itemId; localStorage.setItem("equippedFins", equippedFins); }
-  if (cat === "pet")  { equippedPet = itemId;  localStorage.setItem("equippedPet", equippedPet); }
-
-  openShopModal();
-
-  const boat = document.getElementById("globalDiver");
-  if (boat) boat.innerHTML = getCharacterSVG();
-}
-
-function unequipShopItem(cat) {
-  if (cat === "hand") { equippedHand = "none"; localStorage.setItem("equippedHand", "none"); }
-  if (cat === "pet")  { equippedPet = "none";  localStorage.setItem("equippedPet", "none"); }
-
-  openShopModal();
-
-  const boat = document.getElementById("globalDiver");
-  if (boat) boat.innerHTML = getCharacterSVG();
+function equipSkin(skinId) {
+  if (unlockedSkins.includes(skinId)) {
+    equippedSkin = skinId;
+    localStorage.setItem("equippedSkin", equippedSkin);
+    openShopModal(); // Refresh
+    
+    const boat = document.getElementById("globalSailingBoat");
+    if (boat) boat.innerHTML = getCharacterSVG();
+  }
 }
 
 function updateGoldUI() {
@@ -2479,7 +2200,7 @@ function closeModal() {
   setModalState(false);
 }
 
-// 儲存 Modal 內容並驅動潛水員向前移動
+// 儲存 Modal 內容並發動信封飛向日誌與小船前進儀式
 function saveModalContent() {
   if (!activeTaskRow) return;
 
@@ -2513,11 +2234,10 @@ function saveModalContent() {
 
   // 2. 非同步發送至 Google Sheets
   if (task) {
-    const numberedTaskName = `${String(task.rowNum).padStart(2, '0')}. ${task.keyResult}`;
-    syncDataToGoogleSheet(numberedTaskName, "✔️", contentToSave);
+    syncDataToGoogleSheet(task.keyResult, "✔️", contentToSave);
   }
 
-  // 觸發儀式：關閉視窗，潛水員游向下一格
+  // 觸發儀式：關閉視窗、畫面縮小、信封飛向日誌、小船邁向下一格
   triggerLetterFlightSequence(activeTaskRow, isFirstTimeCompletion);
 }
 
@@ -2551,7 +2271,7 @@ function triggerLetterFlightSequence(rowNum, isFirstTimeCompletion = true) {
   }
   saveDataToStorage();
 
-  // 2. 精確計算潛水員目標節點：永遠自潛水員當前停靠點 (startIdx) 順序邁進 1 格
+  // 2. 精確計算小船目標節點：永遠自小船當前停靠點 (startIdx) 順序邁進 1 格
   const currentTileIdx = customRoadmapNodes.findIndex(n => n.id === currentCharacterTileId);
   const startIdx = currentTileIdx >= 0 ? currentTileIdx : 0;
   
@@ -2565,20 +2285,20 @@ function triggerLetterFlightSequence(rowNum, isFirstTimeCompletion = true) {
   // ☁️ 提前開啟視野與繪製目標 DOM 元素，同步重繪軌跡線
   updateMapFogVisibility(finalTargetIndex);
 
-  // 立即將潛水員瞬移貼合到當前格子的新物理座標 (因為迷霧推開導致 DOM 往下推擠)
-  if (currentNode) repositionDiverToNode(currentNode.id);
+  // 立即將小船瞬移貼合到當前格子的新物理座標 (因為迷霧推開導致 DOM 往下推擠)
+  if (currentNode) repositionBoatToNode(currentNode.id);
 
-  // 3. 🤿 潛水員單次極致絲滑前進，直達目標格 (稍等 DOM 計算完畢後起航)
+  // 3. ⛵ 小船單次極致絲滑起航，直達目標格 (稍等 DOM 計算完畢後起航)
   setTimeout(() => {
-    swimDiverToProgressNode(finalTargetNode.id, () => {
-      // A. 潛水員靠岸抵達 finalTargetNode
+    sailBoatToProgressNode(finalTargetNode.id, () => {
+      // A. 小船靠岸抵達 finalTargetNode
       if (finalTargetNode) {
         const targetCube = document.getElementById(`iso-cube-${finalTargetNode.id}`);
         if (targetCube) {
           targetCube.classList.remove("status-locked");
           targetCube.classList.add("status-current");
 
-          // 若為「獎勵 💡」或「挑戰 🎯」：觸發在地圖內氣泡/挑戰，潛水員完全停留在這一格！
+          // 若為「獎勵 💡」或「挑戰 🎯」：觸發在地圖內氣泡/挑戰，小船完全停留在這一格！
           if (finalTargetNode.type === "reward" || finalTargetNode.type === "challenge") {
             triggerAutoExperienceModal(finalTargetNode);
           } else {
@@ -2606,7 +2326,7 @@ function triggerLetterFlightSequence(rowNum, isFirstTimeCompletion = true) {
           }
         }
       }
-    }); // End swimDiverToProgressNode
+    }); // End sailBoatToProgressNode
   }, 30); // End setTimeout
 }
 
@@ -2631,12 +2351,12 @@ function triggerTestStep(isFailed = false) {
   // ☁️ 提前開啟視野與繪製目標 DOM 元素，同步重繪軌跡線
   updateMapFogVisibility(finalTargetIndex);
 
-  // 立即將潛水員瞬移貼合到當前格子的新物理座標 (因為迷霧推開導致 DOM 往下推擠)
-  if (currentNode) repositionDiverToNode(currentNode.id);
+  // 立即將小船瞬移貼合到當前格子的新物理座標 (因為迷霧推開導致 DOM 往下推擠)
+  if (currentNode) repositionBoatToNode(currentNode.id);
 
   setTimeout(() => {
-    // 🤿 潛水員單次極致絲滑前進，直達目標格
-    swimDiverToProgressNode(finalTargetNode.id, () => {
+    // ⛵ 小船單次極致絲滑起航，直達目標格
+    sailBoatToProgressNode(finalTargetNode.id, () => {
     const targetCube = document.getElementById(`iso-cube-${finalTargetNode.id}`);
     if (targetCube) {
       targetCube.classList.remove("status-locked", "status-current");
@@ -2839,7 +2559,7 @@ function renderCollectionItems() {
     container.innerHTML = `
       <div class="py-12 text-center text-brand-beige/40">
         <div class="text-3xl mb-2">${activeCollectionTab === 'rewards' ? '💡' : '🎯'}</div>
-        <p class="text-xs">尚無搜集到的${activeCollectionTab === 'rewards' ? '瓶中靈感' : '社交挑戰'}</p>
+        <p class="text-xs">尚無搜集到的${activeCollectionTab === 'rewards' ? '瓶中靈感' : '實戰紀錄'}</p>
         <p class="text-[11px] text-brand-beige/30 mt-1">潛水員抵達對應關卡後，內容會自動歸檔至此！</p>
       </div>
     `;
