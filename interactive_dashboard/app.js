@@ -1858,40 +1858,52 @@ function getCharacterSVG() {
 
   const finsStroke = equippedFins === "fins_gold" ? "#f59e0b" : "#0f172a";
 
-  // 3. 手持裝備 SVG
+  // 3. 手持裝備 SVG (置於右手手邊位置 x: 42~58, y: 32~48，避開臉部面罩)
   let handSVG = "";
   if (equippedHand === "hand_flashlight") {
     handSVG = `
       <g class="hand-item">
-        <!-- 探照燈光束 -->
-        <polygon points="38,28 58,16 58,40" fill="url(#flashlightBeamGrad)" opacity="0.65"/>
+        <!-- 探照燈光束 (朝右下前延伸) -->
+        <polygon points="54,37.5 72,26 72,49" fill="url(#flashlightBeamGrad)" opacity="0.65"/>
+        <!-- 右臂握柄 -->
+        <path d="M 36 32 Q 40 35 42 37" fill="none" stroke="${bodyColor}" stroke-width="3" stroke-linecap="round"/>
         <!-- 手電筒主體 -->
-        <rect x="34" y="24" width="10" height="8" rx="2" fill="#fbbf24" stroke="#0f172a" stroke-width="1.5"/>
-        <rect x="42" y="22" width="3" height="12" rx="1.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
-        <circle cx="44" cy="28" r="2" fill="#fff"/>
+        <rect x="42" y="34" width="10" height="7" rx="2" fill="#fbbf24" stroke="#0f172a" stroke-width="1.5"/>
+        <rect x="50" y="32" width="4" height="11" rx="1.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
+        <circle cx="52" cy="37.5" r="1.8" fill="#fff"/>
       </g>`;
   } else if (equippedHand === "hand_camera") {
     handSVG = `
       <g class="hand-item">
-        <!-- 防水相機 -->
-        <rect x="34" y="23" width="14" height="11" rx="3" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
-        <circle cx="41" cy="28.5" r="3.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
-        <circle cx="42" cy="27.5" r="1.2" fill="#fff"/>
-        <rect x="43" y="21" width="3" height="2" rx="0.5" fill="#ef4444"/>
+        <!-- 相機肩帶 -->
+        <path d="M 34 24 Q 38 30 42 34" stroke="#475569" stroke-width="1.5" fill="none"/>
+        <!-- 右臂握住相機 -->
+        <path d="M 36 32 Q 40 36 43 37" fill="none" stroke="${bodyColor}" stroke-width="3" stroke-linecap="round"/>
+        <!-- 防水相機本體 (腰邊位置) -->
+        <rect x="42" y="33" width="14" height="11" rx="3" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+        <circle cx="49" cy="38.5" r="3.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+        <circle cx="50" cy="37.5" r="1.2" fill="#fff"/>
+        <rect x="51" y="31" width="3" height="2" rx="0.5" fill="#ef4444"/>
       </g>`;
   } else if (equippedHand === "hand_trident") {
     handSVG = `
       <g class="hand-item">
-        <!-- 三叉戟 -->
-        <path d="M 38 38 L 38 10 M 34 16 L 34 10 L 38 14 M 42 16 L 42 10 L 38 14" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="38" cy="10" r="1.5" fill="#fff"/>
+        <!-- 右臂握柄 -->
+        <path d="M 36 32 Q 42 36 48 38" fill="none" stroke="${bodyColor}" stroke-width="3" stroke-linecap="round"/>
+        <!-- 三叉戟 (位於右手右側，平行直立) -->
+        <line x1="48" y1="52" x2="48" y2="16" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M 44 22 L 44 16 L 48 20 M 52 22 L 52 16 L 48 20" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="48" cy="16" r="1.5" fill="#fff"/>
       </g>`;
   } else if (equippedHand === "hand_net") {
     handSVG = `
       <g class="hand-item">
-        <!-- 無慾望漁網 -->
-        <path d="M 36 28 L 48 20 L 50 36 Z" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="2,2"/>
-        <line x1="36" y1="28" x2="48" y2="20" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+        <!-- 右臂握柄 -->
+        <path d="M 36 32 Q 40 35 43 36" fill="none" stroke="${bodyColor}" stroke-width="3" stroke-linecap="round"/>
+        <!-- 無慾望漁網 (位於腰邊) -->
+        <line x1="38" y1="38" x2="46" y2="30" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M 46 30 L 56 22 L 58 40 Z" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="2,2"/>
+        <line x1="46" y1="30" x2="56" y2="22" stroke="#fbbf24" stroke-width="2"/>
       </g>`;
   }
 
