@@ -2280,12 +2280,102 @@ const SHOP_PETS_DATA = [
 ];
 
 const PET_SVGS = {
-  pet_clownfish: `<svg viewBox="0 0 32 32"><path d="M 4 16 Q 16 4, 28 16 Q 16 28, 4 16 Z" fill="#f97316"/><path d="M 12 8 Q 14 16, 12 24 L 16 24 Q 18 16, 16 8 Z" fill="#fff"/><circle cx="24" cy="14" r="2" fill="#000"/></svg>`,
-  pet_bluetang: `<svg viewBox="0 0 32 32"><path d="M 4 16 Q 16 4, 28 16 Q 16 28, 4 16 Z" fill="#0284c7"/><path d="M 10 10 Q 18 16, 10 22 Z" fill="#facc15"/><circle cx="24" cy="14" r="2" fill="#fff"/></svg>`,
-  pet_jellyfish: `<svg viewBox="0 0 32 32"><path d="M 8 16 Q 16 4, 24 16 Z" fill="#c084fc"/><path d="M 10 16 L 10 26 M 16 16 L 16 28 M 22 16 L 22 26" stroke="#e9d5ff" stroke-width="2" stroke-linecap="round"/></svg>`,
-  pet_octopus: `<svg viewBox="0 0 32 32"><circle cx="16" cy="12" r="10" fill="#f472b6"/><circle cx="12" cy="10" r="2" fill="#fff"/><circle cx="20" cy="10" r="2" fill="#fff"/><path d="M 8 20 Q 8 28, 10 28 M 12 20 Q 13 28, 14 28 M 18 20 Q 19 28, 20 28 M 22 20 Q 24 28, 24 28" stroke="#f472b6" stroke-width="2" stroke-linecap="round"/></svg>`,
-  pet_puffer: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="#facc15"/><circle cx="22" cy="12" r="2.5" fill="#000"/><path d="M 6 10 L 8 14 M 6 22 L 8 18 M 16 5 L 16 8 M 26 16 L 29 16" stroke="#eab308" stroke-width="2" stroke-linecap="round"/></svg>`,
-  pet_turtle: `<svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="9" ry="8" fill="#15803d"/><circle cx="26" cy="16" r="4" fill="#22c55e"/><ellipse cx="10" cy="8" rx="3" ry="2" fill="#22c55e"/><ellipse cx="10" cy="24" rx="3" ry="2" fill="#22c55e"/></svg>`
+  // 1. 橘光小丑魚 (Dave the Diver 圓滾滾小丑魚)
+  pet_clownfish: `<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 4 18 C 4 10, 24 6, 29 18 C 24 30, 4 26, 4 18 Z" fill="#f97316" stroke="#0f172a" stroke-width="1.8"/>
+    <!-- 尾鰭 -->
+    <path d="M 4 18 L 1 11 C 3 16, 3 20, 1 25 Z" fill="#ea580c" stroke="#0f172a" stroke-width="1.5"/>
+    <!-- 經典 3 道白紋 -->
+    <path d="M 12 8 Q 15 18, 12 28 C 15 28, 17 18, 15 8 Z" fill="#ffffff" stroke="#0f172a" stroke-width="1"/>
+    <path d="M 20 10 Q 22 18, 20 26 C 22 26, 24 18, 23 10 Z" fill="#ffffff" stroke="#0f172a" stroke-width="1"/>
+    <!-- 背鰭與胸鰭 -->
+    <path d="M 14 8 Q 20 4, 25 10 Z" fill="#f97316" stroke="#0f172a" stroke-width="1.2"/>
+    <path d="M 16 22 Q 20 26, 15 27 Z" fill="#f97316" stroke="#0f172a" stroke-width="1.2"/>
+    <!-- 眼睛與高光 -->
+    <circle cx="25" cy="15" r="2.2" fill="#0f172a"/>
+    <circle cx="25.8" cy="14.2" r="0.8" fill="#ffffff"/>
+  </svg>`,
+
+  // 2. 藍倒吊隨行魚 (多莉極速魚)
+  pet_bluetang: `<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 藍色主體 -->
+    <path d="M 5 18 C 5 9, 22 6, 29 18 C 22 30, 5 27, 5 18 Z" fill="#0284c7" stroke="#0f172a" stroke-width="1.8"/>
+    <!-- 亮黃色尾鰭 -->
+    <path d="M 6 18 L 1 10 Q 4 18, 1 26 Z" fill="#facc15" stroke="#0f172a" stroke-width="1.5"/>
+    <!-- 黑色側紋花紋 -->
+    <path d="M 11 11 Q 20 12, 16 20 C 12 25, 8 20, 11 11 Z" fill="#0f172a" opacity="0.85"/>
+    <!-- 背鰭與亮黃色斑塊 -->
+    <path d="M 12 8 Q 22 5, 27 12 Z" fill="#0284c7" stroke="#0f172a" stroke-width="1.2"/>
+    <path d="M 4 15 Q 1 12, 2 18 Z" fill="#facc15"/>
+    <!-- 眼睛與亮斑 -->
+    <circle cx="24" cy="15" r="2.2" fill="#0f172a"/>
+    <circle cx="24.8" cy="14.2" r="0.8" fill="#ffffff"/>
+  </svg>`,
+
+  // 3. 閃耀小水母 (夢幻粉紫水母)
+  pet_jellyfish: `<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 水母傘蓋 -->
+    <path d="M 7 18 C 7 7, 29 7, 29 18 C 29 21, 7 21, 7 18 Z" fill="#c084fc" stroke="#581c87" stroke-width="1.8"/>
+    <!-- 傘蓋裙邊弧線 -->
+    <path d="M 7 19 Q 12 22, 18 19 Q 24 22, 29 19" fill="#e9d5ff" stroke="#581c87" stroke-width="1.2"/>
+    <!-- 螢光內部心形光暈 -->
+    <ellipse cx="18" cy="14" rx="6" ry="4" fill="#f472b6" opacity="0.6"/>
+    <!-- 彎曲觸手 -->
+    <path d="M 11 20 Q 9 27, 13 32 M 16 20 Q 18 28, 15 33 M 21 20 Q 23 27, 20 33 M 25 20 Q 27 27, 24 32" stroke="#f472b6" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- 閃耀高光點 -->
+    <circle cx="13" cy="12" r="1.5" fill="#ffffff" opacity="0.8"/>
+  </svg>`,
+
+  // 4. 粉紅小章魚 (呆萌圓滾滾章魚)
+  pet_octopus: `<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 圓滾滾章魚頭部 -->
+    <circle cx="18" cy="15" r="11" fill="#f472b6" stroke="#831843" stroke-width="1.8"/>
+    <!-- 可愛腮紅 -->
+    <circle cx="11" cy="18" r="2" fill="#fb7185" opacity="0.7"/>
+    <circle cx="25" cy="18" r="2" fill="#fb7185" opacity="0.7"/>
+    <!-- 大眼睛與反射亮點 -->
+    <circle cx="14" cy="14" r="2" fill="#0f172a"/>
+    <circle cx="14.6" cy="13.2" r="0.7" fill="#ffffff"/>
+    <circle cx="22" cy="14" r="2" fill="#0f172a"/>
+    <circle cx="22.6" cy="13.2" r="0.7" fill="#ffffff"/>
+    <!-- 捲曲小觸手 (6腳) -->
+    <path d="M 8 23 Q 5 29, 9 31 M 12 24 Q 11 31, 14 32 M 17 25 Q 18 32, 19 32 M 22 25 Q 24 31, 23 32 M 27 23 Q 31 28, 28 31" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- 頭頂可愛吐水泡泡 -->
+    <circle cx="24" cy="6" r="1.2" fill="#38bdf8" opacity="0.7"/>
+  </svg>`,
+
+  // 5. 氣鼓鼓小河豚 (黃色圓滾滾刺河豚)
+  pet_puffer: `<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 刺河豚圓滾滾身體 -->
+    <circle cx="18" cy="18" r="12" fill="#facc15" stroke="#713f12" stroke-width="1.8"/>
+    <!-- 白色肚皮 -->
+    <path d="M 10 21 A 9 9 0 0 0 26 21 Z" fill="#fef08a"/>
+    <!-- 刺刺凸起 -->
+    <path d="M 7 13 L 4 11 M 6 22 L 3 24 M 14 7 L 13 4 M 22 7 L 23 4 M 30 13 L 33 11 M 30 22 L 33 24 M 18 30 L 18 33" stroke="#854d0e" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- 氣鼓鼓小嘴巴 -->
+    <circle cx="28" cy="19" r="1.5" fill="#f97316" stroke="#713f12" stroke-width="1"/>
+    <!-- 大眼睛 -->
+    <circle cx="22" cy="14" r="2.2" fill="#0f172a"/>
+    <circle cx="22.8" cy="13.2" r="0.8" fill="#ffffff"/>
+    <!-- 小胸鰭 -->
+    <path d="M 12 20 Q 8 23, 11 25 Z" fill="#eab308" stroke="#713f12" stroke-width="1"/>
+  </svg>`,
+
+  // 6. 綠色小海龜 (悠閒綠海龜)
+  pet_turtle: `<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 龜殼主體 (深綠紋理) -->
+    <ellipse cx="17" cy="18" rx="10" ry="8" fill="#15803d" stroke="#064e3b" stroke-width="1.8"/>
+    <path d="M 12 14 L 17 12 L 22 14 L 22 22 L 17 24 L 12 22 Z" fill="#166534" stroke="#4ade80" stroke-width="1"/>
+    <!-- 划水前雙槳劃腳 -->
+    <path d="M 23 12 Q 31 8, 29 16 Z" fill="#22c55e" stroke="#064e3b" stroke-width="1.2"/>
+    <path d="M 23 24 Q 31 28, 29 20 Z" fill="#22c55e" stroke="#064e3b" stroke-width="1.2"/>
+    <!-- 後腿與尾巴 -->
+    <path d="M 9 13 Q 5 10, 7 16 Z" fill="#22c55e" stroke="#064e3b" stroke-width="1"/>
+    <path d="M 9 23 Q 5 26, 7 20 Z" fill="#22c55e" stroke="#064e3b" stroke-width="1"/>
+    <!-- 海龜頭部與亮眼 -->
+    <circle cx="28" cy="18" r="3.5" fill="#4ade80" stroke="#064e3b" stroke-width="1.2"/>
+    <circle cx="29.5" cy="17" r="1" fill="#0f172a"/>
+  </svg>`
 };
 
 function switchShopTab(tabId) {
