@@ -600,17 +600,79 @@ function getNodeIconSVG(node, isDone, isStanding) {
     `;
   }
 
-  // 2. 漂流瓶 / 寶箱獎勵 (Reward Floating Bottle / Compass)
+  // 2. 🪸 靈感／小知識獎勵格 ➔ 戴夫風 Q 版動態海洋生物 (依關卡 ID 輪播 5 大靈動海洋生物)
   if (node.type === "reward") {
+    const creatureType = (node.id % 5);
+    
+    // A. 橘光小丑魚 🐟
+    if (creatureType === 0) {
+      return `
+        <svg class="node-svg-icon" viewBox="0 0 36 36" fill="none">
+          <ellipse cx="18" cy="27" rx="13" ry="5" fill="rgba(249,115,22,0.3)"/>
+          <path d="M 6 18 C 6 10, 24 6, 29 18 C 24 30, 6 26, 6 18 Z" fill="#f97316" stroke="#0f172a" stroke-width="1.8"/>
+          <path d="M 6 18 L 2 11 C 4 16, 4 20, 2 25 Z" fill="#ea580c" stroke="#0f172a" stroke-width="1.5"/>
+          <path d="M 14 8 Q 17 18, 14 28 C 17 28, 19 18, 17 8 Z" fill="#ffffff" stroke="#0f172a" stroke-width="1"/>
+          <path d="M 21 10 Q 23 18, 21 26 C 23 26, 25 18, 24 10 Z" fill="#ffffff" stroke="#0f172a" stroke-width="1"/>
+          <circle cx="25" cy="15" r="2.2" fill="#0f172a"/>
+          <circle cx="25.8" cy="14.2" r="0.8" fill="#ffffff"/>
+        </svg>
+      `;
+    }
+    
+    // B. 藍倒吊多莉魚 🐠
+    if (creatureType === 1) {
+      return `
+        <svg class="node-svg-icon" viewBox="0 0 36 36" fill="none">
+          <ellipse cx="18" cy="27" rx="13" ry="5" fill="rgba(2,132,199,0.3)"/>
+          <path d="M 6 18 C 6 9, 23 6, 29 18 C 23 30, 6 27, 6 18 Z" fill="#0284c7" stroke="#0f172a" stroke-width="1.8"/>
+          <path d="M 7 18 L 2 10 Q 5 18, 2 26 Z" fill="#facc15" stroke="#0f172a" stroke-width="1.5"/>
+          <path d="M 12 11 Q 21 12, 17 20 C 13 25, 9 20, 12 11 Z" fill="#0f172a" opacity="0.85"/>
+          <circle cx="24" cy="15" r="2.2" fill="#0f172a"/>
+          <circle cx="24.8" cy="14.2" r="0.8" fill="#ffffff"/>
+        </svg>
+      `;
+    }
+
+    // C. 閃耀夢幻水母 🪼
+    if (creatureType === 2) {
+      return `
+        <svg class="node-svg-icon" viewBox="0 0 36 36" fill="none">
+          <ellipse cx="18" cy="28" rx="11" ry="4" fill="rgba(192,132,252,0.35)"/>
+          <path d="M 7 17 C 7 6, 29 6, 29 17 C 29 20, 7 20, 7 17 Z" fill="#c084fc" stroke="#581c87" stroke-width="1.8"/>
+          <path d="M 7 18 Q 12 21, 18 18 Q 24 21, 29 18" fill="#e9d5ff" stroke="#581c87" stroke-width="1.2"/>
+          <ellipse cx="18" cy="13" rx="6" ry="4" fill="#f472b6" opacity="0.6"/>
+          <path d="M 11 19 Q 9 26, 13 31 M 16 19 Q 18 27, 15 32 M 21 19 Q 23 26, 20 32 M 25 19 Q 27 26, 24 31" stroke="#f472b6" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="13" cy="11" r="1.5" fill="#ffffff" opacity="0.8"/>
+        </svg>
+      `;
+    }
+
+    // D. 氣鼓鼓小河豚 🐡
+    if (creatureType === 3) {
+      return `
+        <svg class="node-svg-icon" viewBox="0 0 36 36" fill="none">
+          <ellipse cx="18" cy="27" rx="12" ry="4" fill="rgba(250,204,21,0.35)"/>
+          <circle cx="18" cy="17" r="11" fill="#facc15" stroke="#713f12" stroke-width="1.8"/>
+          <path d="M 10 20 A 8 8 0 0 0 26 20 Z" fill="#fef08a"/>
+          <path d="M 7 12 L 4 10 M 6 21 L 3 23 M 14 6 L 13 3 M 22 6 L 23 3 M 30 12 L 33 10 M 30 21 L 33 23" stroke="#854d0e" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="22" cy="13" r="2.2" fill="#0f172a"/>
+          <circle cx="22.8" cy="12.2" r="0.8" fill="#ffffff"/>
+        </svg>
+      `;
+    }
+
+    // E. 呆萌粉紅章魚 🐙
     return `
       <svg class="node-svg-icon" viewBox="0 0 36 36" fill="none">
-        <ellipse cx="18" cy="28" rx="12" ry="4" fill="rgba(103,232,249,0.3)"/>
-        <path d="M15 10 L21 10 L21 14 Q25 16 24 24 Q23 30 18 30 Q13 30 12 24 Q11 16 15 14 Z" fill="rgba(167,243,208,0.85)" stroke="#059669" stroke-width="1.2"/>
-        <rect x="16" y="7" width="4" height="3" rx="1" fill="#b45309"/>
-        <rect x="15" y="18" width="6" height="8" rx="1" fill="#fef08a" transform="rotate(-15 18 22)"/>
-        <line x1="16" y1="20" x2="19" y2="20" stroke="#b45309" stroke-width="0.8" transform="rotate(-15 18 22)"/>
-        <circle cx="26" cy="10" r="1.8" fill="#fef08a"/>
-        <circle cx="9" cy="16" r="1.4" fill="#fff"/>
+        <ellipse cx="18" cy="28" rx="12" ry="4" fill="rgba(244,114,182,0.35)"/>
+        <circle cx="18" cy="15" r="11" fill="#f472b6" stroke="#831843" stroke-width="1.8"/>
+        <circle cx="11" cy="18" r="2" fill="#fb7185" opacity="0.7"/>
+        <circle cx="25" cy="18" r="2" fill="#fb7185" opacity="0.7"/>
+        <circle cx="14" cy="14" r="2" fill="#0f172a"/>
+        <circle cx="14.6" cy="13.2" r="0.7" fill="#ffffff"/>
+        <circle cx="22" cy="14" r="2" fill="#0f172a"/>
+        <circle cx="22.6" cy="13.2" r="0.7" fill="#ffffff"/>
+        <path d="M 8 23 Q 5 29, 9 31 M 12 24 Q 11 31, 14 32 M 17 25 Q 18 32, 19 32 M 22 25 Q 24 31, 23 32 M 27 23 Q 31 28, 28 31" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/>
       </svg>
     `;
   }
@@ -675,19 +737,21 @@ function getNodeIconSVG(node, isDone, isStanding) {
       `;
     }
 
-    // B. 完成準備課 ➔ 湛藍活力熱帶小魚 🐟 (高辨識度魚身與雙鰭)
+    // B. 完成準備課 ➔ 戴夫風 Q 版彩紋小魚 🐟 (高辨識度圓滾滾雙色身與翡翠綠通關章)
     return `
       <svg class="node-svg-icon" viewBox="0 0 36 36" fill="none">
         <circle cx="6" cy="10" r="1.5" fill="rgba(125,211,252,0.6)"/>
         <circle cx="9" cy="6" r="1" fill="rgba(125,211,252,0.8)"/>
-        <path d="M12 18 C14 10, 26 12, 28 18 C26 24, 14 26, 12 18 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2"/>
-        <path d="M26 18 L34 11 L32 18 L34 25 Z" fill="#0284c7" stroke="#0369a1" stroke-width="1"/>
-        <path d="M18 12 Q22 7, 24 13" fill="#f59e0b"/>
-        <path d="M18 24 Q22 29, 24 23" fill="#f59e0b"/>
-        <circle cx="16" cy="16" r="2.5" fill="#ffffff"/>
-        <circle cx="15.5" cy="16" r="1.3" fill="#0f172a"/>
-        <circle cx="26" cy="7" r="5" fill="#10b981" stroke="#fff" stroke-width="1.2"/>
-        <path d="M23.5 7 L25.2 8.5 L28.5 5.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- 戴夫風魚身 -->
+        <path d="M 6 18 C 6 10, 24 6, 29 18 C 24 30, 6 26, 6 18 Z" fill="#38bdf8" stroke="#0f172a" stroke-width="1.6"/>
+        <path d="M 6 18 L 2 11 C 4 16, 4 20, 2 25 Z" fill="#0284c7" stroke="#0f172a" stroke-width="1.2"/>
+        <!-- 亮黃色雙側紋與背鰭 -->
+        <path d="M 14 8 Q 17 18, 14 28 C 17 28, 19 18, 17 8 Z" fill="#facc15" stroke="#0f172a" stroke-width="1"/>
+        <circle cx="23" cy="15" r="2.2" fill="#0f172a"/>
+        <circle cx="23.8" cy="14.2" r="0.8" fill="#ffffff"/>
+        <!-- 右上角綠色通關勾勾章 -->
+        <circle cx="27" cy="7" r="5" fill="#10b981" stroke="#fff" stroke-width="1.2"/>
+        <path d="M 24.5 7 L 26.2 8.5 L 29.5 5.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     `;
   }
