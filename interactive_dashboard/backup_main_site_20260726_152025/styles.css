@@ -344,10 +344,10 @@ body {
 /* Base Node */
 .adventure-node {
   position: relative;
-  width: 96px;
-  height: 80px;
-  min-width: 96px;
-  min-height: 80px;
+  width: 76px;
+  height: 76px;
+  min-width: 76px;
+  min-height: 76px;
   flex-shrink: 0;
   cursor: pointer;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
@@ -355,64 +355,67 @@ body {
 }
 
 .adventure-node:hover {
-  transform: translateY(-4px) scale(1.06);
-  filter: brightness(1.08);
+  transform: translateY(2px);
+  filter: brightness(1.1);
 }
 
-/* Island Container (Transparent 2.5D Canvas) */
+/* Island Circle */
 .node-circle {
   width: 100%;
   height: 100%;
-  border-radius: 0;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  border: none;
-  background: transparent;
-  box-shadow: none;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 35% 35%, #334155, #0f172a);
+  box-shadow:
+    0 8px 0 #020617,
+    0 14px 20px rgba(0, 0, 0, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
+  transform: translateY(-8px);
 }
 
 .adventure-node:hover .node-circle {
-  box-shadow: none;
+  box-shadow:
+    0 4px 0 #020617,
+    0 8px 12px rgba(0, 0, 0, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
 }
 
 /* Node badges */
 .node-num-badge {
   position: absolute;
-  top: -10px;
+  top: -9px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.55rem;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 800;
   color: #f8fafc;
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(15, 23, 42, 0.95);
   padding: 1px 7px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  z-index: 25;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  z-index: 10;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .node-date-badge {
   position: absolute;
-  bottom: -12px;
+  bottom: -11px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.55rem;
+  font-size: 0.52rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
-  color: rgba(226, 232, 240, 0.85);
-  background: rgba(2, 6, 23, 0.75);
-  backdrop-filter: blur(4px);
+  font-weight: 800;
   white-space: nowrap;
-  padding: 1px 7px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  z-index: 25;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  padding: 1px 6px;
+  border-radius: 6px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .node-svg-icon {
@@ -422,39 +425,191 @@ body {
   z-index: 5;
 }
 
-/* ─── 🟢 Status & Type Clean Transparent Canvas Overrides (0 Button Discs, 100% Pure 2.5D Cutouts) ─── */
-.adventure-node.status-done .node-circle,
-.adventure-node.status-done:hover .node-circle,
-.adventure-node.status-failed .node-circle,
-.adventure-node.status-failed:hover .node-circle,
-.adventure-node.status-current .node-circle,
-.adventure-node.status-current:hover .node-circle,
-.adventure-node.status-locked .node-circle,
-.adventure-node.status-locked:hover .node-circle,
-.adventure-node.type-reward .node-circle,
-.adventure-node.type-reward:hover .node-circle,
-.adventure-node.type-challenge .node-circle,
-.adventure-node.type-challenge:hover .node-circle,
-.adventure-node.type-destination .node-circle,
-.adventure-node.type-destination:hover .node-circle,
-.adventure-node.type-start .node-circle,
-.adventure-node.type-start:hover .node-circle,
-.adventure-node.type-achievement .node-circle,
-.adventure-node.type-achievement:hover .node-circle,
-.adventure-node.status-locked.type-reward .node-circle,
-.adventure-node.status-locked.type-challenge .node-circle {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
+/* ─── 🟢 Done: Completed Island ─── */
+.adventure-node.status-done .node-circle {
+  background: radial-gradient(circle at 35% 35%, #34d399, #047857);
+  border-color: #a7f3d0;
+  box-shadow:
+    0 8px 0 #064e3b,
+    0 14px 20px rgba(16, 185, 129, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
 }
 
-.adventure-node.type-reward,
-.adventure-node.type-challenge {
-  width: 76px;
-  height: 76px;
-  min-width: 76px;
-  min-height: 76px;
+.adventure-node.status-done:hover .node-circle {
+  box-shadow:
+    0 4px 0 #064e3b,
+    0 8px 12px rgba(16, 185, 129, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+
+.adventure-node.status-done .node-date-badge {
+  color: #a7f3d0;
+  background: rgba(4, 120, 87, 0.95);
+  border: 1px solid rgba(167, 243, 208, 0.4);
+}
+
+/* ─── ❌ Failed / Test Cross Marked ─── */
+.adventure-node.status-failed {
+  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.7));
+}
+
+.adventure-node.status-failed .node-circle {
+  background: radial-gradient(circle at 35% 35%, #ef4444, #991b1b) !important;
+  border-color: #fca5a5 !important;
+  box-shadow:
+    0 8px 0 #450a0a,
+    0 14px 20px rgba(239, 68, 68, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25) !important;
+}
+
+.adventure-node.status-failed:hover .node-circle {
+  box-shadow:
+    0 4px 0 #450a0a,
+    0 8px 12px rgba(239, 68, 68, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25) !important;
+}
+
+.adventure-node.status-failed .node-date-badge {
+  color: #fca5a5;
+  background: rgba(153, 27, 27, 0.95);
+  border: 1px solid rgba(252, 165, 165, 0.4);
+}
+
+/* ─── 🟡 Current: Active Island (pulsing beacon) ─── */
+.adventure-node.status-current .node-circle {
+  background: radial-gradient(circle at 35% 35%, #fde047, #ca8a04);
+  border-color: #fef08a;
+  box-shadow:
+    0 8px 0 #713f12,
+    0 14px 24px rgba(245, 158, 11, 0.75),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  animation: beaconPulse 2s ease-in-out infinite;
+}
+
+.adventure-node.status-current:hover .node-circle {
+  box-shadow:
+    0 4px 0 #713f12,
+    0 8px 12px rgba(245, 158, 11, 0.75),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3) !important;
+}
+
+@keyframes beaconPulse {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 0 rgba(245, 158, 11, 0)); }
+  50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(245, 158, 11, 0.6)); }
+}
+
+/* ─── 🔒 Locked ─── */
+.adventure-node.status-locked .node-circle {
+  background: radial-gradient(circle at 35% 35%, #475569, #1e293b);
+  border-color: rgba(255, 255, 255, 0.2);
+  opacity: 0.88;
+  box-shadow:
+    0 8px 0 #020617,
+    0 14px 15px rgba(0, 0, 0, 0.8),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.status-locked:hover .node-circle {
+  box-shadow:
+    0 4px 0 #020617,
+    0 8px 12px rgba(0, 0, 0, 0.8),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* ─── 🧭 Reward: Bottle / Compass ─── */
+.adventure-node.type-reward .node-circle {
+  background: radial-gradient(circle at 35% 35%, #fde047, #b45309);
+  border-color: #fef08a;
+  box-shadow:
+    0 8px 0 #713f12,
+    0 14px 20px rgba(245, 158, 11, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+
+.adventure-node.type-reward:hover .node-circle {
+  box-shadow:
+    0 4px 0 #713f12,
+    0 8px 12px rgba(245, 158, 11, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+.adventure-node.type-reward { width: 62px; height: 62px; min-width: 62px; min-height: 62px; }
+
+/* ─── 🌊 Challenge: Storm / Kraken ─── */
+.adventure-node.type-challenge .node-circle {
+  background: radial-gradient(circle at 35% 35%, #a5b4fc, #4338ca);
+  border-color: #e0e7ff;
+  box-shadow:
+    0 8px 0 #312e81,
+    0 14px 20px rgba(99, 102, 241, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+
+.adventure-node.type-challenge:hover .node-circle {
+  box-shadow:
+    0 4px 0 #312e81,
+    0 8px 12px rgba(99, 102, 241, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}
+.adventure-node.type-challenge { width: 62px; height: 62px; min-width: 62px; min-height: 62px; }
+
+/* ─── 🏰 Destination: Lighthouse ─── */
+.adventure-node.type-destination .node-circle {
+  background: radial-gradient(circle at 35% 35%, #fb923c, #c2410c);
+  border-color: #fed7aa;
+  box-shadow:
+    0 8px 0 #7c2d12,
+    0 14px 24px rgba(251, 146, 60, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.type-destination:hover .node-circle {
+  box-shadow:
+    0 4px 0 #7c2d12,
+    0 8px 12px rgba(251, 146, 60, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* ─── 🏝️ Start ─── */
+.adventure-node.type-start .node-circle {
+  background: radial-gradient(circle at 35% 35%, #67e8f9, #0891b2);
+  border-color: #a5f3fc;
+  box-shadow:
+    0 8px 0 #164e63,
+    0 14px 20px rgba(8, 145, 178, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.type-start:hover .node-circle {
+  box-shadow:
+    0 4px 0 #164e63,
+    0 8px 12px rgba(8, 145, 178, 0.6),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* ─── 🎖️ Achievement ─── */
+.adventure-node.type-achievement .node-circle {
+  background: radial-gradient(circle at 35% 35%, #fbbf24, #dc2626);
+  border-color: #fde68a;
+  box-shadow:
+    0 8px 0 #7f1d1d,
+    0 14px 20px rgba(234, 88, 12, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.adventure-node.type-achievement:hover .node-circle {
+  box-shadow:
+    0 4px 0 #7f1d1d,
+    0 8px 12px rgba(234, 88, 12, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* Locked override for special types */
+.adventure-node.status-locked.type-reward .node-circle,
+.adventure-node.status-locked.type-challenge .node-circle {
+  background: radial-gradient(circle at 35% 35%, #334155, #1e293b);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  opacity: 0.5;
 }
 
 /* ============================================
@@ -1145,96 +1300,3 @@ body.modal-open .sparkle-star {
   transform: translateX(calc(-50% + var(--bubble-shift, 0px))) translateY(0) scale(1) !important;
   pointer-events: auto !important;
 }
-
-/* 🌊 徹底消除貼圖感 4 大核心技術 (Anti-Sticker Underwater Integration System) */
-
-/* 1. 淺灘水光暈染 (Lagoon Glow) */
-.island-lagoon-glow {
-  position: absolute;
-  width: 150%;
-  height: 150%;
-  top: -25%;
-  left: -25%;
-  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.45) 0%, rgba(14, 116, 144, 0.25) 50%, transparent 75%);
-  border-radius: 50%;
-  filter: blur(12px);
-  pointer-events: none;
-  animation: lagoonPulse 4s ease-in-out infinite alternate;
-}
-
-/* 2. 深海沉降陰影 (Deep Shadow) */
-.island-deep-shadow {
-  position: absolute;
-  width: 115%;
-  height: 38%;
-  bottom: -10%;
-  left: -7.5%;
-  background: radial-gradient(ellipse at center, rgba(2, 6, 23, 0.88) 0%, rgba(8, 47, 73, 0.4) 60%, transparent 85%);
-  border-radius: 50%;
-  filter: blur(8px);
-  pointer-events: none;
-}
-
-/* 3. 動態海水拍打波紋擴散環 (Dynamic Water Ripple Rings) */
-.water-ripple-ring {
-  position: absolute;
-  width: 130%;
-  height: 60%;
-  bottom: -12%;
-  left: -15%;
-  border: 2px solid rgba(56, 189, 248, 0.6);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: rippleSpread 3.6s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
-}
-.water-ripple-ring-2 {
-  animation-delay: 1.8s;
-}
-
-@keyframes rippleSpread {
-  0% { transform: scale(0.75); opacity: 0.85; border-color: rgba(186, 230, 253, 0.8); }
-  100% { transform: scale(1.35); opacity: 0; border-color: rgba(14, 116, 144, 0); }
-}
-
-/* 4. 水下浸透羽化層 (Underwater Submersion Water Tint) */
-.underwater-submersion-mask {
-  position: absolute;
-  width: 100%;
-  height: 35%;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(to top, rgba(14, 116, 144, 0.45) 0%, rgba(56, 189, 248, 0.15) 60%, transparent 100%);
-  border-radius: 0 0 20px 20px;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-
-/* 5. 小島原畫水光融和過濾器 (Natural Image Blend Filter) */
-.natural-island-img {
-  filter: drop-shadow(0 12px 20px rgba(8, 47, 73, 0.65)) drop-shadow(0 4px 8px rgba(2, 6, 23, 0.4)) contrast(1.02);
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-@keyframes lagoonPulse {
-  0% { transform: scale(0.95); opacity: 0.7; }
-  100% { transform: scale(1.08); opacity: 1; }
-}
-
-/* 🌫️ 無框有機水霧雲氣漂移與漩渦動畫 (Organic Swirling Ocean Fog Animation) */
-@keyframes fogSwirl1 {
-  0%, 100% { transform: scale(1) translate(0px, 0px) rotate(0deg); opacity: 0.92; }
-  50% { transform: scale(1.15) translate(-8px, -5px) rotate(10deg); opacity: 0.98; }
-}
-@keyframes fogSwirl2 {
-  0%, 100% { transform: scale(1.08) translate(0px, 0px) rotate(0deg); opacity: 0.82; }
-  50% { transform: scale(0.92) translate(10px, 8px) rotate(-14deg); opacity: 0.95; }
-}
-@keyframes fogSwirl3 {
-  0%, 100% { transform: scale(0.92) translate(0px, 0px); opacity: 0.88; }
-  50% { transform: scale(1.22) translate(-6px, 7px); opacity: 0.96; }
-}
-
-.animate-fogSwirl1 { animation: fogSwirl1 6.5s ease-in-out infinite; }
-.animate-fogSwirl2 { animation: fogSwirl2 8.5s ease-in-out infinite alternate; }
-.animate-fogSwirl3 { animation: fogSwirl3 5.5s ease-in-out infinite alternate; }
-
