@@ -513,24 +513,27 @@ body {
   100% { transform: translateY(0px) rotate(0deg) scale(1); }
 }
 
-/* 🐟 隨行小魚夥伴動畫 */
+/* 🐟 隨行小魚夥伴動畫 (精緻微型 24px + 大範圍動態悠游) */
 .companion-pet {
   position: absolute;
-  right: -28px;
-  top: 6px;
-  width: 28px;
-  height: 28px;
+  right: -24px;
+  top: 4px;
+  width: 24px;
+  height: 24px;
   pointer-events: none;
   z-index: 25;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
-  animation: petSwim 2.8s ease-in-out infinite alternate;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  animation: petSwim 3.5s ease-in-out infinite alternate;
 }
 
 @keyframes petSwim {
-  0% { transform: translateY(0) rotate(-6deg) scale(1); }
-  50% { transform: translateY(-9px) rotate(6deg) scale(1.08); }
-  100% { transform: translateY(3px) rotate(-3deg) scale(0.96); }
+  0% { transform: translate(0px, 0px) rotate(-10deg) scale(1); }
+  25% { transform: translate(12px, -14px) rotate(8deg) scale(1.1); }
+  50% { transform: translate(-8px, -18px) rotate(-14deg) scale(1.05); }
+  75% { transform: translate(-14px, 6px) rotate(12deg) scale(0.95); }
+  100% { transform: translate(8px, 10px) rotate(-6deg) scale(1); }
 }
+
 
 .bubble {
   animation: bubbleRise 2s ease-in infinite;

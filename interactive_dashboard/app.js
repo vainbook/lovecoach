@@ -1782,10 +1782,23 @@ function getCharacterSVG() {
     skinImg = 'images/dave_diver_duckie_refined.gif?v=120';
   }
 
-  // 2. 道具部分目前完全隱藏 (100% 清空，不殘留)
+  // 2. 隨行小魚夥伴動畫 GIF / SVG
+  const PET_ANIMATED_IMAGES = {
+    pet_clownfish: 'images/pet_clownfish_anim.gif?v=300',
+    pet_puffer: 'images/pet_pufferfish_anim.gif?v=300',
+    pet_pufferfish: 'images/pet_pufferfish_anim.gif?v=300',
+    pet_octopus: 'images/pet_octopus_anim.gif?v=300',
+    pet_turtle: 'images/pet_turtle_anim.gif?v=300',
+    pet_jellyfish: 'images/pet_jellyfish_anim.gif?v=300',
+    pet_dolphin: 'images/pet_dolphin_anim.gif?v=300'
+  };
+
   const handPropHtml = '';
 
-  const petHtml = (equippedPet !== 'none' && PET_SVGS[equippedPet]) ? '<div class="companion-pet">' + PET_SVGS[equippedPet] + '</div>' : '';
+  const petImgSrc = PET_ANIMATED_IMAGES[equippedPet];
+  const petHtml = (equippedPet !== 'none' && petImgSrc)
+    ? '<div class="companion-pet"><img src="' + petImgSrc + '" alt="Companion Pet" class="w-full h-full object-contain filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]"></div>'
+    : ((equippedPet !== 'none' && PET_SVGS[equippedPet]) ? '<div class="companion-pet">' + PET_SVGS[equippedPet] + '</div>' : '');
 
   return '<div class="character-token relative cursor-pointer pointer-events-auto" onclick="talkAndSwim()" style="transform: scale(1.5) translateY(-5px); transform-origin: bottom center; z-index: 20;">' +
     '<div id="diverSpeechBubble" class="speech-bubble"></div>' +
@@ -1795,6 +1808,7 @@ function getCharacterSVG() {
       handPropHtml +
     '</div>' +
   '</div>';
+
 }
 
 const DIVER_DIALOGUES = [
@@ -1985,13 +1999,10 @@ const SHOP_SKINS_DATA = [
 ];
 
 const SHOP_PETS_DATA = [
-  { id: "pet_clownfish", name: "橘光小丑魚", price: 100, icon: "🐠", desc: "活潑圍繞的小丑魚隨行夥伴" },
-  { id: "pet_bluetang", name: "藍倒吊隨行魚", price: 100, icon: "🐟", desc: "好奇心十足的藍倒吊魚夥伴" },
-  { id: "pet_jellyfish", name: "閃耀小水母", price: 100, icon: "🪼", desc: "散發粉紫微光的小水母夥伴" },
-  { id: "pet_octopus", name: "粉紅小章魚", price: 100, icon: "🐙", desc: "萌萌的小章魚隨行夥伴" },
-  { id: "pet_puffer", name: "氣鼓鼓小河豚", price: 100, icon: "🐡", desc: "偶爾膨脹賣萌的萌系河豚" },
-  { id: "pet_turtle", name: "綠色小海龜", price: 100, icon: "🐢", desc: "悠閒划水陪伴的小海龜" }
+  { id: "pet_clownfish", name: "1. 橘光小丑魚", price: 100, icon: "🐠", desc: "活潑圍繞的小丑魚隨行夥伴 (AI 原生呆萌黑點眼)" },
+  { id: "pet_puffer", name: "2. 氣鼓鼓黃河豚", price: 100, icon: "🐡", desc: "偶爾膨脹賣萌的萌系河豚 (AI 原生呆萌黑點眼)" }
 ];
+
 
 const PET_SVGS = {
   // 1. 橘光小丑魚 (Dave the Diver 圓滾滾小丑魚)
