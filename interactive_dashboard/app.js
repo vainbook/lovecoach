@@ -1565,12 +1565,15 @@ function renderBossQuizQuestion() {
   });
 }
 
-// 統一管理 Modal 開啟與關閉狀態（同步鎖定 html & body 滾動）
+// 統一管理 Modal 開啟與關閉狀態（同步鎖定 html & body 滾動 + 自動卸載鍵盤焦點）
 function setModalState(isOpen) {
   if (isOpen) {
     document.body.classList.add("modal-open");
     document.documentElement.classList.add("modal-open");
   } else {
+    if (document.activeElement && typeof document.activeElement.blur === "function") {
+      document.activeElement.blur();
+    }
     document.body.classList.remove("modal-open");
     document.documentElement.classList.remove("modal-open");
   }
@@ -2559,7 +2562,9 @@ function triggerLetterFlightSequence(rowNum, isFirstTimeCompletion = true) {
 
   // 3. 🤿 潛水員單次極致絲滑前進，直達目標格 (稍等 DOM 計算完畢後起航)
   setTimeout(() => {
+    centerCameraOnDiver(true);
     swimDiverToProgressNode(finalTargetNode.id, () => {
+      centerCameraOnDiver(true);
       // A. 潛水員靠岸抵達 finalTargetNode
       if (finalTargetNode) {
         const targetCube = document.getElementById(`iso-cube-${finalTargetNode.id}`);
