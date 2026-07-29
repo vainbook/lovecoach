@@ -449,6 +449,71 @@ body {
   border-radius: 0 !important;
 }
 
+/* ============================================
+   🔒 NODE STATUS VISUAL STATES (已走過/當前/未解鎖格子)
+   ============================================ */
+
+/* 🔒 未解鎖 / 還沒走到的格子 (Dimmed & Locked State) */
+.adventure-node.status-locked {
+  opacity: 0.48;
+  filter: grayscale(0.65) brightness(0.65) contrast(0.85);
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.adventure-node.status-locked:hover {
+  opacity: 0.8;
+  filter: grayscale(0.25) brightness(0.88);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.adventure-node.status-locked .node-num-badge {
+  background: rgba(15, 23, 42, 0.95);
+  color: rgba(226, 232, 240, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 🔒 迷你解鎖圖示角標 */
+.adventure-node.status-locked::after {
+  content: "🔒";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 9px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 1px 4px;
+  line-height: 1;
+  z-index: 30;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* 🎯 當前潛水員站立格子 (Active Pulsing Glow) */
+.adventure-node.status-current {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.65));
+  animation: currentNodePulse 2.5s infinite ease-in-out;
+}
+
+@keyframes currentNodePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.5));
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(245, 158, 11, 0.9));
+    transform: translateY(-3px);
+  }
+}
+
+/* ✅ 已通關/已完成格子 (Completed State) */
+.adventure-node.status-done {
+  opacity: 1;
+  filter: drop-shadow(0 4px 10px rgba(52, 211, 153, 0.35));
+}
+
 .adventure-node.type-reward,
 .adventure-node.type-challenge {
   width: 76px;
@@ -994,8 +1059,42 @@ body {
 .drag-handle { cursor: grab; color: var(--text-muted); user-select: none; }
 
 /* ============================================
-   🛑 PAUSE BACKGROUND ANIMATIONS WHEN MODAL OPEN
+   🛑 PAUSE BACKGROUND ANIMATIONS & LOCK SCROLL WHEN MODAL OPEN
    ============================================ */
+
+html.modal-open,
+body.modal-open {
+  overflow: hidden !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+/* Modal content scroll containment & touch fixes */
+[id$="Modal"] {
+  overscroll-behavior: contain;
+}
+
+[id$="Modal"] .overflow-y-auto {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* 📱 Prevent iOS Safari Auto-Zoom on Input Focus */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="url"],
+  input[type="number"],
+  textarea {
+    font-size: 16px !important; /* iOS Safari requires 16px+ to disable focus auto-zoom */
+  }
+}
+
+/* ⚡ Optimize typing performance when input is focused inside modal */
+[id$="Modal"]:focus-within {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
 
 body.modal-open .q-cloud-wrapper,
 body.modal-open .character-token,
@@ -1089,7 +1188,7 @@ body.modal-open .sparkle-star {
   border-radius: 12px;
   font-size: 10px;
   font-weight: 700;
-  white-space: normal;
+  white-space: pre-line;
   width: 110px; /* Force a fixed width so it wraps nicely */
   text-align: center;
   word-break: keep-all;
